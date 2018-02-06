@@ -33,16 +33,17 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
             gui['btn'].clicked.connect(self.makeLampButtonCallback(color))
 
         # styles
-        self.addStyle(self.btnHeat, 'color: white')
-        self.addStyle(self.btnLamp1, 'color: white')
-        self.addStyle(self.btnLamp2, 'color: white')
-        self.addStyle(self.btnLamp3, 'color: white')
-        self.addStyle(self.btnLamp4, 'color: white')
+        self.addStyle(self.btnHeat, 'color: white; border-radius: 20')
+        self.addStyle(self.btnLamp1, 'color: white; border-radius: 20')
+        self.addStyle(self.btnLamp2, 'color: white; border-radius: 20')
+        self.addStyle(self.btnLamp3, 'color: white; border-radius: 20')
+        self.addStyle(self.btnLamp4, 'color: white; border-radius: 20')
         self.toRed(self.btnHeat)
         self.toRed(self.btnLamp1)
         self.toRed(self.btnLamp2)
         self.toRed(self.btnLamp3)
         self.toRed(self.btnLamp4)
+        self.setStyleSheet('background-color: white')
 
     def makeLampButtonCallback(self, color):
         return lambda: self.lampToggle(color)
@@ -79,7 +80,6 @@ def main():
     app = QApplication(sys.argv)
     form = MainWindow()
     form.show()
-    # without this, the script exits immediately
     sys.exit(app.exec_())
 
 if __name__ == '__main__':
