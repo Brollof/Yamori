@@ -1,0 +1,10 @@
+- testy 230 V
+- obs³uga GPIO
+- odczyt temperatury procesora
+- obs³uga 1-wire, odczyt termperatury
+- pod³¹czenie termomentru (HW)
+- postawienie serwera WWW
+- aplikacja webowa do kontroli I/O
+- aplikacja Linux do kontroli I/O
+- zdalny pulpit/ SSH
+- czujnik wilgotnoœci (?) (5 - 10 z³)
