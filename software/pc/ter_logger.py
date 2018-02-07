@@ -9,6 +9,9 @@ def printProgramStart():
     logging.info('=================================================')
     logging.info('Application started')
 
+def printProgramClosed():
+    logging.info('Application terminated')
+    
 def main():
     init();
 
