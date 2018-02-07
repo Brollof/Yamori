@@ -1,18 +1,21 @@
 import sys
 sys.path.append('gui')
+import logging
 
 import PyQt5
 from PyQt5.QtWidgets import *
 
 import gui
 import ter_io
-
+import ter_logger
+from ter_utils import convertBool
 
 class MainWindow(QMainWindow, gui.Ui_MainWindow):
     def __init__(self):
         super(self.__class__, self).__init__()
         self.setupUi(self)
         self.setFixedSize(self.width(), self.height())
+        self.log = logging.getLogger('GUI')
         self.lamps = {}
         self.lamps['czerwona'] = {'btn': self.btnLamp1, 'lab' : self.labLamp1}
         self.lamps['niebieska'] = {'btn': self.btnLamp2, 'lab' : self.labLamp2}
@@ -65,6 +68,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         else:
             self.btnHeat.setText('OFF')
             self.toRed(self.btnHeat)
+        self.log.debug('Heater {}'.format(convertBool(self.io.heater, 'ON', 'OFF')))
 
     def lampToggle(self, color):
         self.io.lampToggle(color)
@@ -74,9 +78,12 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         else:
             self.lamps[color]['btn'].setText('OFF')
             self.toRed(self.lamps[color]['btn'])
+        self.log.debug('Lamp {} {}'.format(color, convertBool(self.io.lamps[color]['state'], 'ON', 'OFF')))
 
 
 def main():
+    ter_logger.init()
+    ter_logger.printProgramStart()
     app = QApplication(sys.argv)
     form = MainWindow()
     form.show()
