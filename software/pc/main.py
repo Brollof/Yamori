@@ -22,7 +22,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.lamps['zielona'] = {'btn': self.btnLamp3, 'lab' : self.labLamp3}
         self.lamps['biala'] = {'btn': self.btnLamp4, 'lab' : self.labLamp4}
 
-
+        # create lamps name array and init GUI labels with it
         colors = []
         for color, gui in self.lamps.items():
             gui['lab'].setText(color.upper())
