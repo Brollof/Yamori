@@ -17,10 +17,11 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.setFixedSize(self.width(), self.height())
         self.log = logging.getLogger('GUI')
         self.lamps = {}
-        self.lamps['czerwona'] = {'btn': self.btnLamp1, 'lab' : self.labLamp1}
-        self.lamps['niebieska'] = {'btn': self.btnLamp2, 'lab' : self.labLamp2}
-        self.lamps['zielona'] = {'btn': self.btnLamp3, 'lab' : self.labLamp3}
-        self.lamps['biala'] = {'btn': self.btnLamp4, 'lab' : self.labLamp4}
+        # map lamp name to corresponding GUI controls
+        self.lamps['czerwona'] = {'btn': self.btnLamp1, 'lab': self.labLamp1}
+        self.lamps['niebieska'] = {'btn': self.btnLamp2, 'lab': self.labLamp2}
+        self.lamps['zielona'] = {'btn': self.btnLamp3, 'lab': self.labLamp3}
+        self.lamps['biala'] = {'btn': self.btnLamp4, 'lab': self.labLamp4}
 
         # create lamps name array and init GUI labels with it
         colors = []
@@ -33,7 +34,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         # events
         self.btnHeat.clicked.connect(self.guiHeaterToggle)
         for color, gui in self.lamps.items():
-            gui['btn'].clicked.connect(self.makeLampButtonCallback(color))
+            gui['btn'].clicked.connect(self.createLampButtonCallback(color))
 
         # styles
         self.addStyle(self.btnHeat, 'color: white; border-radius: 20')
@@ -48,7 +49,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.toRed(self.btnLamp4)
         self.setStyleSheet('background-color: white')
 
-    def makeLampButtonCallback(self, color):
+    def createLampButtonCallback(self, color):
         return lambda: self.lampToggle(color)
 
     def addStyle(self, widget, style):
