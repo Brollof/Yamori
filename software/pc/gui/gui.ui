@@ -20,11 +20,16 @@
    <string>Yamori</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#pageManual QPushButton {
-	border: 4px solid black;
+   <string notr="true">#pageManual QPushButton, #pageManual QToolButton {
+	border: 2px solid black;
 	border-radius: 20;
 }
-</string>
+
+#btnMan10 {
+	background-color: transparent;
+	background: none;
+	background-repeat: none;
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -224,7 +229,7 @@ QFrame {
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
-             <widget class="QPushButton" name="btnMan3">
+             <widget class="QToolButton" name="btnMan3">
               <property name="minimumSize">
                <size>
                 <width>120</width>
@@ -234,8 +239,15 @@ QFrame {
               <property name="text">
                <string/>
               </property>
-              <property name="flat">
-               <bool>false</bool>
+              <property name="icon">
+               <iconset resource="icons.qrc">
+                <normaloff>:/cold.png</normaloff>:/cold.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>90</width>
+                <height>90</height>
+               </size>
               </property>
              </widget>
             </item>
@@ -327,6 +339,8 @@ QFrame {
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

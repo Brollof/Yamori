@@ -4,12 +4,17 @@ import logging
 
 import PyQt5
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtCore import *
 
 import gui
 import ter_io
 import ter_logger
 from ter_utils import convertBool
 import styles
+import icons_rc
+
+
 
 class MainWindow(QMainWindow, gui.Ui_MainWindow):
     def __init__(self):
@@ -18,7 +23,10 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.setFixedSize(self.width(), self.height())
         self.log = logging.getLogger('GUI')
         self.lamps = {}
-
+        self.icons = {
+            'heat': QIcon(':heat.png'),
+            'cold': QIcon(':cold.png'),
+        }
         # map buttons
         self.lamps['blue-L'] = {'btn': self.btnMan1, 'color': 'rgba(0, 0, 255, 30%)'}
         self.lamps['red'] = {'btn': self.btnMan2, 'color': 'rgba(255, 0, 0, 30%)'}
@@ -51,11 +59,9 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
     def guiHeaterToggle(self):
         self.io.heaterToggle()
         if self.io.heater == True:
-            self.btnMan3.setText('ON')
-            styles.toGreen(self.btnMan3)
+            self.btnHeat.setIcon(self.icons['heat'])
         else:
-            self.btnMan3.setText('OFF')
-            styles.toRed(self.btnMan3)
+            self.btnHeat.setIcon(self.icons['cold'])
         self.log.debug('Heater {}'.format(convertBool(self.io.heater, 'ON', 'OFF')))
 
     def lampToggle(self, color):
