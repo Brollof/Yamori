@@ -22,6 +22,12 @@ class Ui_MainWindow(object):
 "    border-radius: 20;\n"
 "}\n"
 "\n"
+"#menuFrame QToolButton {\n"
+"    border: none;\n"
+"    qproperty-iconSize: 60px;\n"
+"    qproperty-toolButtonStyle: ToolButtonTextUnderIcon;\n"
+"}\n"
+"\n"
 "#btnMan10 {\n"
 "    background-color: transparent;\n"
 "    background: none;\n"
@@ -41,7 +47,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.menuFrame.sizePolicy().hasHeightForWidth())
         self.menuFrame.setSizePolicy(sizePolicy)
-        self.menuFrame.setMinimumSize(QtCore.QSize(0, 100))
+        self.menuFrame.setMinimumSize(QtCore.QSize(0, 110))
         self.menuFrame.setStyleSheet("QToolButton {\n"
 "    font-size: 20px;\n"
 "}\n"
@@ -54,18 +60,31 @@ class Ui_MainWindow(object):
         self.menuFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.menuFrame.setObjectName("menuFrame")
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.menuFrame)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 781, 101))
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 781, 111))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.btnManual = QtWidgets.QToolButton(self.horizontalLayoutWidget)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/i_manual.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btnManual.setIcon(icon)
+        self.btnManual.setIconSize(QtCore.QSize(60, 60))
+        self.btnManual.setCheckable(False)
+        self.btnManual.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
+        self.btnManual.setAutoRaise(False)
         self.btnManual.setObjectName("btnManual")
         self.horizontalLayout.addWidget(self.btnManual)
         self.btnAuto = QtWidgets.QToolButton(self.horizontalLayoutWidget)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/i_auto.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btnAuto.setIcon(icon1)
         self.btnAuto.setObjectName("btnAuto")
         self.horizontalLayout.addWidget(self.btnAuto)
         self.btnDiag = QtWidgets.QToolButton(self.horizontalLayoutWidget)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/i_diag.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btnDiag.setIcon(icon2)
         self.btnDiag.setObjectName("btnDiag")
         self.horizontalLayout.addWidget(self.btnDiag)
         self.verticalLayout.addWidget(self.menuFrame)
@@ -82,7 +101,7 @@ class Ui_MainWindow(object):
         self.pageManual = QtWidgets.QWidget()
         self.pageManual.setObjectName("pageManual")
         self.horizontalLayoutWidget_2 = QtWidgets.QWidget(self.pageManual)
-        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(0, 0, 781, 341))
+        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(0, 0, 781, 321))
         self.horizontalLayoutWidget_2.setObjectName("horizontalLayoutWidget_2")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_2)
         self.horizontalLayout_2.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
@@ -91,6 +110,7 @@ class Ui_MainWindow(object):
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem1)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_2.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.btnMan1 = QtWidgets.QPushButton(self.horizontalLayoutWidget_2)
         self.btnMan1.setMinimumSize(QtCore.QSize(120, 120))
@@ -158,5 +178,6 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "Yamori"))
         self.btnManual.setText(_translate("MainWindow", "Manual"))
         self.btnAuto.setText(_translate("MainWindow", "Automat"))
-        self.btnDiag.setText(_translate("MainWindow", "Diagnostyka"))
+        self.btnDiag.setText(_translate("MainWindow", "Status"))
 
+import icons_rc

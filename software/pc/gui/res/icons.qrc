@@ -2,5 +2,8 @@
 <qresource>
     <file>i_cold.png</file>
     <file>i_heat.png</file>
+    <file>i_manual.png</file>
+    <file>i_auto.png</file>
+    <file>i_diag.png</file>
 </qresource>
 </RCC>
