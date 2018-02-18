@@ -114,9 +114,6 @@ class Ui_MainWindow(object):
         self.btnMan3 = QtWidgets.QToolButton(self.horizontalLayoutWidget_2)
         self.btnMan3.setMinimumSize(QtCore.QSize(120, 120))
         self.btnMan3.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/cold.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btnMan3.setIcon(icon)
         self.btnMan3.setIconSize(QtCore.QSize(90, 90))
         self.btnMan3.setObjectName("btnMan3")
         self.verticalLayout_4.addWidget(self.btnMan3)
@@ -163,4 +160,3 @@ class Ui_MainWindow(object):
         self.btnAuto.setText(_translate("MainWindow", "Automat"))
         self.btnDiag.setText(_translate("MainWindow", "Diagnostyka"))
 
-import icons_rc

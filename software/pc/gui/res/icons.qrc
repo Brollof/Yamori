@@ -1,6 +1,6 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
-    <file>cold.png</file>
-    <file>heat.png</file>
+    <file>i_cold.png</file>
+    <file>i_heat.png</file>
 </qresource>
 </RCC>

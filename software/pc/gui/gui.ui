@@ -239,10 +239,6 @@ QFrame {
               <property name="text">
                <string/>
               </property>
-              <property name="icon">
-               <iconset resource="icons.qrc">
-                <normaloff>:/cold.png</normaloff>:/cold.png</iconset>
-              </property>
               <property name="iconSize">
                <size>
                 <width>90</width>
@@ -339,8 +335,6 @@ QFrame {
    </widget>
   </widget>
  </widget>
- <resources>
-  <include location="icons.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

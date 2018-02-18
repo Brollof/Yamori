@@ -12,8 +12,7 @@ import ter_io
 import ter_logger
 from ter_utils import convertBool
 import styles
-import icons_rc
-
+import icons
 
 
 class MainWindow(QMainWindow, gui.Ui_MainWindow):
@@ -24,15 +23,18 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.log = logging.getLogger('GUI')
         self.lamps = {}
         self.icons = {
-            'heat': QIcon(':heat.png'),
-            'cold': QIcon(':cold.png'),
+            'heat': QIcon(':i_heat.png'),
+            'cold': QIcon(':i_cold.png'),
         }
+        
         # map buttons
         self.lamps['blue-L'] = {'btn': self.btnMan1, 'color': 'rgba(0, 0, 255, 30%)'}
         self.lamps['red'] = {'btn': self.btnMan2, 'color': 'rgba(255, 0, 0, 30%)'}
         self.btnHeat = self.btnMan3
         self.lamps['blue-R'] = {'btn': self.btnMan4, 'color': 'rgba(0, 0, 255, 30%)'}
         self.lamps['white'] = {'btn': self.btnMan5, 'color': 'rgba(255, 255, 0, 30%)'}
+
+        self.btnHeat.setIcon(self.icons['cold'])
 
         # create lamps name array and init GUI labels with it
         colors = []
