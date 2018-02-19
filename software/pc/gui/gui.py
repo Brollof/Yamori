@@ -21,7 +21,15 @@ class Ui_MainWindow(object):
         MainWindow.setMinimumSize(QtCore.QSize(800, 480))
         MainWindow.setMaximumSize(QtCore.QSize(800, 480))
         MainWindow.setAutoFillBackground(False)
-        MainWindow.setStyleSheet("#pageManual QPushButton, #pageManual QToolButton {\n"
+        MainWindow.setStyleSheet("#menuFrame {\n"
+"    border: 4px solid #ffe0b2;\n"
+"}\n"
+"\n"
+"#centralwidget {\n"
+"    background-color: white;\n"
+"}\n"
+"\n"
+"#pageManual QPushButton, #pageManual QToolButton {\n"
 "    border: 2px solid black;\n"
 "    border-radius: 20;\n"
 "}\n"
@@ -40,6 +48,10 @@ class Ui_MainWindow(object):
 "#pageDiag QGroupBox QLabel{\n"
 "    font-size: 20px;\n"
 "    color: #00C851;\n"
+"}\n"
+"\n"
+"#mainView > QWidget {\n"
+"    background-color: white;\n"
 "}")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -105,6 +117,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.mainView.sizePolicy().hasHeightForWidth())
         self.mainView.setSizePolicy(sizePolicy)
+        self.mainView.setStyleSheet("")
         self.mainView.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.mainView.setObjectName("mainView")
         self.pageManual = QtWidgets.QWidget()
