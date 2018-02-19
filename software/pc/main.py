@@ -21,6 +21,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         super(self.__class__, self).__init__()
         self.setupUi(self)
         self.setFixedSize(self.width(), self.height())
+        self.activeMenu = -1
         self.log = logging.getLogger('GUI')
         self.lamps = {}
         self.icons = {
@@ -34,6 +35,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.btnHeat = self.btnMan3
         self.lamps['blue-R'] = {'btn': self.btnMan4, 'color': 'rgba(0, 0, 255, 30%)'}
         self.lamps['white'] = {'btn': self.btnMan5, 'color': 'rgba(255, 255, 0, 30%)'}
+        self.menu = [self.btnManual, self.btnAuto, self.btnDiag]
 
         self.btnHeat.setIcon(self.icons['cold'])
 
@@ -49,26 +51,22 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         for color, gui in self.lamps.items():
             gui['btn'].clicked.connect(self.createLampButtonCallback(color))
 
-        self.btnManual.clicked.connect(lambda: self.displayView(0))
-        self.btnAuto.clicked.connect(lambda: self.displayView(1))
-        self.btnDiag.clicked.connect(lambda: self.displayView(2))
+        self.menu[0].clicked.connect(lambda: self.displayView(0))
+        self.menu[1].clicked.connect(lambda: self.displayView(1))
+        self.menu[2].clicked.connect(lambda: self.displayView(2))
+        self.displayView(0)
 
         # styles
         self.initStyles();
 
     def displayView(self, viewNum):
-        styles.addStyle(self.sender(), MEENU_INDICATOR)
-        if viewNum == 0:
-            styles.removeStyle(self.btnAuto, MEENU_INDICATOR)
-            styles.removeStyle(self.btnDiag, MEENU_INDICATOR)
-        elif viewNum == 1:
-            styles.removeStyle(self.btnManual, MEENU_INDICATOR)
-            styles.removeStyle(self.btnDiag, MEENU_INDICATOR)
-        else:
-            styles.removeStyle(self.btnAuto, MEENU_INDICATOR)
-            styles.removeStyle(self.btnManual, MEENU_INDICATOR)
+        if viewNum == self.activeMenu:
+            return
 
+        styles.removeStyle(self.menu[self.activeMenu], MEENU_INDICATOR)
+        styles.addStyle(self.menu[viewNum], MEENU_INDICATOR)
         self.mainView.setCurrentIndex(viewNum)
+        self.activeMenu = viewNum;
 
     def createLampButtonCallback(self, color):
         return lambda: self.lampToggle(color)
@@ -76,8 +74,6 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
     def initStyles(self):
         for lampName, props in self.lamps.items():
             styles.addStyle(props['btn'], 'background-color: {};'.format(props['color']))
-
-        styles.addStyle(self.btnManual, MEENU_INDICATOR)
 
     def guiHeaterToggle(self):
         self.io.heaterToggle()
