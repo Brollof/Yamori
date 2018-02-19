@@ -48,8 +48,15 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         for color, gui in self.lamps.items():
             gui['btn'].clicked.connect(self.createLampButtonCallback(color))
 
+        self.btnManual.clicked.connect(lambda: self.displayView(0))
+        self.btnAuto.clicked.connect(lambda: self.displayView(1))
+        self.btnDiag.clicked.connect(lambda: self.displayView(2))
+
         # styles
         self.initStyles();
+
+    def displayView(self, viewNum):
+        self.mainView.setCurrentIndex(viewNum)
 
     def createLampButtonCallback(self, color):
         return lambda: self.lampToggle(color)
