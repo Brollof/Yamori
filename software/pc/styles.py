@@ -5,12 +5,6 @@ def addStyle(widget, style):
         style += ';'
     widget.setStyleSheet(widget.styleSheet() + style)
 
-def toRed(widget):
-    addStyle(widget, 'background-color: red')
-
-def toGreen(widget):
-    addStyle(widget, 'background-color: green')
-
 def setAlpha(widget, percent):
     """ Sets alpha in rgba property """
     style = widget.styleSheet()

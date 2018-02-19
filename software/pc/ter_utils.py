@@ -1,5 +1,6 @@
 def convertBool(boolVal, ifTrue, ifFalse):
     if type(boolVal) is not bool:
+        print(type(boolVal))
         raise TypeError
     return ifTrue if boolVal else ifFalse
 

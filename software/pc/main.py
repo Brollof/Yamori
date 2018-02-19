@@ -77,11 +77,11 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
 
     def guiHeaterToggle(self):
         self.io.heaterToggle()
-        if self.io.heater == True:
+        if self.io.heater['state'] == True:
             self.btnHeat.setIcon(self.icons['heat'])
         else:
             self.btnHeat.setIcon(self.icons['cold'])
-        self.log.debug('Heater {}'.format(convertBool(self.io.heater, 'ON', 'OFF')))
+        self.log.debug('Heater {}'.format(convertBool(self.io.heater['state'], 'ON', 'OFF')))
 
     def lampToggle(self, color):
         self.io.lampToggle(color)
