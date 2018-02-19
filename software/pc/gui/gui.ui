@@ -183,7 +183,7 @@ QFrame {
            <x>0</x>
            <y>0</y>
            <width>781</width>
-           <height>321</height>
+           <height>341</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">

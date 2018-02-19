@@ -107,7 +107,7 @@ class Ui_MainWindow(object):
         self.pageManual = QtWidgets.QWidget()
         self.pageManual.setObjectName("pageManual")
         self.horizontalLayoutWidget_2 = QtWidgets.QWidget(self.pageManual)
-        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(0, 0, 781, 321))
+        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(0, 0, 781, 341))
         self.horizontalLayoutWidget_2.setObjectName("horizontalLayoutWidget_2")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_2)
         self.horizontalLayout_2.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
