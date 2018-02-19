@@ -18,3 +18,8 @@ def setAlpha(widget, percent):
     newColor = re.sub(r'\d+%', str(percent) + "%", oldColor)
     style = style.replace(oldColor, newColor)
     widget.setStyleSheet(style)
+
+def removeStyle(widget, prop):
+    style = widget.styleSheet()
+    style = style.replace(prop+';', '')
+    widget.setStyleSheet(style)

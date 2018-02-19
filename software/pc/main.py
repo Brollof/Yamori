@@ -14,6 +14,7 @@ from ter_utils import convertBool
 import styles
 import icons_rc
 
+MEENU_INDICATOR = 'background-color: #ffe0b2; border-radius: 10px'
 
 class MainWindow(QMainWindow, gui.Ui_MainWindow):
     def __init__(self):
@@ -56,6 +57,17 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.initStyles();
 
     def displayView(self, viewNum):
+        styles.addStyle(self.sender(), MEENU_INDICATOR)
+        if viewNum == 0:
+            styles.removeStyle(self.btnAuto, MEENU_INDICATOR)
+            styles.removeStyle(self.btnDiag, MEENU_INDICATOR)
+        elif viewNum == 1:
+            styles.removeStyle(self.btnManual, MEENU_INDICATOR)
+            styles.removeStyle(self.btnDiag, MEENU_INDICATOR)
+        else:
+            styles.removeStyle(self.btnAuto, MEENU_INDICATOR)
+            styles.removeStyle(self.btnManual, MEENU_INDICATOR)
+
         self.mainView.setCurrentIndex(viewNum)
 
     def createLampButtonCallback(self, color):
@@ -64,6 +76,8 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
     def initStyles(self):
         for lampName, props in self.lamps.items():
             styles.addStyle(props['btn'], 'background-color: {};'.format(props['color']))
+
+        styles.addStyle(self.btnManual, MEENU_INDICATOR)
 
     def guiHeaterToggle(self):
         self.io.heaterToggle()

@@ -112,6 +112,9 @@ QFrame {
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <widget class="QToolButton" name="btnManual">
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Manual</string>
            </property>
@@ -128,11 +131,17 @@ QFrame {
            <property name="checkable">
             <bool>false</bool>
            </property>
+           <property name="popupMode">
+            <enum>QToolButton::DelayedPopup</enum>
+           </property>
            <property name="toolButtonStyle">
             <enum>Qt::ToolButtonTextUnderIcon</enum>
            </property>
            <property name="autoRaise">
             <bool>false</bool>
+           </property>
+           <property name="arrowType">
+            <enum>Qt::NoArrow</enum>
            </property>
           </widget>
          </item>
