@@ -1,11 +1,12 @@
 import sys
 sys.path.append('gui')
 import logging
+from time import sleep
 
 import PyQt5
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtCore import *
+from PyQt5.QtCore import QThread, pyqtSignal
 
 import gui
 import ter_io
@@ -14,14 +15,74 @@ from ter_utils import convertBool
 import styles
 import icons_rc
 
-MEENU_INDICATOR = 'background-color: #ffe0b2; border-radius: 10px'
+# debug
+import random
+
+MENU_INDICATOR = 'background-color: #ffe0b2; border-radius: 10px'
+DIAG_SCREEN_UPDATE_PERIOD = 1 # seconds
+
+# read GPIO state app after restart
+# temp limits view
+
+class Stat():
+    def __init__(self, name):
+        self.name = name
+        self.avg = 0
+        self.min = None
+        self.max = None
+        self.lastVal = 0
+        self.n = 0
+        self.sum = 0
+
+    def calcAvg(self, newVal):
+        self.n += 1
+        self.sum += newVal
+        try:
+            self.avg = self.sum / self.n
+        except ZeroDivisionError:
+            print('Cannot divide by 0! n = {}'.format(self.n))
+
+    def update(self, newVal):
+        if not self.min and not self.max:
+            self.min = newVal
+            self.max = newVal
+
+        self.lastVal = newVal
+        if newVal > self.max:
+            self.max = newVal
+        elif newVal < self.min:
+            self.min = newVal
+
+        self.calcAvg(newVal)
+
+class DiagThread(QThread):
+    update = pyqtSignal(dict)
+
+    def __init__(self):
+        super(self.__class__, self).__init__()
+        self.temp1Stats = Stat('temp1')
+        self.temp2Stats = Stat('temp2')
+        self.cpuTemp = Stat('cpuTemp')
+        self.humidity = Stat('humidity')
+
+    def run(self):
+        while True:
+            # read temp sensors
+            # read board temp
+            # calculate min, max, avg
+            # emit signal to update GUI
+            self.temp1Stats.update(random.randint(0, 10))
+            temps = {}
+            temps[self.temp1Stats.name] = self.temp1Stats
+            self.update.emit(temps)
+            sleep(DIAG_SCREEN_UPDATE_PERIOD)
 
 class MainWindow(QMainWindow, gui.Ui_MainWindow):
     def __init__(self):
         super(self.__class__, self).__init__()
         self.setupUi(self)
         self.setFixedSize(self.width(), self.height())
-        self.activeMenu = -1
+        self.activeMenu = -1 # current active menu page number
         self.log = logging.getLogger('GUI')
         self.lamps = {}
         self.icons = {
@@ -40,11 +101,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.btnHeat.setIcon(self.icons['cold'])
 
         # create lamps name array and init GUI labels with it
-        colors = []
-        for color, gui in self.lamps.items():
-            colors.append(color)
-        
-        self.io = ter_io.TerIO(colors)
+        self.io = ter_io.TerIO([color for color, gui, in self.lamps.items()])
 
         # events
         self.btnHeat.clicked.connect(self.guiHeaterToggle)
@@ -59,12 +116,23 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         # styles
         self.initStyles();
 
+        self.diagThread = DiagThread()
+        self.diagThread.update.connect(self.updateDiagPage)
+        self.diagThread.start()
+        self.log.info('Diagnostic thread started')
+
+    def updateDiagPage(self, stats):
+        self.labTTemp1.setText(str(stats['temp1'].lastVal))
+        self.labTTemp1Avg.setText('{0: .2f}'.format(stats['temp1'].avg))
+        self.labTTemp1Min.setText(str(stats['temp1'].min))
+        self.labTTemp1Max.setText(str(stats['temp1'].max))
+
     def displayView(self, viewNum):
         if viewNum == self.activeMenu:
             return
 
-        styles.removeStyle(self.menu[self.activeMenu], MEENU_INDICATOR)
-        styles.addStyle(self.menu[viewNum], MEENU_INDICATOR)
+        styles.removeStyle(self.menu[self.activeMenu], MENU_INDICATOR)
+        styles.addStyle(self.menu[viewNum], MENU_INDICATOR)
         self.mainView.setCurrentIndex(viewNum)
         self.activeMenu = viewNum;
 

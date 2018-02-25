@@ -198,7 +198,7 @@ QFrame {
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="pageManual">
         <widget class="QWidget" name="horizontalLayoutWidget_2">
@@ -418,7 +418,7 @@ QFrame {
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="label_11">
+             <widget class="QLabel" name="labTTemp1">
               <property name="text">
                <string>0 *C</string>
               </property>
@@ -432,7 +432,7 @@ QFrame {
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLabel" name="label_12">
+             <widget class="QLabel" name="labTTemp2">
               <property name="text">
                <string>0 *C</string>
               </property>
@@ -477,7 +477,7 @@ QFrame {
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="label_4">
+             <widget class="QLabel" name="labTTemp1Avg">
               <property name="text">
                <string>0 *C</string>
               </property>
@@ -522,7 +522,7 @@ QFrame {
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="label_20">
+             <widget class="QLabel" name="labTTemp1Max">
               <property name="text">
                <string>0 *C</string>
               </property>
@@ -567,7 +567,7 @@ QFrame {
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="label_26">
+             <widget class="QLabel" name="labTTemp1Min">
               <property name="text">
                <string>0 *C</string>
               </property>
