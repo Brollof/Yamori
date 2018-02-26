@@ -106,7 +106,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.btnAuto)
         self.btnDiag = QtWidgets.QToolButton(self.horizontalLayoutWidget)
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/i_diag.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/i_diag2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btnDiag.setIcon(icon2)
         self.btnDiag.setObjectName("btnDiag")
         self.horizontalLayout.addWidget(self.btnDiag)

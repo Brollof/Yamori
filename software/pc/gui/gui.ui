@@ -175,7 +175,7 @@ QFrame {
            </property>
            <property name="icon">
             <iconset resource="res/icons.qrc">
-             <normaloff>:/i_diag.png</normaloff>:/i_diag.png</iconset>
+             <normaloff>:/i_diag2.png</normaloff>:/i_diag2.png</iconset>
            </property>
           </widget>
          </item>

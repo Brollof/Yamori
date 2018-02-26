@@ -60,12 +60,14 @@ class DiagThread(QThread):
 
     def __init__(self):
         super(self.__class__, self).__init__()
+        self.log = logging.getLogger('DIAG thread')
         self.temp1Stats = Stat('temp1')
         self.temp2Stats = Stat('temp2')
         self.cpuTemp = Stat('cpuTemp')
         self.humidity = Stat('humidity')
 
     def run(self):
+        self.log.info('Diagnostic thread started')
         while True:
             # read temp sensors
             # read board temp
@@ -99,8 +101,6 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.menu = [self.btnManual, self.btnAuto, self.btnDiag]
 
         self.btnHeat.setIcon(self.icons['cold'])
-
-        # create lamps name array and init GUI labels with it
         self.io = ter_io.TerIO([color for color, gui, in self.lamps.items()])
 
         # events
@@ -119,7 +119,9 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.diagThread = DiagThread()
         self.diagThread.update.connect(self.updateDiagPage)
         self.diagThread.start()
-        self.log.info('Diagnostic thread started')
+
+        self.ioManagerThread = ter_io.IOManager()
+        self.ioManagerThread.start()
 
     def updateDiagPage(self, stats):
         self.labTTemp1.setText(str(stats['temp1'].lastVal))
@@ -142,6 +144,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
     def initStyles(self):
         for lampName, props in self.lamps.items():
             styles.addStyle(props['btn'], 'background-color: {};'.format(props['color']))
+        # self.menuFrame.setStyleSheet('border: 4px solid #ffe0b2')
 
     def guiHeaterToggle(self):
         self.io.heaterToggle()

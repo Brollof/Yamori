@@ -5,5 +5,6 @@
     <file>i_manual.png</file>
     <file>i_auto.png</file>
     <file>i_diag.png</file>
+    <file>i_diag2.png</file>
 </qresource>
 </RCC>
