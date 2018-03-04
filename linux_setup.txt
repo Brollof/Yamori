@@ -1,0 +1,55 @@
+1. WiFi + SSH
+- sciagniecie systemu z rpi (debian desktop)
+- sciagniecie etcher
+- burn debian image into SD card
+- create 'wpa_supplicant.conf' file in /boot folder and copy data below into it:
+
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+country=PL
+ 
+network={ 
+    ssid="Nazwa sieci" 
+    psk="haslo" 
+    key_mgmt=WPA-PSK 
+}
+
+- create empty 'ssh' file in /boot folder
+- boot pi
+- ssh to pi's IP address
+
+Optional:
+- generate keys pair using PuttyGen
+- copy public key data into ~/.ssh/authorized_keys
+- configure Putty to auth by using private key (.ppk file)
+
+2. Linux setup
+sudo apt update
+sudo apt upgrade
+
+install:
+tmux
+vim
+samba (for resolving pi's hostname)
+
+3. LCD
+
+/boot/config.txt
+____________________
+
+hdmi_force_hotplug=1
+ 
+# uncomment to force a specific HDMI mode (here we are forcing 800x480!)
+hdmi_group=2
+hdmi_mode=87
+hdmi_cvt=800 480 60 6 0 0 0
+hdmi_drive=1
+ 
+max_usb_current=1
+
+https://www.waveshare.com/wiki/5inch_HDMI_LCD_(B)
+
+NOT: this command run without sudo: DISPLAY=:0.0 xinput_calibrator
+
+4. VNC
+https://forbot.pl/blog/kurs-raspberry-pi-dostep-zdalny-vnc-scp-klucze-rsa-id22764
