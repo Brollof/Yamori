@@ -93,16 +93,15 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         }
 
         # map buttons
-        self.lamps['blue-L'] = {'btn': self.btnMan1, 'color': 'rgba(0, 0, 255, 30%)'}
+        self.lamps['blueL'] = {'btn': self.btnMan1, 'color': 'rgba(0, 0, 255, 30%)'}
         self.lamps['red'] = {'btn': self.btnMan2, 'color': 'rgba(255, 0, 0, 30%)'}
         self.btnHeat = self.btnMan3
-        self.lamps['blue-R'] = {'btn': self.btnMan4, 'color': 'rgba(0, 0, 255, 30%)'}
+        self.lamps['blueR'] = {'btn': self.btnMan4, 'color': 'rgba(0, 0, 255, 30%)'}
         self.lamps['white'] = {'btn': self.btnMan5, 'color': 'rgba(255, 255, 0, 30%)'}
         self.menu = [self.btnManual, self.btnAuto, self.btnDiag]
 
         self.btnHeat.setIcon(self.icons['cold'])
-        self.io = ter_io.TerIO([color for color, gui, in self.lamps.items()])
-
+        
         # events
         self.btnHeat.clicked.connect(self.guiHeaterToggle)
         for color, gui in self.lamps.items():
@@ -120,8 +119,8 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.diagThread.update.connect(self.updateDiagPage)
         self.diagThread.start()
 
-        self.ioManagerThread = ter_io.IOManager()
-        self.ioManagerThread.start()
+        self.io = ter_io.IOManager()
+        self.io.start()
 
     def updateDiagPage(self, stats):
         self.labTTemp1.setText(str(stats['temp1'].lastVal))
@@ -147,20 +146,22 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         # self.menuFrame.setStyleSheet('border: 4px solid #ffe0b2')
 
     def guiHeaterToggle(self):
-        self.io.heaterToggle()
-        if self.io.heater['state'] == True:
+        self.io.change(('heater', 'toggle'))
+        state = self.io.read('heater')['heater']
+        if state == True:
             self.btnHeat.setIcon(self.icons['heat'])
         else:
             self.btnHeat.setIcon(self.icons['cold'])
-        self.log.debug('Heater {}'.format(convertBool(self.io.heater['state'], 'ON', 'OFF')))
+        self.log.debug('Heater {}'.format(convertBool(state, 'ON', 'OFF')))
 
-    def lampToggle(self, color):
-        self.io.lampToggle(color)
-        if self.io.lamps[color]['state'] == True:
-            styles.setAlpha(self.lamps[color]['btn'], 100)
+    def lampToggle(self, lamp):
+        self.io.change((lamp, 'toggle'))
+        state = self.io.read(lamp)[lamp]
+        if state == True:
+            styles.setAlpha(self.lamps[lamp]['btn'], 100)
         else:
-            styles.setAlpha(self.lamps[color]['btn'], 30)
-        self.log.debug('Lamp {} {}'.format(color, convertBool(self.io.lamps[color]['state'], 'ON', 'OFF')))
+            styles.setAlpha(self.lamps[lamp]['btn'], 30)
+        self.log.debug('Lamp {} {}'.format(lamp, convertBool(state, 'ON', 'OFF')))
 
 
 def main():

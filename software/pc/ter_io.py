@@ -48,7 +48,7 @@ class IOEvents():
 
 class IOManager(QThread):
     BUTTON_SUPPRESS_TIME = 2 # seconds
-    QUEUE_CHECK_PERIOD = 0.3 # seconds
+    QUEUE_CHECK_PERIOD = 0.05 # seconds
 
     def __init__(self):
         """
@@ -69,7 +69,7 @@ class IOManager(QThread):
         }
         self.timers = {}
         for key, val in self.events.items():
-            self.timers[key] = {'last': 0, 'pending': None}
+            self.timers[key] = {'last': 0}
 
         self.ids = {}
 
@@ -77,15 +77,6 @@ class IOManager(QThread):
         self.log.info('IO manager thread started')
 
         while True:
-            # Check pending state and handle it
-            for io, val in self.timers.items():
-                if self.timers[io]['pending'] and self.timers[io]['last'] + self.BUTTON_SUPPRESS_TIME < time():
-                    self.timers[io]['last'] = time()
-                    action = self.timers[io]['pending']
-                    self.events[io][action]()
-                    self.timers[io]['pending'] = None
-                    print('io: {}, action: {}'.format(io, action))
-
             # Check queue
             while not iosQ.empty():
                 cmd = iosQ.get()
@@ -99,8 +90,6 @@ class IOManager(QThread):
                             print('io: {}, action: {}'.format(io, action))
                             self.timers[io]['last'] = time()
                             self.events[io][action]()
-                        else:
-                            self.timers[io]['pending'] = action
 
                 elif operation == 'read':
                     data = cmd['data']
