@@ -1,6 +1,6 @@
 import logging
 from ter_utils import convertBool
-from PyQt5.QtCore import QThread
+from PyQt5.QtCore import QThread, QSemaphore
 from time import sleep, time
 from queue import Queue
 import uuid
@@ -112,6 +112,7 @@ class IOManager(QThread):
                             ret[io] = self.ios.lamps[io].value
 
                     self.ids[cmd['id']] = ret
+                    cmd['sem'].release()
 
             sleep(self.QUEUE_CHECK_PERIOD)
 
@@ -123,17 +124,14 @@ class IOManager(QThread):
 
     def read(self, *ios):
         id = self.getRandomId()
-        iosQ.put({'type': 'read', 'data': list(ios), 'id': id})
-
-        while True:
-            try:
-                state = self.ids[id]
-                del self.ids[id]
-                return state
-            except Exception as e:
-                pass
-            finally:
-                sleep(0.02)
+        sem = QSemaphore(1)
+        sem.acquire()
+        iosQ.put({'type': 'read', 'data': list(ios), 'id': id, 'sem': sem})
+        # wait for release the semaphore
+        sem.acquire()
+        state = self.ids[id]
+        del self.ids[id]
+        return state
 
 
 class Reader(QThread):
@@ -164,19 +162,20 @@ def main():
     # for t in ths:
     #     t.wait()
 
-    iom.change(('heater', 'toggle'), ('red', 'off'))
+    # iom.change(('heater', 'toggle'), ('red', 'off'))
 
-    # iom.change('heater', 'off')
-    # iom.change('red', 'on')
-    # iom.change('blueR', 'on')
-
-    states = iom.read('heater', 'red', 'blueR')
-    print(states)
-    iom.change(('blueR', 'on'))
+    # states = iom.read('heater', 'red', 'blueR')
+    # print(states)
+    # iom.change(('blueR', 'on'))
+    states = iom.read('red', 'blueR', 'white', 'blueR')
+    states = iom.read('red', 'blueR', 'white', 'blueR')
     states = iom.read('red', 'blueR', 'white', 'blueR')
     print(states)
 
-    state = iom.read('heater')
+
+
+
+
 
     # sleep(3.5)
 
