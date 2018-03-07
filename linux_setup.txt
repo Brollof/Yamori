@@ -53,3 +53,41 @@ NOT: this command run without sudo: DISPLAY=:0.0 xinput_calibrator
 
 4. VNC
 https://forbot.pl/blog/kurs-raspberry-pi-dostep-zdalny-vnc-scp-klucze-rsa-id22764
+
+-----------------------------------------------------------------------
+pi_03_03.img
+-----------------------------------------------------------------------
+
+sudo apt-get install libssl-dev
+
+sudo rpi-update
+sudo apt-get install libgles2-mesa libsdl2-dev
+
+sudo apt update
+sudo apt upgrade
+
+make links:
+https://pi3d.github.io/html/FAQ.html#glx-dri2-not-supported-or-failed-to-authenticate
+
+-----------------------------------------------------------------------
+pi_007_03.img
+-----------------------------------------------------------------------
+
+remove all libEGL*
+and
+remove all libGLESv2*
+except /opt/vc/lib
+
+sudo ln -fs /opt/vc/lib/libGLESv2.so /usr/lib/arm-linux-gnueabihf/libGLESv2.so.2
+
+-----------------------------------------------------------------------
+
+-----------------------------------------------------------------------
+
+alias temp='vcgencmd measure_temp' in ~/.bash_aliases
+
+Change default python version system-wide:
+https://linuxconfig.org/how-to-change-from-default-to-alternative-python-version-on-debian-linux
+
+
+
