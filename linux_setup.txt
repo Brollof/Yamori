@@ -70,7 +70,7 @@ make links:
 https://pi3d.github.io/html/FAQ.html#glx-dri2-not-supported-or-failed-to-authenticate
 
 -----------------------------------------------------------------------
-pi_007_03.img
+pi_07_03.img
 -----------------------------------------------------------------------
 
 remove all libEGL*
@@ -81,13 +81,21 @@ except /opt/vc/lib
 sudo ln -fs /opt/vc/lib/libGLESv2.so /usr/lib/arm-linux-gnueabihf/libGLESv2.so.2
 
 -----------------------------------------------------------------------
-
+pi_13_03.img
 -----------------------------------------------------------------------
 
 alias temp='vcgencmd measure_temp' in ~/.bash_aliases
 
 Change default python version system-wide:
 https://linuxconfig.org/how-to-change-from-default-to-alternative-python-version-on-debian-linux
+
+https://www.waveshare.com/wiki/Raspberry_Pi_Tutorial_Series:_1-Wire_DS18B20_Sensor
+
+-----------------------------------------------------------------------
+pi_17_03.img
+-----------------------------------------------------------------------
+
+
 
 
 
