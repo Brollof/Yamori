@@ -4,32 +4,22 @@ from PyQt5.QtCore import QThread, QSemaphore
 from time import sleep, time
 from queue import Queue
 import uuid
+import os
 
-# dummy class, will be replaced by the gpiozero module
-class DigitalOutputDevice():
-    def __init__(self, pin, active_high=True, initial_value=False):
-        self.pin = pin
-        self.value = initial_value
-        
-    def toggle(self):
-        self.value = not self.value
-
-    def on(self):
-        self.value = True
-
-    def off(self):
-        self.value = False
-
+if os.name == "unix": # rpi
+    from gpiozero import DigitalOutputDevice
+else:
+    from dummy import DigitalOutputDevice
 
 class TerIO():
     def __init__(self):
         self.lamps = {
-            'red': DigitalOutputDevice(1, active_high=True, initial_value=False),
-            'white': DigitalOutputDevice(2, active_high=True, initial_value=False),
-            'blueL': DigitalOutputDevice(3, active_high=True, initial_value=False),
-            'blueR': DigitalOutputDevice(4, active_high=True, initial_value=False)
+            'red': DigitalOutputDevice(26, active_high=False, initial_value=False),
+            'white': DigitalOutputDevice(19, active_high=False, initial_value=False),
+            'blueL': DigitalOutputDevice(13, active_high=False, initial_value=False),
+            'blueR': DigitalOutputDevice(6, active_high=False, initial_value=False)
         }
-        self.heater = DigitalOutputDevice(5, active_high=True, initial_value=False)
+        self.heater = DigitalOutputDevice(5, active_high=False, initial_value=False)
         self.log = logging.getLogger('IO')
         self.log.info('IO init')
 
