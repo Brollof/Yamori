@@ -120,7 +120,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.diagThread.start()
 
         self.io = ter_io.IOManager()
-        self.io.start()
+        # self.io.start()
 
     def updateDiagPage(self, stats):
         self.labTTemp1.setText(str(stats['temp1'].lastVal))
@@ -146,7 +146,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         # self.menuFrame.setStyleSheet('border: 4px solid #ffe0b2')
 
     def guiHeaterToggle(self):
-        self.io.change(('heater', 'toggle'))
+        self.io.write(('heater', 'toggle'))
         state = self.io.read('heater')['heater']
         if state == True:
             self.btnHeat.setIcon(self.icons['heat'])
@@ -155,7 +155,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.log.debug('Heater {}'.format(convertBool(state, 'ON', 'OFF')))
 
     def lampToggle(self, lamp):
-        self.io.change((lamp, 'toggle'))
+        self.io.write((lamp, 'toggle'))
         state = self.io.read(lamp)[lamp]
         if state == True:
             styles.setAlpha(self.lamps[lamp]['btn'], 100)
