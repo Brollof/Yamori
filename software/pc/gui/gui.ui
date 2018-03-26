@@ -491,7 +491,7 @@ QFrame {
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLabel" name="label_5">
+             <widget class="QLabel" name="labTTemp2Avg">
               <property name="text">
                <string>0 *C</string>
               </property>
@@ -536,7 +536,7 @@ QFrame {
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLabel" name="label_22">
+             <widget class="QLabel" name="labTTemp2Max">
               <property name="text">
                <string>0 *C</string>
               </property>
@@ -581,7 +581,7 @@ QFrame {
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLabel" name="label_28">
+             <widget class="QLabel" name="labTTemp2Min">
               <property name="text">
                <string>0 *C</string>
               </property>

@@ -14,6 +14,7 @@ import ter_logger
 from ter_utils import convertBool
 import styles
 import icons_rc
+import ter_temp
 
 # debug
 import random
@@ -58,24 +59,28 @@ class Stat():
 class DiagThread(QThread):
     update = pyqtSignal(dict)
 
-    def __init__(self):
+    def __init__(self, tman):
         super(self.__class__, self).__init__()
         self.log = logging.getLogger('DIAG thread')
         self.temp1Stats = Stat('temp1')
         self.temp2Stats = Stat('temp2')
         self.cpuTemp = Stat('cpuTemp')
         self.humidity = Stat('humidity')
+        self.tman = tman
 
     def run(self):
         self.log.info('Diagnostic thread started')
         while True:
             # read temp sensors
+            raw = [v for k, v in self.tman.read().items()]
             # read board temp
             # calculate min, max, avg
+            self.temp1Stats.update(raw[0])
+            self.temp2Stats.update(raw[1])
             # emit signal to update GUI
-            self.temp1Stats.update(random.randint(0, 10))
             temps = {}
             temps[self.temp1Stats.name] = self.temp1Stats
+            temps[self.temp2Stats.name] = self.temp2Stats
             self.update.emit(temps)
             sleep(DIAG_SCREEN_UPDATE_PERIOD)
 
@@ -115,18 +120,23 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         # styles
         self.initStyles();
 
-        self.diagThread = DiagThread()
+        self.io = ter_io.IOManager()
+        self.tman = ter_temp.TempSensorsManager()
+
+        self.diagThread = DiagThread(self.tman)
         self.diagThread.update.connect(self.updateDiagPage)
         self.diagThread.start()
 
-        self.io = ter_io.IOManager()
-        # self.io.start()
-
     def updateDiagPage(self, stats):
-        self.labTTemp1.setText(str(stats['temp1'].lastVal))
-        self.labTTemp1Avg.setText('{0: .2f}'.format(stats['temp1'].avg))
-        self.labTTemp1Min.setText(str(stats['temp1'].min))
-        self.labTTemp1Max.setText(str(stats['temp1'].max))
+        self.labTTemp1.setText('%.1f' % stats['temp1'].lastVal)
+        self.labTTemp1Avg.setText('%.1f' % stats['temp1'].avg)
+        self.labTTemp1Min.setText('%.1f' % stats['temp1'].min)
+        self.labTTemp1Max.setText('%.1f' % stats['temp1'].max)
+
+        self.labTTemp2.setText('%.1f' % stats['temp2'].lastVal)
+        self.labTTemp2Avg.setText('%.1f' % stats['temp2'].avg)
+        self.labTTemp2Min.setText('%.1f' % stats['temp2'].min)
+        self.labTTemp2Max.setText('%.1f' % stats['temp2'].max)
 
     def displayView(self, viewNum):
         if viewNum == self.activeMenu:
