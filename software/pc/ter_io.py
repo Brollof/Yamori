@@ -6,7 +6,7 @@ from queue import Queue
 import uuid
 import os
 
-if os.name == "unix": # rpi
+if os.name in ["posix", "unix"]: # rpi
     from gpiozero import DigitalOutputDevice
 else:
     from dummy import DigitalOutputDevice

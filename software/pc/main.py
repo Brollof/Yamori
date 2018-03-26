@@ -29,8 +29,8 @@ class Stat():
     def __init__(self, name):
         self.name = name
         self.avg = 0
-        self.min = None
-        self.max = None
+        self.min = 0
+        self.max = 0
         self.lastVal = 0
         self.n = 0
         self.sum = 0
@@ -75,12 +75,15 @@ class DiagThread(QThread):
             raw = [v for k, v in self.tman.read().items()]
             # read board temp
             # calculate min, max, avg
-            self.temp1Stats.update(raw[0])
-            self.temp2Stats.update(raw[1])
-            # emit signal to update GUI
+            if len(raw) > 0:
+                self.temp1Stats.update(raw[0])
+            if len(raw) > 1:
+                self.temp2Stats.update(raw[1])
+
             temps = {}
             temps[self.temp1Stats.name] = self.temp1Stats
             temps[self.temp2Stats.name] = self.temp2Stats
+            # emit signal to update GUI
             self.update.emit(temps)
             sleep(DIAG_SCREEN_UPDATE_PERIOD)
 
