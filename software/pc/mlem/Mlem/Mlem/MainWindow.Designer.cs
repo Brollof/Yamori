@@ -31,6 +31,7 @@
             this.butConn = new System.Windows.Forms.Button();
             this.labConnStatus = new System.Windows.Forms.Label();
             this.btnSend = new System.Windows.Forms.Button();
+            this.btnJson = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // butConn
@@ -62,11 +63,22 @@
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
+            // btnJson
+            // 
+            this.btnJson.Location = new System.Drawing.Point(324, 129);
+            this.btnJson.Name = "btnJson";
+            this.btnJson.Size = new System.Drawing.Size(75, 23);
+            this.btnJson.TabIndex = 3;
+            this.btnJson.Text = "button1";
+            this.btnJson.UseVisualStyleBackColor = true;
+            this.btnJson.Click += new System.EventHandler(this.btnJson_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(420, 238);
+            this.ClientSize = new System.Drawing.Size(717, 345);
+            this.Controls.Add(this.btnJson);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.labConnStatus);
             this.Controls.Add(this.butConn);
@@ -82,6 +94,7 @@
         private System.Windows.Forms.Button butConn;
         private System.Windows.Forms.Label labConnStatus;
         private System.Windows.Forms.Button btnSend;
+        private System.Windows.Forms.Button btnJson;
     }
 }
 

@@ -1,6 +1,7 @@
 # Echo server program
 import socket
 from time import sleep
+import json
 
 def main():
     HOST = ''
@@ -17,12 +18,16 @@ def main():
                 print('Connected by', addr)
                 while True:
                     data = conn.recv(1024)
-                    print(data)
                     if not data:
                         print('Disconnected...')
                         break
-                    else:
-                        conn.sendall(data)
+                    # else:
+                        # conn.sendall(data)
+
+                    data = json.loads(data)
+                    print(data)
+                    print("Heater: ")
+                    print(data['Heater'])
                     sleep(0.5)
   
 

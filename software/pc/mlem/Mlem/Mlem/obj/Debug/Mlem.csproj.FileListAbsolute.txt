@@ -7,3 +7,14 @@ C:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem1\Mlem\Mlem\obj\Debug\Ml
 C:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem1\Mlem\Mlem\obj\Debug\Mlem.csproj.GenerateResource.Cache
 C:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem1\Mlem\Mlem\obj\Debug\Mlem.exe
 C:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem1\Mlem\Mlem\obj\Debug\Mlem.pdb
+c:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem\Mlem\Mlem\bin\Debug\Mlem.exe.config
+c:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem\Mlem\Mlem\obj\Debug\Mlem.exe
+c:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem\Mlem\Mlem\obj\Debug\Mlem.pdb
+c:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem\Mlem\Mlem\obj\Debug\Mlem.csprojResolveAssemblyReference.cache
+c:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem\Mlem\Mlem\obj\Debug\Mlem.MainWindow.resources
+c:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem\Mlem\Mlem\obj\Debug\Mlem.Properties.Resources.resources
+c:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem\Mlem\Mlem\obj\Debug\Mlem.csproj.GenerateResource.Cache
+c:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem\Mlem\Mlem\bin\Debug\Mlem.exe
+c:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem\Mlem\Mlem\bin\Debug\Mlem.pdb
+c:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem\Mlem\Mlem\bin\Debug\Newtonsoft.Json.dll
+c:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem\Mlem\Mlem\bin\Debug\Newtonsoft.Json.xml

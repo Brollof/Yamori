@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Mlem;
+using Newtonsoft.Json;
 
 namespace Mlem
 {
@@ -44,6 +44,25 @@ namespace Mlem
         {
             mlem.Send("Hello :)");
             mlem.Receive();
+        }
+
+        private void btnJson_Click(object sender, EventArgs e)
+        {
+            var data = new RootJson()
+            {
+                Lamp = new IO()
+                {
+                    State = true,
+                    Time = new DateTime(2013, 1, 20, 0, 0, 0, DateTimeKind.Utc),
+                },
+                Heater = new IO()
+                {
+                    State = false,
+                    Time = new DateTime(2016, 3, 18, 16, 55, 20, DateTimeKind.Utc),
+                }
+            };
+            var output = JsonConvert.SerializeObject(data);
+            mlem.Send(output);
         }
     }
 }
