@@ -95,7 +95,8 @@ https://www.waveshare.com/wiki/Raspberry_Pi_Tutorial_Series:_1-Wire_DS18B20_Sens
 pi_17_03.img
 -----------------------------------------------------------------------
 
-
-
-
+cd /etc/ifplugd/action.d/
+sudo mv ifupdown ifupdown.original
+sudo cp /etc/wpa_supplicant/ifupdown.sh ./ifupdown
+sudo reboot
 

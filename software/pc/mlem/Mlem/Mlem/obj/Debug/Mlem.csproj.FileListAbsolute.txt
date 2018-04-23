@@ -1,0 +1,9 @@
+C:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem1\Mlem\Mlem\bin\Debug\Mlem.exe.config
+C:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem1\Mlem\Mlem\bin\Debug\Mlem.exe
+C:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem1\Mlem\Mlem\bin\Debug\Mlem.pdb
+C:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem1\Mlem\Mlem\obj\Debug\Mlem.csprojResolveAssemblyReference.cache
+C:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem1\Mlem\Mlem\obj\Debug\Mlem.MainWindow.resources
+C:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem1\Mlem\Mlem\obj\Debug\Mlem.Properties.Resources.resources
+C:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem1\Mlem\Mlem\obj\Debug\Mlem.csproj.GenerateResource.Cache
+C:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem1\Mlem\Mlem\obj\Debug\Mlem.exe
+C:\Users\Olaf\Desktop\Projekty\YAMORI_1\software\pc\mlem1\Mlem\Mlem\obj\Debug\Mlem.pdb
