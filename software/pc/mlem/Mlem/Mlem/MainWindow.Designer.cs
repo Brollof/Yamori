@@ -65,11 +65,11 @@
             // 
             // btnJson
             // 
-            this.btnJson.Location = new System.Drawing.Point(324, 129);
+            this.btnJson.Location = new System.Drawing.Point(22, 107);
             this.btnJson.Name = "btnJson";
             this.btnJson.Size = new System.Drawing.Size(75, 23);
             this.btnJson.TabIndex = 3;
-            this.btnJson.Text = "button1";
+            this.btnJson.Text = "JSON";
             this.btnJson.UseVisualStyleBackColor = true;
             this.btnJson.Click += new System.EventHandler(this.btnJson_Click);
             // 

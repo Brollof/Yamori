@@ -50,11 +50,11 @@ namespace Mlem
         {
             var data = new RootJson()
             {
-                Lamp = new IO()
-                {
-                    State = true,
-                    Time = new DateTime(2013, 1, 20, 0, 0, 0, DateTimeKind.Utc),
-                },
+                //Lamp = new IO()
+                //{
+                //    State = true,
+                //    Time = new DateTime(2013, 1, 20, 0, 0, 0, DateTimeKind.Utc),
+                //},
                 Heater = new IO()
                 {
                     State = false,
@@ -62,7 +62,7 @@ namespace Mlem
                 }
             };
             var output = JsonConvert.SerializeObject(data);
-            mlem.Send(output);
+            // mlem.Send(output);
         }
     }
 }

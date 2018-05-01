@@ -9,6 +9,8 @@ namespace Mlem
 {
     class Mlem
     {
+        // min - czerwona 0.5h
+        // max - off wszystko 1h, dalej normalnie
         private string server;
         private int port;
         private TcpClient conn;
