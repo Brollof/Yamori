@@ -7,5 +7,5 @@ keys/
 images/
 lld.txt
 tasks.txt
-Mlem/bin
-Mlem/obj
+software/pc/mlem/Mlem/Mlem/obj
+software/pc/mlem/Mlem/Mlem/bin
