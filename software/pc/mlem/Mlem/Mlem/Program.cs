@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DevComponents.DotNetBar;
 
 namespace Mlem
 {
@@ -16,6 +17,7 @@ namespace Mlem
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            BarUtilities.UseTextRenderer = true;
             Application.Run(new MainWindow());
         }
     }
