@@ -40,6 +40,9 @@ namespace Mlem
             // Period columnt width
             calendarView1.TimeLineColumnWidth = 30;
             calendarView1.TimeLineHeight = 10;
+
+            // Disable current time indicator
+            calendarView1.TimeIndicator.Visibility = eTimeIndicatorVisibility.Hidden;
         }
 
         // UNUSED

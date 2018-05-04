@@ -24,14 +24,10 @@ namespace Mlem
             InitializeComponent();
 
             CalendarInit();
-  
-            
 
-            
             btnSend.Enabled = false;
             mlem = new Mlem("127.0.0.1", 50007);
         }
-
 
         private void button1_Click(object sender, EventArgs e)
         {
