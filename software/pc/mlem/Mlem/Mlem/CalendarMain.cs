@@ -7,6 +7,7 @@ using DevComponents.DotNetBar.Schedule;
 using DevComponents.DotNetBar;
 using DevComponents.Schedule.Model;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Mlem
 {
@@ -14,7 +15,8 @@ namespace Mlem
     {
         private void CalendarInit()
         {
-            CalendarModel model = new CalendarModel();
+            CalendarModel model = NewCalendarModelInit(System.Drawing.Color.White);
+
             calendarView1.CalendarModel = model;
             calendarView1.DisplayedOwners.AddRange(LampsStr);
 
@@ -43,6 +45,35 @@ namespace Mlem
 
             // Disable current time indicator
             calendarView1.TimeIndicator.Visibility = eTimeIndicatorVisibility.Hidden;
+            //calendarView1
+        }
+
+        private CalendarModel NewCalendarModelInit(System.Drawing.Color color)
+        {
+            CalendarModel model = new CalendarModel();
+
+            if (color == System.Drawing.Color.White)
+            {
+                WorkTime start = new WorkTime(0, 0);
+                WorkTime end = new WorkTime(23, 59);
+                foreach (WorkDay day in model.WorkDays)
+                {
+                    day.WorkStartTime = start;
+                    day.WorkEndTime = end;
+                }
+                model.WorkDays.Add(new WorkDay(DayOfWeek.Saturday, start, end));
+                model.WorkDays.Add(new WorkDay(DayOfWeek.Sunday, start, end));
+            }
+            else if (color == System.Drawing.Color.Blue)
+            {
+                model.WorkDays.Clear();
+            }
+            else
+            {
+                Debug.Assert(false, "Only BLUE or WHITE color is allowed!");
+            }
+
+            return model;
         }
 
         // UNUSED
