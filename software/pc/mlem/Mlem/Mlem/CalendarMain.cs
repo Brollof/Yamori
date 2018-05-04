@@ -28,6 +28,18 @@ namespace Mlem
             calendarView1.TimeLineShowPageNavigation = false;
             // scroll for every timeline
             calendarView1.TimeLineCondensedViewVisibility = eCondensedViewVisibility.Hidden;
+
+            // Don't show more than 24h
+            calendarView1.TimeLineCanExtendRange = false;
+            calendarView1.TimeLineViewEndDate = calendarView1.TimeLineViewStartDate.AddDays(1);
+
+            // Stretch appointment across timeline
+            calendarView1.TimeLineStretchRowHeight = true;
+            // Remove horizontal appointment padding
+            calendarView1.TimeLineHorizontalPadding = 0;
+            // Period columnt width
+            calendarView1.TimeLineColumnWidth = 30;
+            calendarView1.TimeLineHeight = 10;
         }
 
         // UNUSED

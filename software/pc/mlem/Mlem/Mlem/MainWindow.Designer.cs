@@ -86,6 +86,7 @@
             // 
             // calendarView1
             // 
+            this.calendarView1.AllowTabReorder = false;
             this.calendarView1.AutoScrollMinSize = new System.Drawing.Size(26880, 102);
             this.calendarView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(241)))), ((int)(((byte)(242)))));
             // 
@@ -95,13 +96,15 @@
             this.calendarView1.ContainerControlProcessDialogKey = true;
             this.calendarView1.EnableDragDrop = false;
             this.calendarView1.Is24HourFormat = true;
+            this.calendarView1.IsMonthMoreItemsIndicatorVisible = false;
+            this.calendarView1.IsMonthSideBarVisible = false;
             this.calendarView1.LabelTimeSlots = true;
             this.calendarView1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
-            this.calendarView1.Location = new System.Drawing.Point(133, 12);
+            this.calendarView1.Location = new System.Drawing.Point(22, 149);
             this.calendarView1.MultiUserTabHeight = 19;
             this.calendarView1.Name = "calendarView1";
             this.calendarView1.SelectedView = DevComponents.DotNetBar.Schedule.eCalendarView.TimeLine;
-            this.calendarView1.Size = new System.Drawing.Size(676, 527);
+            this.calendarView1.Size = new System.Drawing.Size(821, 263);
             this.calendarView1.TabIndex = 2;
             this.calendarView1.Text = "calendarView1";
             this.calendarView1.TimeIndicator.BorderColor = System.Drawing.Color.Empty;
@@ -124,7 +127,7 @@
             this.InContentContextMenu,
             this.AppointmentContextMenu,
             this.IntervalHeaderContextMenu});
-            this.contextMenuBar1.Location = new System.Drawing.Point(89, 171);
+            this.contextMenuBar1.Location = new System.Drawing.Point(198, 24);
             this.contextMenuBar1.Name = "contextMenuBar1";
             this.contextMenuBar1.Size = new System.Drawing.Size(565, 25);
             this.contextMenuBar1.Stretch = true;
@@ -186,7 +189,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(940, 700);
+            this.ClientSize = new System.Drawing.Size(871, 427);
             this.Controls.Add(this.contextMenuBar1);
             this.Controls.Add(this.calendarView1);
             this.Controls.Add(this.btnJson);
@@ -194,7 +197,10 @@
             this.Controls.Add(this.labConnStatus);
             this.Controls.Add(this.butConn);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.Name = "MainWindow";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mlem 0.1";
             ((System.ComponentModel.ISupportInitialize)(this.contextMenuBar1)).EndInit();
