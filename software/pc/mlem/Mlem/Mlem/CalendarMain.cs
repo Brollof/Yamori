@@ -14,23 +14,20 @@ namespace Mlem
     {
         private void CalendarInit()
         {
-            // Set our Calendar Model
             CalendarModel model = new CalendarModel();
-
-            // Assign model to the CalendarView so view has data to display
             calendarView1.CalendarModel = model;
-
-            // And add our base set of users
             calendarView1.DisplayedOwners.AddRange(LampsStr);
 
             // Add some sample appointments
             // deleted! AddSampleAppointments();
 
-            calendarView1.TimeLineShowIntervalHeader = true; // musi byc...
-            calendarView1.TimeLineShowPeriodHeader = false; // calkiem u gory gowno
-            calendarView1.IsTimeRulerVisible = true; // podzialka
-            calendarView1.TimeLineShowPageNavigation = false; // to gowno na dole
-            calendarView1.TimeLineCondensedViewVisibility = eCondensedViewVisibility.Hidden; // scroll dla kazdego timelineu
+            calendarView1.TimeLineShowIntervalHeader = true;
+            calendarView1.TimeLineShowPeriodHeader = false;
+            calendarView1.IsTimeRulerVisible = true;
+            // bottom scroll
+            calendarView1.TimeLineShowPageNavigation = false;
+            // scroll for every timeline
+            calendarView1.TimeLineCondensedViewVisibility = eCondensedViewVisibility.Hidden;
         }
 
         // UNUSED
