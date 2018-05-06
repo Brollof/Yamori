@@ -43,6 +43,7 @@
             this.IntervalHeaderContextMenu = new DevComponents.DotNetBar.ButtonItem();
             this.labelItem7 = new DevComponents.DotNetBar.LabelItem();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbShowPeriod = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.contextMenuBar1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -194,11 +195,23 @@
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 8;
             // 
+            // cbShowPeriod
+            // 
+            this.cbShowPeriod.AutoSize = true;
+            this.cbShowPeriod.Location = new System.Drawing.Point(779, 12);
+            this.cbShowPeriod.Name = "cbShowPeriod";
+            this.cbShowPeriod.Size = new System.Drawing.Size(81, 17);
+            this.cbShowPeriod.TabIndex = 9;
+            this.cbShowPeriod.Text = "Pokaż czas";
+            this.cbShowPeriod.UseVisualStyleBackColor = true;
+            this.cbShowPeriod.CheckedChanged += new System.EventHandler(this.cbShowPeriod_CheckedChanged);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(871, 427);
+            this.Controls.Add(this.cbShowPeriod);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.contextMenuBar1);
             this.Controls.Add(this.calendarView1);
@@ -235,6 +248,7 @@
         private DevComponents.DotNetBar.LabelItem labelItem7;
         private DevComponents.DotNetBar.StyleManager styleManager1;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.CheckBox cbShowPeriod;
     }
 }
 

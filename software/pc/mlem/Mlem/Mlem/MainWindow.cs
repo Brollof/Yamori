@@ -71,5 +71,17 @@ namespace Mlem
             var output = JsonConvert.SerializeObject(data);
             // mlem.Send(output);
         }
+
+        private void cbShowPeriod_CheckedChanged(object sender, EventArgs e)
+        {
+            string template = "";
+            if (((CheckBox)sender).Checked)
+                template = "[StartTime] - [EndTime]";
+
+            foreach(var app in calendarView1.CalendarModel.Appointments)
+            {
+                app.DisplayTemplate = template;
+            }
+        }
     }
 }

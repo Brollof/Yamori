@@ -60,17 +60,22 @@ namespace Mlem
                 {
                     if (arePeriodsOverlapping(app.StartTime, app.EndTime, current.StartTime, current.EndTime))
                     {
-                        Console.WriteLine("overlaps");
                         current.StartTime = e.OldStartTime;
                         current.EndTime = e.OldEndTime;
                     }
                 }
             }
+            updateAppointmentTooltip(current.ModelItem as Appointment);
         }
 
         private bool arePeriodsOverlapping(DateTime s1, DateTime e1, DateTime s2, DateTime e2)
         {
             return !(s1 >= e2 || s2 >= e1);
+        }
+
+        private void updateAppointmentTooltip(Appointment app)
+        {
+            app.Tooltip = app.StartTime.ToShortTimeString() + " - " + app.EndTime.ToShortTimeString();
         }
 
         private CalendarModel NewCalendarModelInit(System.Drawing.Color color)
@@ -220,16 +225,16 @@ namespace Mlem
             appointment.StartTime = startDate;
             appointment.EndTime = endDate;
             appointment.OwnerKey = calendarView1.SelectedOwner;
-
-            appointment.Subject = "New " +
-                appointment.CategoryColor + " appointment!";
-
-            appointment.Description = "This is a new appointment";
-            appointment.Tooltip = "This is a Custom tooltip for this new appointment";
-
+            if (cbShowPeriod.Checked)
+                appointment.DisplayTemplate = "[StartTime] - [EndTime]";
+            else
+                appointment.DisplayTemplate = " ";
+            
+            updateAppointmentTooltip(appointment);    
+        
             calendarView1.CalendarModel.Appointments.Add(appointment);
 
-            return (appointment);
+            return appointment;
         }
 
         #endregion
