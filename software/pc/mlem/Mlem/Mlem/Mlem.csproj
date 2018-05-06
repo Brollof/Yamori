@@ -58,6 +58,9 @@
     <Compile Include="CalendarMain.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="EventsMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="JsonData.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>

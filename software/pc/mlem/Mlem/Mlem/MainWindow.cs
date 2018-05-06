@@ -18,7 +18,7 @@ namespace Mlem
     public partial class MainWindow : Office2007Form
     {
         Mlem mlem;
-        private string[] LampsStr = new string[] { "Niebieska-L", "Czerwona", "Biala", "Niebieska-P" };
+        private string[] LampsStr = new string[] { "Podłoga", "Czerwona", "Biala", "Niebieska" };
         private List<Event> heaterList;
         private List<Event> redLampList;
         private List<Event> blueLampList;
@@ -104,12 +104,19 @@ namespace Mlem
         {
             try
             {
+                List<Event> heater = GetEventsFromTimeline(0);
                 List<Lamp> lamps = new List<Lamp>();
-                lamps.Add(new Lamp("Czerwona", redLampList));
-                lamps.Add(new Lamp("Niebieska", blueLampList));
-                string output = JsonCreator.GetJson(heaterList, lamps);
+
+                for (int i = 1; i < calendarView1.DisplayedOwners.Count; i++)
+                {
+                    string lampName = calendarView1.DisplayedOwners[i];
+                    List<Event> events = GetEventsFromTimeline(i);
+                    lamps.Add(new Lamp(lampName, events));
+                }
+
+                string output = JsonCreator.GetJson(heater, lamps);
                 Console.WriteLine(output);
-                mlem.Send(output);
+                //mlem.Send(output);
             }
             catch (Exception ex)
             {

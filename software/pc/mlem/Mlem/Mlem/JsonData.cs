@@ -8,24 +8,6 @@ using System.Threading.Tasks;
 
 namespace Mlem
 {
-    public class Event
-    {
-        public bool State { get; set; }
-        public DateTime Time { get; set; }
-    }
-
-    public class Lamp
-    {
-        public List<Event> Events;
-        public string Name;
-        
-        public Lamp(string name, List<Event> events)
-        {
-            Name = name;
-            Events = events;
-        }
-    }
-
     public static class JsonCreator
     {
         public static JArray ArrayFromList(List<Event> events)
