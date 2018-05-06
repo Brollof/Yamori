@@ -115,6 +115,7 @@
             this.calendarView1.TimeIndicator.Visibility = DevComponents.DotNetBar.Schedule.eTimeIndicatorVisibility.AllResources;
             this.calendarView1.TimeSlotDuration = 15;
             this.calendarView1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.calendarView1_MouseUp);
+            this.calendarView1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.calendarView1_KeyUp);
             // 
             // styleManager1
             // 

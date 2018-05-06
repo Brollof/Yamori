@@ -135,5 +135,14 @@ namespace Mlem
                 app.DisplayTemplate = template;
             }
         }
+
+        private void calendarView1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete && calendarView1.SelectedAppointments.Count > 0)
+            {
+                AppointmentView view = calendarView1.SelectedAppointments[0];
+                calendarView1.CalendarModel.Appointments.Remove(view.Appointment);
+            }
+        }
     }
 }
