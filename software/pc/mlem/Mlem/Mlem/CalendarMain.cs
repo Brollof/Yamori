@@ -15,7 +15,7 @@ namespace Mlem
     {
         private void CalendarInit()
         {
-            CalendarModel model = NewCalendarModelInit(System.Drawing.Color.White);
+            CalendarModel model = NewCalendarModelInit(System.Drawing.Color.Blue);
 
             calendarView1.CalendarModel = model;
             calendarView1.DisplayedOwners.AddRange(LampsStr);
