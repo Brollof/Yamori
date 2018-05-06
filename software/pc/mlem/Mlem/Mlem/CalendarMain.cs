@@ -56,7 +56,7 @@ namespace Mlem
             // check wheter this appointment overlaps another one
             foreach(var app in calendarView1.CalendarModel.Appointments)
             {
-                if (!app.IsSelected)
+                if (!app.IsSelected && app.OwnerKey == ((Appointment)current.ModelItem).OwnerKey)
                 {
                     if (arePeriodsOverlapping(app.StartTime, app.EndTime, current.StartTime, current.EndTime))
                     {
