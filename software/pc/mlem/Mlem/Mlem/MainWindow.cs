@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using DevComponents.DotNetBar.Schedule;
 using DevComponents.DotNetBar;
 using DevComponents.Schedule.Model;
+using Newtonsoft.Json.Linq;
 
 namespace Mlem
 {
@@ -18,6 +19,10 @@ namespace Mlem
     {
         Mlem mlem;
         private string[] LampsStr = new string[] { "Niebieska-L", "Czerwona", "Biala", "Niebieska-P" };
+        private List<Event> heaterList;
+        private List<Event> redLampList;
+        private List<Event> blueLampList;
+
 
         public MainWindow()
         {
@@ -27,6 +32,48 @@ namespace Mlem
 
             btnSend.Enabled = false;
             mlem = new Mlem("127.0.0.1", 50007);
+
+            heaterList = new List<Event>()
+            {
+                new Event()
+                {
+                State = true,
+                Time = new DateTime(2016, 3, 18, 16, 55, 20, DateTimeKind.Utc),
+                },
+                new Event()
+                {
+                State = false,
+                Time = new DateTime(2016, 3, 18, 17, 0, 0, DateTimeKind.Utc),
+                },
+            };
+
+            redLampList = new List<Event>()
+            {
+                new Event()
+                {
+                State = true,
+                Time = new DateTime(2016, 3, 18, 1, 55, 20, DateTimeKind.Utc),
+                },
+                new Event()
+                {
+                State = false,
+                Time = new DateTime(2016, 3, 18, 2, 0, 0, DateTimeKind.Utc),
+                },
+            };
+
+            blueLampList = new List<Event>()
+            {
+                new Event()
+                {
+                State = true,
+                Time = new DateTime(2016, 3, 18, 5, 55, 20, DateTimeKind.Utc),
+                },
+                new Event()
+                {
+                State = false,
+                Time = new DateTime(2016, 3, 18, 8, 0, 0, DateTimeKind.Utc),
+                },
+            };
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -55,21 +102,19 @@ namespace Mlem
 
         private void btnJson_Click(object sender, EventArgs e)
         {
-            var data = new RootJson()
+            try
             {
-                //Lamp = new IO()
-                //{
-                //    State = true,
-                //    Time = new DateTime(2013, 1, 20, 0, 0, 0, DateTimeKind.Utc),
-                //},
-                Heater = new IO()
-                {
-                    State = false,
-                    Time = new DateTime(2016, 3, 18, 16, 55, 20, DateTimeKind.Utc),
-                }
-            };
-            var output = JsonConvert.SerializeObject(data);
-            // mlem.Send(output);
+                List<Lamp> lamps = new List<Lamp>();
+                lamps.Add(new Lamp("Czerwona", redLampList));
+                lamps.Add(new Lamp("Niebieska", blueLampList));
+                string output = JsonCreator.GetJson(heaterList, lamps);
+                Console.WriteLine(output);
+                mlem.Send(output);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         private void cbShowPeriod_CheckedChanged(object sender, EventArgs e)

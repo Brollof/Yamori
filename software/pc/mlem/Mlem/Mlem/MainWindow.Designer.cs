@@ -32,7 +32,7 @@
             this.butConn = new System.Windows.Forms.Button();
             this.labConnStatus = new System.Windows.Forms.Label();
             this.btnSend = new System.Windows.Forms.Button();
-            this.btnJson = new System.Windows.Forms.Button();
+            this.btnSendConfig = new System.Windows.Forms.Button();
             this.calendarView1 = new DevComponents.DotNetBar.Schedule.CalendarView();
             this.styleManager1 = new DevComponents.DotNetBar.StyleManager(this.components);
             this.contextMenuBar1 = new DevComponents.DotNetBar.ContextMenuBar();
@@ -76,15 +76,15 @@
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
-            // btnJson
+            // btnSendConfig
             // 
-            this.btnJson.Location = new System.Drawing.Point(22, 107);
-            this.btnJson.Name = "btnJson";
-            this.btnJson.Size = new System.Drawing.Size(75, 23);
-            this.btnJson.TabIndex = 3;
-            this.btnJson.Text = "JSON";
-            this.btnJson.UseVisualStyleBackColor = true;
-            this.btnJson.Click += new System.EventHandler(this.btnJson_Click);
+            this.btnSendConfig.Location = new System.Drawing.Point(22, 107);
+            this.btnSendConfig.Name = "btnSendConfig";
+            this.btnSendConfig.Size = new System.Drawing.Size(75, 23);
+            this.btnSendConfig.TabIndex = 3;
+            this.btnSendConfig.Text = "Zapisz";
+            this.btnSendConfig.UseVisualStyleBackColor = true;
+            this.btnSendConfig.Click += new System.EventHandler(this.btnJson_Click);
             // 
             // calendarView1
             // 
@@ -215,7 +215,7 @@
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.contextMenuBar1);
             this.Controls.Add(this.calendarView1);
-            this.Controls.Add(this.btnJson);
+            this.Controls.Add(this.btnSendConfig);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.labConnStatus);
             this.Controls.Add(this.butConn);
@@ -237,7 +237,7 @@
         private System.Windows.Forms.Button butConn;
         private System.Windows.Forms.Label labConnStatus;
         private System.Windows.Forms.Button btnSend;
-        private System.Windows.Forms.Button btnJson;
+        private System.Windows.Forms.Button btnSendConfig;
         private DevComponents.DotNetBar.Schedule.CalendarView calendarView1;
         private DevComponents.DotNetBar.ContextMenuBar contextMenuBar1;
         private DevComponents.DotNetBar.ButtonItem InContentContextMenu;

@@ -26,8 +26,10 @@ def main():
 
                     data = json.loads(data)
                     print(data)
-                    print("Heater: ")
-                    print(data['Heater'])
+                    # print("Heater: ")
+                    # print(data['Heater'])
+                    for i in data['Lamps']:
+                        print(i)
                     sleep(0.5)
   
 
