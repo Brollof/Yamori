@@ -42,6 +42,7 @@
             this.AppDeleteContextItem = new DevComponents.DotNetBar.ButtonItem();
             this.IntervalHeaderContextMenu = new DevComponents.DotNetBar.ButtonItem();
             this.labelItem7 = new DevComponents.DotNetBar.LabelItem();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.contextMenuBar1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -127,7 +128,7 @@
             this.InContentContextMenu,
             this.AppointmentContextMenu,
             this.IntervalHeaderContextMenu});
-            this.contextMenuBar1.Location = new System.Drawing.Point(198, 24);
+            this.contextMenuBar1.Location = new System.Drawing.Point(87, 244);
             this.contextMenuBar1.Name = "contextMenuBar1";
             this.contextMenuBar1.Size = new System.Drawing.Size(565, 25);
             this.contextMenuBar1.Stretch = true;
@@ -185,11 +186,20 @@
             this.labelItem7.SingleLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
             this.labelItem7.Text = "Interval Time";
             // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(148, 21);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 8;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(871, 427);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.contextMenuBar1);
             this.Controls.Add(this.calendarView1);
             this.Controls.Add(this.btnJson);
@@ -224,6 +234,7 @@
         private DevComponents.DotNetBar.ButtonItem IntervalHeaderContextMenu;
         private DevComponents.DotNetBar.LabelItem labelItem7;
         private DevComponents.DotNetBar.StyleManager styleManager1;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
 

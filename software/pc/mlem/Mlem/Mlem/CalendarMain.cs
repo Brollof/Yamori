@@ -45,7 +45,32 @@ namespace Mlem
 
             // Disable current time indicator
             calendarView1.TimeIndicator.Visibility = eTimeIndicatorVisibility.Hidden;
-            //calendarView1
+            calendarView1.AppointmentViewChanged += calendarView1_AppointmentViewChanged;
+        }
+
+        // Perform actions for both move and resize events
+        void calendarView1_AppointmentViewChanged(object sender, AppointmentViewChangedEventArgs e)
+        {
+            AppointmentView current = e.CalendarItem as AppointmentView;
+
+            // check wheter this appointment overlaps another one
+            foreach(var app in calendarView1.CalendarModel.Appointments)
+            {
+                if (!app.IsSelected)
+                {
+                    if (arePeriodsOverlapping(app.StartTime, app.EndTime, current.StartTime, current.EndTime))
+                    {
+                        Console.WriteLine("overlaps");
+                        current.StartTime = e.OldStartTime;
+                        current.EndTime = e.OldEndTime;
+                    }
+                }
+            }
+        }
+
+        private bool arePeriodsOverlapping(DateTime s1, DateTime e1, DateTime s2, DateTime e2)
+        {
+            return !(s1 >= e2 || s2 >= e1);
         }
 
         private CalendarModel NewCalendarModelInit(System.Drawing.Color color)
@@ -184,15 +209,12 @@ namespace Mlem
         {
             DateTime startDate = calendarView1.DateSelectionStart.GetValueOrDefault();
             DateTime endDate = calendarView1.DateSelectionEnd.GetValueOrDefault();
-
+            
             AddNewAppointment(startDate, endDate);
         }
 
         private Appointment AddNewAppointment(DateTime startDate, DateTime endDate)
         {
-            // Create new appointment and add it to the model
-            // Appointment will show up in the view automatically
-
             Appointment appointment = new Appointment();
 
             appointment.StartTime = startDate;
@@ -204,8 +226,6 @@ namespace Mlem
 
             appointment.Description = "This is a new appointment";
             appointment.Tooltip = "This is a Custom tooltip for this new appointment";
-
-            // Add appointment to the model
 
             calendarView1.CalendarModel.Appointments.Add(appointment);
 
