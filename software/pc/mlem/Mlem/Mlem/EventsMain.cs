@@ -62,7 +62,7 @@ namespace Mlem
             }
 
             SortEventsByTime(ref events);
-            return ConcatEvents(events);
+            return events;
         }
 
         private void SortEventsByTime(ref List<Event> events)
@@ -73,33 +73,6 @@ namespace Mlem
         private bool IsDateValid(DateTime time)
         {
             return (time <= calendarView1.TimeLineViewStartDate.AddDays(1));
-        }
-
-        private List<Event> ConcatEvents(List<Event> events)
-        {
-            int n = events.Count;
-
-            if (n > 3) // at least two time periods must be in list
-            {
-                List<Event> concat = new List<Event>();
-                concat.Add(events[0]);
-                concat.Add(events[1]);
-
-                for (int i = 2; i < n; i++) // ommit first period
-                {
-                    var last = concat.Last();
-                    if (last.Time == events[i].Time)
-                    {
-                        concat.Remove(last);
-                    }
-                    else
-                    {
-                        concat.Add(events[i]);
-                    }
-                }
-                return concat;
-            }
-            return events;
         }
     }
 }

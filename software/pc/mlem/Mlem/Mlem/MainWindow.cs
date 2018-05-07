@@ -104,6 +104,7 @@ namespace Mlem
         {
             try
             {
+                ConcatAppointments();
                 List<Event> heater = GetEventsFromTimeline(0);
                 List<Lamp> lamps = new List<Lamp>();
 

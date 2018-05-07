@@ -338,5 +338,69 @@ namespace Mlem
             cm.Popup(MousePosition);
         }
         #endregion
+
+        #region Utils
+        private List<Appointment> GetAppointmentByOwner(int row)
+        {
+            List<Appointment> ret = new List<Appointment>();
+            string owner = calendarView1.DisplayedOwners[row];
+
+            foreach (var app in calendarView1.CalendarModel.Appointments)
+            {
+                if (owner == app.OwnerKey)
+                {
+                    ret.Add(app);
+                }
+            }
+            return ret;
+        }
+
+        private void ClearAppointmentsByOwner(int row)
+        {
+            AppointmentCollection apps = calendarView1.CalendarModel.Appointments;
+            string owner = calendarView1.DisplayedOwners[row];
+
+            for (int i = apps.Count - 1; i >= 0; i--)
+            {
+                if (apps[i].OwnerKey == owner)
+                {
+                    apps.RemoveAt(i);
+                }
+            }
+        }
+
+        private void ConcatAppointmentsByOwner(int row)
+        {
+            List<Appointment> apps = GetAppointmentByOwner(row);
+
+            if (apps.Count > 1) // at least two time periods must be visible
+            {
+                apps.Sort((a, b) => a.StartTime.CompareTo(b.StartTime));
+
+                for (int i = apps.Count - 1; i > 0; i--)
+                {
+                    if (apps[i].StartTime == apps[i - 1].EndTime)
+                    {
+                        apps[i - 1].EndTime = apps[i].EndTime;
+                        apps.RemoveAt(i);
+                    }
+                }
+
+                ClearAppointmentsByOwner(row);
+                foreach (var app in apps)
+                {
+                    calendarView1.CalendarModel.Appointments.Add(app);
+                }
+            }
+        }
+
+        private void ConcatAppointments()
+        {
+            for (int i = 0; i < calendarView1.DisplayedOwners.Count; i++)
+            {
+                ConcatAppointmentsByOwner(i);
+            }
+        }
+        #endregion
     }
 }
