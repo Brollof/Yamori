@@ -13,9 +13,11 @@ namespace Mlem
 {
     public partial class MainWindow
     {
+        private enum TimelineFill { WHITE, COLOR };
+
         private void CalendarInit()
         {
-            CalendarModel model = NewCalendarModelInit(System.Drawing.Color.Blue);
+            CalendarModel model = NewCalendarModelInit(TimelineFill.COLOR);
 
             calendarView1.CalendarModel = model;
             calendarView1.DisplayedOwners.AddRange(LampsStr);
@@ -78,11 +80,11 @@ namespace Mlem
             app.Tooltip = app.StartTime.ToShortTimeString() + " - " + app.EndTime.ToShortTimeString();
         }
 
-        private CalendarModel NewCalendarModelInit(System.Drawing.Color color)
+        private CalendarModel NewCalendarModelInit(TimelineFill fill)
         {
             CalendarModel model = new CalendarModel();
 
-            if (color == System.Drawing.Color.White)
+            if (fill == TimelineFill.WHITE)
             {
                 WorkTime start = new WorkTime(0, 0);
                 WorkTime end = new WorkTime(23, 59);
@@ -94,7 +96,7 @@ namespace Mlem
                 model.WorkDays.Add(new WorkDay(DayOfWeek.Saturday, start, end));
                 model.WorkDays.Add(new WorkDay(DayOfWeek.Sunday, start, end));
             }
-            else if (color == System.Drawing.Color.Blue)
+            else if (fill == TimelineFill.COLOR)
             {
                 model.WorkDays.Clear();
             }
