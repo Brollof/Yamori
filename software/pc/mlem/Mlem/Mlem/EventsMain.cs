@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using DevComponents.Schedule.Model;
 
 namespace Mlem
 {
@@ -52,7 +53,7 @@ namespace Mlem
                 // Accept only date from range 00:00 - 00:00 (next day)
                 if (app.OwnerKey == ioName && IsDateValid(app.EndTime))
                 {
-                    Event startEvent = new Event(true,  app.StartTime);
+                    Event startEvent = new Event(true, app.StartTime);
                     Event endEvent = new Event(false, app.EndTime);
 
                     events.Add(startEvent);
@@ -61,7 +62,7 @@ namespace Mlem
             }
 
             SortEventsByTime(ref events);
-            return events;
+            return ConcatEvents(events);
         }
 
         private void SortEventsByTime(ref List<Event> events)
@@ -72,6 +73,33 @@ namespace Mlem
         private bool IsDateValid(DateTime time)
         {
             return (time <= calendarView1.TimeLineViewStartDate.AddDays(1));
+        }
+
+        private List<Event> ConcatEvents(List<Event> events)
+        {
+            int n = events.Count;
+
+            if (n > 3) // at least two time periods must be in list
+            {
+                List<Event> concat = new List<Event>();
+                concat.Add(events[0]);
+                concat.Add(events[1]);
+
+                for (int i = 2; i < n; i++) // ommit first period
+                {
+                    var last = concat.Last();
+                    if (last.Time == events[i].Time)
+                    {
+                        concat.Remove(last);
+                    }
+                    else
+                    {
+                        concat.Add(events[i]);
+                    }
+                }
+                return concat;
+            }
+            return events;
         }
     }
 }
