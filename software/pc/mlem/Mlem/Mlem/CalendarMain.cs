@@ -22,9 +22,6 @@ namespace Mlem
             calendarView1.CalendarModel = model;
             calendarView1.DisplayedOwners.AddRange(LampsStr);
 
-            // Add some sample appointments
-            // deleted! AddSampleAppointments();
-
             calendarView1.TimeLineShowIntervalHeader = true;
             calendarView1.TimeLineShowPeriodHeader = false;
             calendarView1.IsTimeRulerVisible = true;

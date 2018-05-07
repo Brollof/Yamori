@@ -49,7 +49,8 @@ namespace Mlem
 
             foreach (var app in calendarView1.CalendarModel.Appointments)
             {
-                if (app.OwnerKey == ioName)
+                // Accept only date from range 00:00 - 00:00 (next day)
+                if (app.OwnerKey == ioName && IsDateValid(app.EndTime))
                 {
                     Event startEvent = new Event(true,  app.StartTime);
                     Event endEvent = new Event(false, app.EndTime);
@@ -59,7 +60,18 @@ namespace Mlem
                 }
             }
 
+            SortEventsByTime(ref events);
             return events;
+        }
+
+        private void SortEventsByTime(ref List<Event> events)
+        {
+            events.Sort((a, b) => a.Time.CompareTo(b.Time));
+        }
+
+        private bool IsDateValid(DateTime time)
+        {
+            return (time <= calendarView1.TimeLineViewStartDate.AddDays(1));
         }
     }
 }
