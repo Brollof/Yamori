@@ -61,13 +61,13 @@ namespace Mlem
                 }
             }
 
-            SortEventsByTime(ref events);
-            return events;
+            return SortEventsByTime(events);
         }
 
-        private void SortEventsByTime(ref List<Event> events)
+        private List<Event> SortEventsByTime(List<Event> events)
         {
             events.Sort((a, b) => a.Time.CompareTo(b.Time));
+            return events;
         }
 
         private bool IsDateValid(DateTime time)
