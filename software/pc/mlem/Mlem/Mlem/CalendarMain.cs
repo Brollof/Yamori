@@ -45,6 +45,16 @@ namespace Mlem
             // Disable current time indicator
             calendarView1.TimeIndicator.Visibility = eTimeIndicatorVisibility.Hidden;
             calendarView1.AppointmentViewChanged += calendarView1_AppointmentViewChanged;
+            calendarView1.CalendarModel.AppointmentAdded += CalendarModel_AppointmentAdded;
+        }
+
+        void CalendarModel_AppointmentAdded(object sender, AppointmentEventArgs e)
+        {
+            Appointment app = e.Appointment;
+            if (IsDateValid(app.EndTime) == false)
+            {
+                calendarView1.CalendarModel.Appointments.Remove(app);
+            }
         }
 
         // Perform actions for both move and resize events
@@ -64,6 +74,14 @@ namespace Mlem
                     }
                 }
             }
+
+            // check wheter this appointment exceeds timeline end date
+            if (IsDateValid(current.Appointment.EndTime) == false)
+            {
+                current.StartTime = e.OldStartTime;
+                current.EndTime = e.OldEndTime;
+            }
+
             updateAppointmentTooltip(current.ModelItem as Appointment);
         }
 

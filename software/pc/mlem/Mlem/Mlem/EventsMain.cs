@@ -50,8 +50,7 @@ namespace Mlem
 
             foreach (var app in calendarView1.CalendarModel.Appointments)
             {
-                // Accept only date from range 00:00 - 00:00 (next day)
-                if (app.OwnerKey == ioName && IsDateValid(app.EndTime))
+                if (app.OwnerKey == ioName)
                 {
                     Event startEvent = new Event(true, app.StartTime);
                     Event endEvent = new Event(false, app.EndTime);
