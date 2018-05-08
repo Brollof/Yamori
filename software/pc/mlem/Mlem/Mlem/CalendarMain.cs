@@ -60,10 +60,25 @@ namespace Mlem
 
         void CalendarModel_AppointmentAdded(object sender, AppointmentEventArgs e)
         {
-            // check if created appointment is valid, remove otherwise
-            if (IsDateValid(e.Appointment.EndTime) == false)
+            Appointment current = e.Appointment;
+
+            // Remove appointment if it exceeds timeline range
+            if (IsDateValid(current.EndTime) == false)
             {
-                calendarView1.CalendarModel.Appointments.Remove(e.Appointment);
+                calendarView1.CalendarModel.Appointments.Remove(current);
+                return;
+            }
+
+            // Remove appointment if it was created on existing one
+            foreach (var app in calendarView1.CalendarModel.Appointments)
+            {
+                if (app.OwnerKey == calendarView1.SelectedOwner &&
+                    app != current &&
+                    arePeriodsOverlapping(app.StartTime, app.EndTime, current.StartTime, current.EndTime))
+                {
+                    calendarView1.CalendarModel.Appointments.Remove(current);
+                    return;
+                }
             }
         }
 
