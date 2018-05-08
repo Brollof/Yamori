@@ -46,14 +46,24 @@ namespace Mlem
             calendarView1.TimeIndicator.Visibility = eTimeIndicatorVisibility.Hidden;
             calendarView1.AppointmentViewChanged += calendarView1_AppointmentViewChanged;
             calendarView1.CalendarModel.AppointmentAdded += CalendarModel_AppointmentAdded;
+            calendarView1.AppointmentViewChanging += calendarView1_AppointmentViewChanging;
+        }
+
+        void calendarView1_AppointmentViewChanging(object sender, AppointmentViewChangingEventArgs e)
+        {
+            // check whether this appointment exceeds timeline end date
+            if (IsDateValid(e.EndTime) == false)
+            {
+                e.Cancel = true;
+            }
         }
 
         void CalendarModel_AppointmentAdded(object sender, AppointmentEventArgs e)
         {
-            Appointment app = e.Appointment;
-            if (IsDateValid(app.EndTime) == false)
+            // check if created appointment is valid, remove otherwise
+            if (IsDateValid(e.Appointment.EndTime) == false)
             {
-                calendarView1.CalendarModel.Appointments.Remove(app);
+                calendarView1.CalendarModel.Appointments.Remove(e.Appointment);
             }
         }
 
@@ -62,7 +72,7 @@ namespace Mlem
         {
             AppointmentView current = e.CalendarItem as AppointmentView;
 
-            // check wheter this appointment overlaps another one
+            // check whether this appointment overlaps another one
             foreach (var app in calendarView1.CalendarModel.Appointments)
             {
                 if (!app.IsSelected && app.OwnerKey == current.Appointment.OwnerKey)
@@ -73,13 +83,6 @@ namespace Mlem
                         current.EndTime = e.OldEndTime;
                     }
                 }
-            }
-
-            // check wheter this appointment exceeds timeline end date
-            if (IsDateValid(current.Appointment.EndTime) == false)
-            {
-                current.StartTime = e.OldStartTime;
-                current.EndTime = e.OldEndTime;
             }
 
             updateAppointmentTooltip(current.ModelItem as Appointment);
