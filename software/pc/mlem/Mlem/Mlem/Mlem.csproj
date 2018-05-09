@@ -62,6 +62,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="JsonData.cs" />
+    <Compile Include="LampPickerMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>

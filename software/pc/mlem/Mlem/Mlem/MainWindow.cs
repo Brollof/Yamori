@@ -28,6 +28,7 @@ namespace Mlem
         {
             InitializeComponent();
 
+            LampPickerInit();
             CalendarInit();
 
             btnSend.Enabled = false;
@@ -144,6 +145,11 @@ namespace Mlem
                 AppointmentView view = calendarView1.SelectedAppointments[0];
                 calendarView1.CalendarModel.Appointments.Remove(view.Appointment);
             }
+        }
+
+        private void cbLampsNum_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
