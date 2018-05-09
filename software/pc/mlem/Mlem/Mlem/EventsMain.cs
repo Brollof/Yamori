@@ -38,6 +38,8 @@ namespace Mlem
     {
         /// <summary>
         /// Gathers all events from given row (timeline) to list and returns it.
+        /// Returned list is sorted ascending.
+        /// Midnight periods are combined together.
         /// </summary>
         /// <param name="row"></param>
         /// <returns></returns>
@@ -60,7 +62,8 @@ namespace Mlem
                 }
             }
 
-            return SortEventsByTime(events);
+            events = SortEventsByTime(events);
+            return MergeMidnight(events);
         }
 
         private List<Event> SortEventsByTime(List<Event> events)
@@ -72,6 +75,27 @@ namespace Mlem
         private bool IsDateValid(DateTime time)
         {
             return (time <= calendarView1.TimeLineViewStartDate.AddDays(1));
+        }
+
+        private List<Event> MergeMidnight(List<Event> events)
+        {
+            if (events.Count == 0)
+                return events;
+
+            Event first = events.First();
+            Event last = events.Last();
+
+            if (first.Time.TimeOfDay == last.Time.TimeOfDay)
+            {
+                // List length of two means that there is only one period which lasts
+                // whole day. In that case remove only last event so the controlled
+                // device will be turned on 24/7 which shouldn't happen anyway.
+                if (events.Count > 2)
+                    events.Remove(first);
+                events.Remove(last);
+            }
+
+            return events;
         }
     }
 }
