@@ -95,17 +95,22 @@ namespace Mlem
 
         private void ShowLampPicker(int columns)
         {
+            int currentColsNum = lampPicker.ColumnCount - 1;
+
+            if (columns == currentColsNum)
+                return;
+
             lampPicker.SuspendLayout();
 
-            // Remove all input columns
-            int colsToRemove = lampPicker.ColumnCount - 1;
-            for (int i = 0; i < colsToRemove; i++)
-                RemoveLastColumn();
-
-            // Add columns
-            for (int i = 0; i < columns; i++)
+            if (columns > currentColsNum)
             {
-                AddNewColumn();
+                for (int i = 0; i < columns - currentColsNum; i++)
+                    AddNewColumn();
+            }
+            else
+            {
+                for (int i = 0; i < currentColsNum - columns; i++)
+                    RemoveLastColumn();
             }
 
             UpdateColumnStyles();
