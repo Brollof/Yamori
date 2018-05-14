@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.butConn = new System.Windows.Forms.Button();
             this.labConnStatus = new System.Windows.Forms.Label();
             this.btnSend = new System.Windows.Forms.Button();
@@ -43,13 +42,11 @@
             this.AppDeleteContextItem = new DevComponents.DotNetBar.ButtonItem();
             this.IntervalHeaderContextMenu = new DevComponents.DotNetBar.ButtonItem();
             this.labelItem7 = new DevComponents.DotNetBar.LabelItem();
-            this.cbLampsNum = new System.Windows.Forms.ComboBox();
+            this.ddLampNum = new System.Windows.Forms.ComboBox();
             this.cbShowPeriod = new System.Windows.Forms.CheckBox();
             this.lampPicker = new System.Windows.Forms.TableLayoutPanel();
-            this.cpLamp1 = new DevComponents.DotNetBar.ColorPickerButton();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtLamp1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.contextMenuBar1)).BeginInit();
             this.lampPicker.SuspendLayout();
             this.SuspendLayout();
@@ -195,22 +192,22 @@
             this.labelItem7.SingleLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
             this.labelItem7.Text = "Interval Time";
             // 
-            // cbLampsNum
+            // ddLampNum
             // 
-            this.cbLampsNum.FormattingEnabled = true;
-            this.cbLampsNum.Items.AddRange(new object[] {
+            this.ddLampNum.FormattingEnabled = true;
+            this.ddLampNum.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
             "4",
             "5",
             "6"});
-            this.cbLampsNum.Location = new System.Drawing.Point(148, 21);
-            this.cbLampsNum.Name = "cbLampsNum";
-            this.cbLampsNum.Size = new System.Drawing.Size(121, 21);
-            this.cbLampsNum.TabIndex = 8;
-            this.cbLampsNum.Text = "Wybierz liczbę lamp";
-            this.cbLampsNum.SelectedIndexChanged += new System.EventHandler(this.cbLampsNum_SelectedIndexChanged);
+            this.ddLampNum.Location = new System.Drawing.Point(148, 21);
+            this.ddLampNum.Name = "ddLampNum";
+            this.ddLampNum.Size = new System.Drawing.Size(121, 21);
+            this.ddLampNum.TabIndex = 8;
+            this.ddLampNum.Text = "4";
+            this.ddLampNum.SelectedIndexChanged += new System.EventHandler(this.cbLampsNum_SelectedIndexChanged);
             // 
             // cbShowPeriod
             // 
@@ -225,41 +222,26 @@
             // 
             // lampPicker
             // 
-            this.lampPicker.ColumnCount = 2;
-            this.lampPicker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.lampPicker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.lampPicker.Controls.Add(this.cpLamp1, 1, 1);
+            this.lampPicker.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.lampPicker.ColumnCount = 1;
+            this.lampPicker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 62F));
             this.lampPicker.Controls.Add(this.label2, 0, 1);
             this.lampPicker.Controls.Add(this.label1, 0, 0);
-            this.lampPicker.Controls.Add(this.txtLamp1, 1, 0);
             this.lampPicker.Location = new System.Drawing.Point(148, 56);
             this.lampPicker.Name = "lampPicker";
             this.lampPicker.RowCount = 2;
             this.lampPicker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.lampPicker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
-            this.lampPicker.Size = new System.Drawing.Size(150, 74);
+            this.lampPicker.Size = new System.Drawing.Size(60, 74);
             this.lampPicker.TabIndex = 10;
-            // 
-            // cpLamp1
-            // 
-            this.cpLamp1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.cpLamp1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cpLamp1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.cpLamp1.Image = ((System.Drawing.Image)(resources.GetObject("cpLamp1.Image")));
-            this.cpLamp1.Location = new System.Drawing.Point(63, 43);
-            this.cpLamp1.Name = "cpLamp1";
-            this.cpLamp1.SelectedColorImageRectangle = new System.Drawing.Rectangle(2, 2, 12, 12);
-            this.cpLamp1.Size = new System.Drawing.Size(37, 23);
-            this.cpLamp1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.cpLamp1.TabIndex = 0;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(3, 35);
+            this.label2.Location = new System.Drawing.Point(4, 34);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(54, 39);
+            this.label2.Size = new System.Drawing.Size(56, 39);
             this.label2.TabIndex = 1;
             this.label2.Text = "Kolor";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -268,20 +250,12 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Location = new System.Drawing.Point(4, 1);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 35);
+            this.label1.Size = new System.Drawing.Size(56, 32);
             this.label1.TabIndex = 1;
             this.label1.Text = "Nazwa";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // txtLamp1
-            // 
-            this.txtLamp1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txtLamp1.Location = new System.Drawing.Point(63, 7);
-            this.txtLamp1.Name = "txtLamp1";
-            this.txtLamp1.Size = new System.Drawing.Size(84, 20);
-            this.txtLamp1.TabIndex = 2;
             // 
             // MainWindow
             // 
@@ -290,7 +264,7 @@
             this.ClientSize = new System.Drawing.Size(871, 427);
             this.Controls.Add(this.lampPicker);
             this.Controls.Add(this.cbShowPeriod);
-            this.Controls.Add(this.cbLampsNum);
+            this.Controls.Add(this.ddLampNum);
             this.Controls.Add(this.contextMenuBar1);
             this.Controls.Add(this.calendarView1);
             this.Controls.Add(this.btnSendConfig);
@@ -327,13 +301,11 @@
         private DevComponents.DotNetBar.ButtonItem IntervalHeaderContextMenu;
         private DevComponents.DotNetBar.LabelItem labelItem7;
         private DevComponents.DotNetBar.StyleManager styleManager1;
-        private System.Windows.Forms.ComboBox cbLampsNum;
+        private System.Windows.Forms.ComboBox ddLampNum;
         private System.Windows.Forms.CheckBox cbShowPeriod;
         private System.Windows.Forms.TableLayoutPanel lampPicker;
-        private DevComponents.DotNetBar.ColorPickerButton cpLamp1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtLamp1;
     }
 }
 

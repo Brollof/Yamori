@@ -28,7 +28,7 @@ namespace Mlem
         {
             InitializeComponent();
 
-            LampPickerInit();
+            LampPickerInit(Convert.ToInt32(ddLampNum.Text));
             CalendarInit();
 
             btnSend.Enabled = false;
@@ -149,6 +149,15 @@ namespace Mlem
 
         private void cbLampsNum_SelectedIndexChanged(object sender, EventArgs e)
         {
+            try
+            {
+                int colNum = Convert.ToInt32(ddLampNum.Text);
+                ShowLampPicker(colNum);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
 
         }
     }
