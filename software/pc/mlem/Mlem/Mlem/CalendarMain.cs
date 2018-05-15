@@ -8,6 +8,7 @@ using DevComponents.DotNetBar;
 using DevComponents.Schedule.Model;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace Mlem
 {
@@ -15,14 +16,15 @@ namespace Mlem
     {
         private enum TimelineFill { WHITE, COLOR };
         private const int TIMELINE_ROW_HEIGHT = 55; // px
+        private int MAX_ROWS;
 
-        private void CalendarInit(int rows)
+        private void CalendarInit(int rows, int maxRows)
         {
             CalendarModel model = NewCalendarModelInit(TimelineFill.COLOR);
-
             calendarView1.CalendarModel = model;
 
-            UpdateTimeline(rows);
+            MAX_ROWS = maxRows;
+            UpdateTimelineRows(rows);
 
             calendarView1.TimeLineShowIntervalHeader = true;
             calendarView1.TimeLineShowPeriodHeader = false;
@@ -66,10 +68,9 @@ namespace Mlem
             }
         }
 
-        private void AddNewRow(string name)
+        private void AddNewRow()
         {
-            int max = Convert.ToInt32(ddLampNum.Items[ddLampNum.Items.Count - 1]);
-            if (calendarView1.DisplayedOwners.Count == max)
+            if (calendarView1.DisplayedOwners.Count == MAX_ROWS)
                 return;
 
             if (calendarView1.DisplayedOwners.Count >= 4)
@@ -78,24 +79,31 @@ namespace Mlem
                 this.Height += TIMELINE_ROW_HEIGHT;
             }
 
-            calendarView1.DisplayedOwners.Add(name);
+            calendarView1.DisplayedOwners.Add(" "); // default empty name
         }
 
-        void UpdateTimeline(int rows)
+        void UpdateTimelineRows(int rows)
         {
             int currentRows = calendarView1.DisplayedOwners.Count;
             if (currentRows < rows)
             {
                 for (int i = 0; i < rows - currentRows; i++)
-                {
-                    // here should be retrieving data from lamppicker
-                    AddNewRow(" ");
-                }
+                    AddNewRow();
             }
             else
             {
                 for (int i = 0; i < currentRows - rows; i++)
                     RemoveLastRow();
+            }
+        }
+
+        void UpdateTimeline()
+        {
+            for (int i = 0; i < calendarView1.DisplayedOwners.Count; i++)
+            {
+                LampUI lamp = LampManager.GetLamp(i + 1);
+                calendarView1.DisplayedOwners[i] = lamp.Name;
+                calendarView1.MultiCalendarTimeLineViews[i].CalendarColor = lamp.Color;
             }
         }
 

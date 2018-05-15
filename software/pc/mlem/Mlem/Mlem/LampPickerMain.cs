@@ -20,12 +20,14 @@ namespace Mlem
             lampPicker.ColumnCount++;
 
             lampPicker.Width += COL_WIDTH;
-            lampPicker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            ColumnStyle style = new ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F);
+            lampPicker.ColumnStyles.Add(style);
             TextBox txtLamp = new TextBox();
             txtLamp.Anchor = AnchorStyles.None;
             txtLamp.Name = "txtLamp" + col.ToString();
             txtLamp.Size = new Size(84, 20);
             txtLamp.TabIndex = 2;
+            txtLamp.TextChanged += txtLamp_TextChanged;
             lampPicker.Controls.Add(txtLamp, col, 0);
 
             ColorPickerButton cpLamp = new ColorPickerButton();
@@ -40,6 +42,14 @@ namespace Mlem
             cpLamp.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             cpLamp.TabIndex = 0;
             lampPicker.Controls.Add(cpLamp, col, 1);
+            
+            List<Control> controls = new List<Control>{txtLamp, cpLamp};
+            LampManager.AddColumn(style, controls, lampPicker.ColumnCount - 1);
+        }
+
+        private void txtLamp_TextChanged(object sender, EventArgs e)
+        {
+            UpdateTimeline();
         }
         
         private void UpdateColumnStyles()
@@ -71,20 +81,18 @@ namespace Mlem
 
         }
 
-        private void RemoveLastItem()
-        {
-            int index = lampPicker.Controls.Count - 1;
-            lampPicker.Controls.RemoveAt(index);
-        }
-
         private void RemoveLastColumn()
         {
             if (lampPicker.ColumnCount > 1)
             {
+
                 lampPicker.Width -= COL_WIDTH;
-                RemoveLastItem();
-                RemoveLastItem();
-                lampPicker.ColumnStyles.RemoveAt(lampPicker.ColumnStyles.Count - 1);
+                PickerColumn pc = LampManager.RemovePickerColumn(lampPicker.ColumnCount - 1);
+                foreach(Control control in pc.Controls)
+                {
+                    lampPicker.Controls.Remove(control);
+                }
+                lampPicker.ColumnStyles.Remove(pc.Style);
                 lampPicker.ColumnCount -= 1;
             }
             else

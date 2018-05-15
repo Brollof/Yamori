@@ -28,7 +28,7 @@ namespace Mlem
             InitializeComponent();
 
             LampPickerInit(GetUiLampsNum());
-            CalendarInit(GetUiLampsNum());
+            CalendarInit(GetUiLampsNum(), GetUiMaxLampsNum());
 
             btnSend.Enabled = false;
             mlem = new Mlem("127.0.0.1", 50007);
@@ -79,6 +79,11 @@ namespace Mlem
         private int GetUiLampsNum()
         {
             return Convert.ToInt32(ddLampNum.Text);
+        }
+
+        private int GetUiMaxLampsNum()
+        {
+            return Convert.ToInt32(ddLampNum.Items[ddLampNum.Items.Count - 1]);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -157,7 +162,7 @@ namespace Mlem
             {
                 int lampsNum = GetUiLampsNum();
                 ShowLampPicker(lampsNum);
-                UpdateTimeline(lampsNum);
+                UpdateTimelineRows(lampsNum);
             }
             catch (Exception ex)
             {
