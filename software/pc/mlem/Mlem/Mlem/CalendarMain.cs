@@ -14,13 +14,15 @@ namespace Mlem
     public partial class MainWindow
     {
         private enum TimelineFill { WHITE, COLOR };
+        private const int TIMELINE_ROW_HEIGHT = 55; // px
 
-        private void CalendarInit()
+        private void CalendarInit(int rows)
         {
             CalendarModel model = NewCalendarModelInit(TimelineFill.COLOR);
 
             calendarView1.CalendarModel = model;
-            calendarView1.DisplayedOwners.AddRange(LampsStr);
+
+            UpdateTimeline(rows);
 
             calendarView1.TimeLineShowIntervalHeader = true;
             calendarView1.TimeLineShowPeriodHeader = false;
@@ -38,15 +40,63 @@ namespace Mlem
             calendarView1.TimeLineStretchRowHeight = true;
             // Remove horizontal appointment padding
             calendarView1.TimeLineHorizontalPadding = 0;
-            // Period columnt width
+            // Period column width
             calendarView1.TimeLineColumnWidth = 30;
-            calendarView1.TimeLineHeight = 10;
-
+            // Timeline row height
+            calendarView1.TimeLineHeight = TIMELINE_ROW_HEIGHT;
             // Disable current time indicator
             calendarView1.TimeIndicator.Visibility = eTimeIndicatorVisibility.Hidden;
             calendarView1.AppointmentViewChanged += calendarView1_AppointmentViewChanged;
             calendarView1.CalendarModel.AppointmentAdded += CalendarModel_AppointmentAdded;
             calendarView1.AppointmentViewChanging += calendarView1_AppointmentViewChanging;
+        }
+
+        private void RemoveLastRow()
+        {
+            int lastIndex = calendarView1.DisplayedOwners.Count - 1;
+            if (lastIndex >= 0)
+            {
+                calendarView1.DisplayedOwners.RemoveAt(lastIndex);
+
+                if (calendarView1.DisplayedOwners.Count >= 4)
+                {
+                    calendarView1.Height -= TIMELINE_ROW_HEIGHT;
+                    this.Height -= TIMELINE_ROW_HEIGHT;
+                }
+            }
+        }
+
+        private void AddNewRow(string name)
+        {
+            int max = Convert.ToInt32(ddLampNum.Items[ddLampNum.Items.Count - 1]);
+            if (calendarView1.DisplayedOwners.Count == max)
+                return;
+
+            if (calendarView1.DisplayedOwners.Count >= 4)
+            {
+                calendarView1.Height += TIMELINE_ROW_HEIGHT;
+                this.Height += TIMELINE_ROW_HEIGHT;
+            }
+
+            calendarView1.DisplayedOwners.Add(name);
+        }
+
+        void UpdateTimeline(int rows)
+        {
+            int currentRows = calendarView1.DisplayedOwners.Count;
+            if (currentRows < rows)
+            {
+                for (int i = 0; i < rows - currentRows; i++)
+                {
+                    // here should be retrieving data from lamppicker
+                    AddNewRow(" ");
+                }
+            }
+            else
+            {
+                for (int i = 0; i < currentRows - rows; i++)
+                    RemoveLastRow();
+            }
         }
 
         void calendarView1_AppointmentViewChanging(object sender, AppointmentViewChangingEventArgs e)

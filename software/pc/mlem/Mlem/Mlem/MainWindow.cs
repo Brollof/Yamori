@@ -18,7 +18,6 @@ namespace Mlem
     public partial class MainWindow : Office2007Form
     {
         Mlem mlem;
-        private string[] LampsStr = new string[] { "Podłoga", "Czerwona", "Biala", "Niebieska" };
         private List<Event> heaterList;
         private List<Event> redLampList;
         private List<Event> blueLampList;
@@ -28,8 +27,8 @@ namespace Mlem
         {
             InitializeComponent();
 
-            LampPickerInit(Convert.ToInt32(ddLampNum.Text));
-            CalendarInit();
+            LampPickerInit(GetUiLampsNum());
+            CalendarInit(GetUiLampsNum());
 
             btnSend.Enabled = false;
             mlem = new Mlem("127.0.0.1", 50007);
@@ -75,6 +74,11 @@ namespace Mlem
                 Time = new DateTime(2016, 3, 18, 8, 0, 0, DateTimeKind.Utc),
                 },
             };
+        }
+
+        private int GetUiLampsNum()
+        {
+            return Convert.ToInt32(ddLampNum.Text);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -151,8 +155,9 @@ namespace Mlem
         {
             try
             {
-                int colNum = Convert.ToInt32(ddLampNum.Text);
-                ShowLampPicker(colNum);
+                int lampsNum = GetUiLampsNum();
+                ShowLampPicker(lampsNum);
+                UpdateTimeline(lampsNum);
             }
             catch (Exception ex)
             {

@@ -110,7 +110,7 @@
             this.calendarView1.MultiUserTabHeight = 19;
             this.calendarView1.Name = "calendarView1";
             this.calendarView1.SelectedView = DevComponents.DotNetBar.Schedule.eCalendarView.TimeLine;
-            this.calendarView1.Size = new System.Drawing.Size(821, 263);
+            this.calendarView1.Size = new System.Drawing.Size(820, 260);
             this.calendarView1.TabIndex = 2;
             this.calendarView1.Text = "calendarView1";
             this.calendarView1.TimeIndicator.BorderColor = System.Drawing.Color.Empty;
@@ -224,7 +224,7 @@
             // 
             this.lampPicker.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.lampPicker.ColumnCount = 1;
-            this.lampPicker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 62F));
+            this.lampPicker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 68F));
             this.lampPicker.Controls.Add(this.label2, 0, 1);
             this.lampPicker.Controls.Add(this.label1, 0, 0);
             this.lampPicker.Location = new System.Drawing.Point(148, 56);
@@ -241,7 +241,7 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Location = new System.Drawing.Point(4, 34);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 39);
+            this.label2.Size = new System.Drawing.Size(62, 39);
             this.label2.TabIndex = 1;
             this.label2.Text = "Kolor";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -252,7 +252,7 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(4, 1);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 32);
+            this.label1.Size = new System.Drawing.Size(62, 32);
             this.label1.TabIndex = 1;
             this.label1.Text = "Nazwa";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -261,7 +261,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(871, 427);
+            this.ClientSize = new System.Drawing.Size(870, 428);
             this.Controls.Add(this.lampPicker);
             this.Controls.Add(this.cbShowPeriod);
             this.Controls.Add(this.ddLampNum);
