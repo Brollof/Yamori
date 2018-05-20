@@ -224,7 +224,7 @@
             // 
             this.lampPicker.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.lampPicker.ColumnCount = 1;
-            this.lampPicker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 69F));
+            this.lampPicker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.lampPicker.Controls.Add(this.label2, 0, 1);
             this.lampPicker.Controls.Add(this.label1, 0, 0);
             this.lampPicker.Location = new System.Drawing.Point(148, 56);
@@ -241,7 +241,7 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Location = new System.Drawing.Point(4, 34);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 39);
+            this.label2.Size = new System.Drawing.Size(74, 39);
             this.label2.TabIndex = 1;
             this.label2.Text = "Kolor";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -252,7 +252,7 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(4, 1);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(63, 32);
+            this.label1.Size = new System.Drawing.Size(74, 32);
             this.label1.TabIndex = 1;
             this.label1.Text = "Nazwa";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;

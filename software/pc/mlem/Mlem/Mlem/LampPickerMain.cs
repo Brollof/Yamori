@@ -30,21 +30,22 @@ namespace Mlem
             txtLamp.TextChanged += txtLamp_TextChanged;
             lampPicker.Controls.Add(txtLamp, col, 0);
 
-            ColorPickerButton cpLamp = new ColorPickerButton();
-            cpLamp.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            cpLamp.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            cpLamp.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            cpLamp.Image = new Bitmap(Properties.Resources.NoColor);
-            cpLamp.Location = new System.Drawing.Point(63, 43);
-            cpLamp.Name = "cpLamp" + col.ToString();
-            cpLamp.SelectedColorImageRectangle = new System.Drawing.Rectangle(2, 2, 12, 12);
-            cpLamp.Size = new System.Drawing.Size(37, 23);
-            cpLamp.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            cpLamp.TabIndex = 0;
-            lampPicker.Controls.Add(cpLamp, col, 1);
+            ColorDropDown cdd = new ColorDropDown(0, 0, CalendarUtils.Colors);
+            cdd.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            cdd.SelectedIndexChanged +=cdd_SelectedIndexChanged;
+            lampPicker.Controls.Add(cdd, col, 1);
             
-            List<Control> controls = new List<Control>{txtLamp, cpLamp};
+            List<Control> controls = new List<Control>{txtLamp, cdd};
             LampManager.AddColumn(style, controls, lampPicker.ColumnCount - 1);
+        }
+
+        private void cdd_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ColorDropDown cdd = (ColorDropDown)sender;
+            int col = LampManager.GetColumnNumber(cdd);
+            string colorName = cdd.SelectedItem.ToString();
+            calendarView1.MultiCalendarTimeLineViews[col-1].CalendarColor =
+                CalendarUtils.CalendarColorFromString(colorName);
         }
 
         private void txtLamp_TextChanged(object sender, EventArgs e)

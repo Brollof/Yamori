@@ -79,7 +79,10 @@ namespace Mlem
                 this.Height += TIMELINE_ROW_HEIGHT;
             }
 
-            calendarView1.DisplayedOwners.Add(" "); // default empty name
+            // default empty name and color
+            calendarView1.DisplayedOwners.Add(" ");
+            int cnt = calendarView1.DisplayedOwners.Count;
+            calendarView1.MultiCalendarTimeLineViews[cnt - 1].CalendarColor = eCalendarColor.Blue;
         }
 
         void UpdateTimelineRows(int rows)

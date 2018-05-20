@@ -12,16 +12,16 @@ using DevComponents.DotNetBar.Schedule;
 using DevComponents.DotNetBar;
 using DevComponents.Schedule.Model;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace Mlem
 {
     public partial class MainWindow : Office2007Form
     {
-        Mlem mlem;
+        private Mlem mlem;
         private List<Event> heaterList;
         private List<Event> redLampList;
         private List<Event> blueLampList;
-
 
         public MainWindow()
         {

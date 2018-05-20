@@ -58,6 +58,10 @@
     <Compile Include="CalendarMain.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="CalendarUtils.cs" />
+    <Compile Include="ColorDropDown.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="EventsMain.cs">
       <SubType>Form</SubType>
     </Compile>

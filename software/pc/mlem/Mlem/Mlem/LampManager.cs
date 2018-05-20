@@ -57,10 +57,10 @@ namespace Mlem
                    if (String.IsNullOrEmpty(name))
                        name = " ";
                }
-               else
+               else if (c is ColorDropDown)
                {
-                   // get color
-                   color = eCalendarColor.Green;
+                   string colorName = ((ColorDropDown)c).SelectedItem.ToString();
+                   color = CalendarUtils.CalendarColorFromString(colorName);
                }
             }
             return new LampUI(name, color);
@@ -86,6 +86,19 @@ namespace Mlem
             pickerColumns.Remove(pc);
             Console.WriteLine("[LM] Removed column " + pc.Column);
             return pc;
+        }
+
+        public static int GetColumnNumber(Control target)
+        {
+            foreach(var item in pickerColumns)
+            {
+                foreach(var control in item.Controls)
+                {
+                    if (control == target)
+                        return item.Column;
+                }
+            }
+            return -1;
         }
 
         
