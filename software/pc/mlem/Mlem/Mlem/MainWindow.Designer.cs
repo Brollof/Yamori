@@ -32,7 +32,6 @@
             this.butConn = new System.Windows.Forms.Button();
             this.labConnStatus = new System.Windows.Forms.Label();
             this.btnSend = new System.Windows.Forms.Button();
-            this.btnSendConfig = new System.Windows.Forms.Button();
             this.calendarView1 = new DevComponents.DotNetBar.Schedule.CalendarView();
             this.styleManager1 = new DevComponents.DotNetBar.StyleManager(this.components);
             this.contextMenuBar1 = new DevComponents.DotNetBar.ContextMenuBar();
@@ -73,6 +72,7 @@
             // 
             // btnSend
             // 
+            this.btnSend.Enabled = false;
             this.btnSend.Location = new System.Drawing.Point(22, 65);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(75, 23);
@@ -80,16 +80,6 @@
             this.btnSend.Text = "Send";
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
-            // 
-            // btnSendConfig
-            // 
-            this.btnSendConfig.Location = new System.Drawing.Point(22, 107);
-            this.btnSendConfig.Name = "btnSendConfig";
-            this.btnSendConfig.Size = new System.Drawing.Size(75, 23);
-            this.btnSendConfig.TabIndex = 3;
-            this.btnSendConfig.Text = "Zapisz";
-            this.btnSendConfig.UseVisualStyleBackColor = true;
-            this.btnSendConfig.Click += new System.EventHandler(this.btnJson_Click);
             // 
             // calendarView1
             // 
@@ -225,7 +215,7 @@
             // 
             this.lampPicker.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.lampPicker.ColumnCount = 1;
-            this.lampPicker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 81F));
+            this.lampPicker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 83F));
             this.lampPicker.Controls.Add(this.label2, 0, 1);
             this.lampPicker.Controls.Add(this.label1, 0, 0);
             this.lampPicker.Location = new System.Drawing.Point(148, 56);
@@ -242,7 +232,7 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Location = new System.Drawing.Point(4, 34);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(75, 39);
+            this.label2.Size = new System.Drawing.Size(77, 39);
             this.label2.TabIndex = 1;
             this.label2.Text = "Kolor";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -253,7 +243,7 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(4, 1);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 32);
+            this.label1.Size = new System.Drawing.Size(77, 32);
             this.label1.TabIndex = 1;
             this.label1.Text = "Nazwa";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -279,7 +269,6 @@
             this.Controls.Add(this.ddLampNum);
             this.Controls.Add(this.contextMenuBar1);
             this.Controls.Add(this.calendarView1);
-            this.Controls.Add(this.btnSendConfig);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.labConnStatus);
             this.Controls.Add(this.butConn);
@@ -303,7 +292,6 @@
         private System.Windows.Forms.Button butConn;
         private System.Windows.Forms.Label labConnStatus;
         private System.Windows.Forms.Button btnSend;
-        private System.Windows.Forms.Button btnSendConfig;
         private DevComponents.DotNetBar.Schedule.CalendarView calendarView1;
         private DevComponents.DotNetBar.ContextMenuBar contextMenuBar1;
         private DevComponents.DotNetBar.ButtonItem InContentContextMenu;

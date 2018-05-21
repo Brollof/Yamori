@@ -11,6 +11,34 @@ using System.Windows.Forms;
 
 namespace Mlem
 {
+    public class RGB
+    {
+        public int R { get; set; }
+        public int G { get; set; }
+        public int B { get; set; }
+
+        public RGB(int r, int g, int b)
+        {
+            R = r; G = g; B = b;
+        }
+
+        public RGB() { }
+    }
+   
+    public class LampConfig
+    {
+        public string Name { get; set; }
+        public RGB Color { get; set; }
+
+        public LampConfig(string name, int r, int g, int b)
+        {
+            this.Name = name;
+            this.Color = new RGB(r, g, b);
+        }
+
+        public LampConfig() { }
+    }
+
     struct LampUI
     {
         public string Name;
@@ -37,6 +65,21 @@ namespace Mlem
         }
     }
 
+    
+    public class ValidationEventArgs : EventArgs
+    {
+        private bool isValid;
+        public bool IsValid 
+        {
+            get { return this.isValid; }
+        }
+
+        public ValidationEventArgs(bool isValid)
+        {
+            this.isValid = isValid;
+        }
+    }
+
     static class LampManager
     {
         // 1. Link cols with controls
@@ -44,6 +87,9 @@ namespace Mlem
         private const int OFFSET = 1;
         private static List<PickerColumn> pickerColumns = new List<PickerColumn>();
         private static bool areNamesValid = false;
+
+        public delegate void LampNamesValidationStatusChanged(ValidationEventArgs args);
+        public static event LampNamesValidationStatusChanged OnLampNamesValidationStatusChanged;
 
         public static bool AreNamesValid
         {
@@ -71,6 +117,19 @@ namespace Mlem
                }
             }
             return new LampUI(name, color);
+        }
+
+        private static List<LampUI> GetAllLamps()
+        {
+            List<LampUI> lampsList = new List<LampUI>();
+
+            for(int i = OFFSET; i <= pickerColumns.Count; i++)
+            {
+                LampUI ui = GetLamp(i);
+                lampsList.Add(ui);
+            }
+
+            return lampsList;
         }
 
         public static void AddColumn(ColumnStyle style, List<Control> controls, int column)
@@ -111,16 +170,12 @@ namespace Mlem
         private static bool IsNameValid(string name)
         {
             Regex r = new Regex("^[a-zA-Z0-9]*$");
-            if (r.IsMatch(name))
-            {
-                Console.WriteLine("alpha");
-                return true;
-            }
-            return false;
+            return r.IsMatch(name);
         }
 
         public static bool ValidateNames()
         {
+
             string[] names = new string[pickerColumns.Count];
             int pos = 0;
             bool ret = true;
@@ -147,8 +202,30 @@ namespace Mlem
             if (names.Length != names.Distinct().Count())
                 ret = false;
 
+            if (ret != areNamesValid && OnLampNamesValidationStatusChanged != null)
+            {
+                ValidationEventArgs args = new ValidationEventArgs(ret);
+                OnLampNamesValidationStatusChanged(args);
+            }
             areNamesValid = ret;
+
             return ret;
+        }
+
+        public static List<LampConfig> GetLampsConfig()
+        {
+            List<LampConfig> cfgs = new List<LampConfig>();
+
+            foreach (var lamp in GetAllLamps())
+            {
+                LampConfig cfg = new LampConfig();
+                cfg.Name = lamp.Name;
+                Color color = CalendarUtils.ConvertColor(lamp.Color);
+                cfg.Color = new RGB(color.R, color.B, color.G);
+                cfgs.Add(cfg);
+            }
+
+            return cfgs;
         }
     }
 }

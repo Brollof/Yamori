@@ -19,9 +19,6 @@ namespace Mlem
     public partial class MainWindow : Office2007Form
     {
         private Mlem mlem;
-        private List<Event> heaterList;
-        private List<Event> redLampList;
-        private List<Event> blueLampList;
 
         public MainWindow()
         {
@@ -29,51 +26,13 @@ namespace Mlem
 
             LampPickerInit(GetUiLampsNum());
             CalendarInit(GetUiLampsNum(), GetUiMaxLampsNum());
-
-            btnSend.Enabled = false;
+            LampManager.OnLampNamesValidationStatusChanged += LampManager_OnLampNamesValidationStatusChanged;
             mlem = new Mlem("127.0.0.1", 50007);
+        }
 
-            heaterList = new List<Event>()
-            {
-                new Event()
-                {
-                State = true,
-                Time = new DateTime(2016, 3, 18, 16, 55, 20, DateTimeKind.Utc),
-                },
-                new Event()
-                {
-                State = false,
-                Time = new DateTime(2016, 3, 18, 17, 0, 0, DateTimeKind.Utc),
-                },
-            };
-
-            redLampList = new List<Event>()
-            {
-                new Event()
-                {
-                State = true,
-                Time = new DateTime(2016, 3, 18, 1, 55, 20, DateTimeKind.Utc),
-                },
-                new Event()
-                {
-                State = false,
-                Time = new DateTime(2016, 3, 18, 2, 0, 0, DateTimeKind.Utc),
-                },
-            };
-
-            blueLampList = new List<Event>()
-            {
-                new Event()
-                {
-                State = true,
-                Time = new DateTime(2016, 3, 18, 5, 55, 20, DateTimeKind.Utc),
-                },
-                new Event()
-                {
-                State = false,
-                Time = new DateTime(2016, 3, 18, 8, 0, 0, DateTimeKind.Utc),
-                },
-            };
+        void LampManager_OnLampNamesValidationStatusChanged(ValidationEventArgs args)
+        {
+            btnSend.Enabled = args.IsValid;
         }
 
         private int GetUiLampsNum()
@@ -106,12 +65,8 @@ namespace Mlem
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            mlem.Send("Hello :)");
-            mlem.Receive();
-        }
-
-        private void btnJson_Click(object sender, EventArgs e)
-        {
+            //mlem.Send("Hello :)");
+            //mlem.Receive();
             try
             {
                 ConcatAppointments();
@@ -125,7 +80,7 @@ namespace Mlem
                     lamps.Add(new Lamp(lampName, events));
                 }
 
-                string output = JsonCreator.GetJson(heater, lamps);
+                string output = JsonCreator.GetJson(heater, lamps, LampManager.GetLampsConfig());
                 Console.WriteLine(output);
                 //mlem.Send(output);
             }

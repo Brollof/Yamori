@@ -10,39 +10,49 @@ namespace Mlem
 {
     public static class JsonCreator
     {
-        public static JArray ArrayFromList(List<Event> events)
+        public static JArray ArrayFromList<T>(List<T> items)
         {
             JArray values = new JArray();
 
-            foreach (Event ev in events)
+            foreach (T item in items)
             {
-                values.Add(JObject.FromObject(ev));
+                values.Add(JObject.FromObject(item));
             }
 
             return values;
         }
 
-        public static JProperty PropertyFromList(string propName, List<Event> events)
+        public static JProperty PropertyFromList<T>(string propName, List<T> items)
         {
-            JArray array = JsonCreator.ArrayFromList(events);
+            JArray array = JsonCreator.ArrayFromList(items);
             return new JProperty(propName, array);
         }
 
-        public static string GetJson(List<Event> heater, List<Lamp> lamps)
+        public static string GetJson(List<Event> heater, List<Lamp> lamps, List<LampConfig> lampConfig)
         {
-            // Heater
             JObject data = new JObject();
-            data.Add(JsonCreator.PropertyFromList("Heater", heater));
+            JObject events = new JObject();
+            JObject config = new JObject();
+
+            // Heater
+            events.Add(JsonCreator.PropertyFromList("Heater", heater));
 
             // Lamps
             JObject lampsRoot = new JObject();
-            foreach(var lamp in lamps)
+            foreach (var lamp in lamps)
             {
                 lampsRoot.Add(JsonCreator.PropertyFromList(lamp.Name, lamp.Events));
             }
 
-            data.Add(new JProperty("Lamps", lampsRoot));
+            events.Add(new JProperty("Lamps", lampsRoot));
 
+            // Config
+            config.Add(JsonCreator.PropertyFromList("Lamps", lampConfig));
+
+            data.Add("Events", events);
+            data.Add("Config", config);
+
+            Console.WriteLine(data);
             return JsonConvert.SerializeObject(data);
         }
     }
