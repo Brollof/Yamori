@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -42,6 +43,12 @@ namespace Mlem
         // 2. Link cols with timeline rows
         private const int OFFSET = 1;
         private static List<PickerColumn> pickerColumns = new List<PickerColumn>();
+        private static bool areNamesValid = false;
+
+        public static bool AreNamesValid
+        {
+            get { return areNamesValid; }
+        }
 
         public static LampUI GetLamp(int col)
         {
@@ -101,6 +108,47 @@ namespace Mlem
             return -1;
         }
 
-        
+        private static bool IsNameValid(string name)
+        {
+            Regex r = new Regex("^[a-zA-Z0-9]*$");
+            if (r.IsMatch(name))
+            {
+                Console.WriteLine("alpha");
+                return true;
+            }
+            return false;
+        }
+
+        public static bool ValidateNames()
+        {
+            string[] names = new string[pickerColumns.Count];
+            int pos = 0;
+            bool ret = true;
+            foreach(PickerColumn col in pickerColumns)
+            {
+                foreach(Control control in col.Controls)
+                {
+                    if (control is TextBox)
+                    {
+                        names[pos++] = control.Text;
+                    }
+                }
+            }
+
+            // test empty strings
+            if (!Array.TrueForAll(names, s => !String.IsNullOrEmpty(s)))
+                ret = false;
+
+            // test characters
+            if (!Array.TrueForAll(names, s => IsNameValid(s)))
+                ret = false;
+
+            // test duplicates
+            if (names.Length != names.Distinct().Count())
+                ret = false;
+
+            areNamesValid = ret;
+            return ret;
+        }
     }
 }

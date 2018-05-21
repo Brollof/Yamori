@@ -51,6 +51,7 @@ namespace Mlem
         private void txtLamp_TextChanged(object sender, EventArgs e)
         {
             UpdateTimeline();
+            LampManager.ValidateNames();
         }
         
         private void UpdateColumnStyles()

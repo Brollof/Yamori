@@ -170,5 +170,24 @@ namespace Mlem
             }
 
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                if (LampManager.ValidateNames())
+                {
+                    Console.WriteLine("ok");
+                }
+                else
+                {
+                    Console.WriteLine("not ok");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
     }
 }

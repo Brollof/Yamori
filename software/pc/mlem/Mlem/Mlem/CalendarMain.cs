@@ -106,6 +106,7 @@ namespace Mlem
             {
                 LampUI lamp = LampManager.GetLamp(i + 1);
                 calendarView1.DisplayedOwners[i] = lamp.Name;
+                // changing owner name causes random color change
                 calendarView1.MultiCalendarTimeLineViews[i].CalendarColor = lamp.Color;
             }
         }
@@ -273,7 +274,6 @@ namespace Mlem
             // Get the DateSelection start and end
             // from the current mouse location
             DateTime startDate, endDate;
-
             if (calendarView1.GetDateSelectionFromPoint(e.Location, out startDate, out endDate) == true)
             {
                 // If this date falls outside the currently
@@ -286,7 +286,9 @@ namespace Mlem
                     calendarView1.DateSelectionEnd = endDate;
                 }
             }
-            ShowContextMenu(InContentContextMenu);
+
+            if (LampManager.AreNamesValid)
+                ShowContextMenu(InContentContextMenu);
         }
 
         #endregion
