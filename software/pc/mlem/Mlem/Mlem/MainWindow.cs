@@ -46,7 +46,7 @@ namespace Mlem
             return Convert.ToInt32(ddLampNum.Items[ddLampNum.Items.Count - 1]);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnConn_Click(object sender, EventArgs e)
         {
             if (mlem.IsConnected)
             {

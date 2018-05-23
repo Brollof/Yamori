@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.butConn = new System.Windows.Forms.Button();
-            this.labConnStatus = new System.Windows.Forms.Label();
             this.btnSend = new System.Windows.Forms.Button();
             this.calendarView1 = new DevComponents.DotNetBar.Schedule.CalendarView();
             this.styleManager1 = new DevComponents.DotNetBar.StyleManager(this.components);
@@ -46,7 +45,6 @@
             this.lampPicker = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.contextMenuBar1)).BeginInit();
             this.lampPicker.SuspendLayout();
             this.SuspendLayout();
@@ -57,27 +55,18 @@
             this.butConn.Name = "butConn";
             this.butConn.Size = new System.Drawing.Size(75, 23);
             this.butConn.TabIndex = 0;
-            this.butConn.Text = "Connect";
+            this.butConn.Text = "Połącz";
             this.butConn.UseVisualStyleBackColor = true;
-            this.butConn.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // labConnStatus
-            // 
-            this.labConnStatus.AutoSize = true;
-            this.labConnStatus.Location = new System.Drawing.Point(103, 29);
-            this.labConnStatus.Name = "labConnStatus";
-            this.labConnStatus.Size = new System.Drawing.Size(24, 13);
-            this.labConnStatus.TabIndex = 1;
-            this.labConnStatus.Text = "Idle";
+            this.butConn.Click += new System.EventHandler(this.btnConn_Click);
             // 
             // btnSend
             // 
             this.btnSend.Enabled = false;
             this.btnSend.Location = new System.Drawing.Point(22, 65);
             this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(75, 23);
+            this.btnSend.Size = new System.Drawing.Size(75, 39);
             this.btnSend.TabIndex = 2;
-            this.btnSend.Text = "Send";
+            this.btnSend.Text = "Zapisz konfigurację";
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
@@ -215,7 +204,7 @@
             // 
             this.lampPicker.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.lampPicker.ColumnCount = 1;
-            this.lampPicker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 83F));
+            this.lampPicker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 85F));
             this.lampPicker.Controls.Add(this.label2, 0, 1);
             this.lampPicker.Controls.Add(this.label1, 0, 0);
             this.lampPicker.Location = new System.Drawing.Point(148, 56);
@@ -232,7 +221,7 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Location = new System.Drawing.Point(4, 34);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 39);
+            this.label2.Size = new System.Drawing.Size(79, 39);
             this.label2.TabIndex = 1;
             this.label2.Text = "Kolor";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -243,34 +232,22 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(4, 1);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(77, 32);
+            this.label1.Size = new System.Drawing.Size(79, 32);
             this.label1.TabIndex = 1;
             this.label1.Text = "Nazwa";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(646, 21);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(870, 428);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.lampPicker);
             this.Controls.Add(this.cbShowPeriod);
             this.Controls.Add(this.ddLampNum);
             this.Controls.Add(this.contextMenuBar1);
             this.Controls.Add(this.calendarView1);
             this.Controls.Add(this.btnSend);
-            this.Controls.Add(this.labConnStatus);
             this.Controls.Add(this.butConn);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -290,7 +267,6 @@
         #endregion
 
         private System.Windows.Forms.Button butConn;
-        private System.Windows.Forms.Label labConnStatus;
         private System.Windows.Forms.Button btnSend;
         private DevComponents.DotNetBar.Schedule.CalendarView calendarView1;
         private DevComponents.DotNetBar.ContextMenuBar contextMenuBar1;
@@ -306,7 +282,6 @@
         private System.Windows.Forms.TableLayoutPanel lampPicker;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
     }
 }
 
