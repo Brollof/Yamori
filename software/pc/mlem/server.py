@@ -24,12 +24,15 @@ def main():
                     # else:
                         # conn.sendall(data)
 
-                    data = json.loads(data)
-                    print(data)
-                    # print("Heater: ")
-                    # print(data['Heater'])
-                    for i in data['Lamps']:
-                        print(i)
+                    if data.decode('ascii') == 'read command':
+                        conn.sendall(b'sending current config')
+                    else:
+                        data = json.loads(data)
+                        print(data)
+                        # print("Heater: ")
+                        # print(data['Heater'])
+                        for i in data['Events']['Lamps']:
+                            print(i)
                     sleep(0.5)
   
 

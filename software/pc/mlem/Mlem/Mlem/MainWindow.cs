@@ -46,48 +46,15 @@ namespace Mlem
             return Convert.ToInt32(ddLampNum.Items[ddLampNum.Items.Count - 1]);
         }
 
-        private void btnConn_Click(object sender, EventArgs e)
-        {
-            if (mlem.IsConnected)
-            {
-                butConn.Text = "Connect";
-                mlem.Close();
-                btnSend.Enabled = false;
-            }
-            else
-            {
-                if (mlem.Connect())
-                {
-                    butConn.Text = "Disconnect";
-                    btnSend.Enabled = true;
-                }
-            }
-        }
-
         private void btnSend_Click(object sender, EventArgs e)
         {
             //mlem.Send("Hello :)");
             //mlem.Receive();
-            try
-            {
-                ConcatAppointments();
-                List<Event> heater = GetEventsFromTimeline(0);
-                List<Lamp> lamps = new List<Lamp>();
 
-                for (int i = 1; i < calendarView1.DisplayedOwners.Count; i++)
-                {
-                    string lampName = calendarView1.DisplayedOwners[i];
-                    List<Event> events = GetEventsFromTimeline(i);
-                    lamps.Add(new Lamp(lampName, events));
-                }
-
-                string output = JsonCreator.GetJson(heater, lamps, LampManager.GetLampsConfig());
-                Console.WriteLine(output);
-                //mlem.Send(output);
-            }
-            catch (Exception ex)
+            if (mlem.Connect())
             {
-                Console.WriteLine(ex);
+                SendJsonData();
+                mlem.Close();
             }
         }
 
@@ -126,18 +93,30 @@ namespace Mlem
             }
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void InitHeaterRow(string name, eCalendarColor color)
+        {
+            calendarView1.DisplayedOwners[0] = name;
+            calendarView1.MultiCalendarTimeLineViews[0].CalendarColor = color;
+        }
+
+        private void SendJsonData()
         {
             try
             {
-                if (LampManager.ValidateNames())
+                ConcatAppointments();
+                List<Event> heater = GetEventsFromTimeline(0);
+                List<Lamp> lamps = new List<Lamp>();
+
+                for (int i = 1; i < calendarView1.DisplayedOwners.Count; i++)
                 {
-                    Console.WriteLine("ok");
+                    string lampName = calendarView1.DisplayedOwners[i];
+                    List<Event> events = GetEventsFromTimeline(i);
+                    lamps.Add(new Lamp(lampName, events));
                 }
-                else
-                {
-                    Console.WriteLine("not ok");
-                }
+
+                string output = JsonCreator.GetJson(heater, lamps, LampManager.GetLampsConfig());
+                Console.WriteLine(output);
+                mlem.Send(output);
             }
             catch (Exception ex)
             {
@@ -145,10 +124,15 @@ namespace Mlem
             }
         }
 
-        private void InitHeaterRow(string name, eCalendarColor color)
+        private void btnRead_Click(object sender, EventArgs e)
         {
-            calendarView1.DisplayedOwners[0] = name;
-            calendarView1.MultiCalendarTimeLineViews[0].CalendarColor = color;
+            if (mlem.Connect())
+            {
+                Console.WriteLine("Read config");
+                mlem.Send("read command");
+                mlem.Receive();
+                mlem.Close();
+            }
         }
     }
 }
