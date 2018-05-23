@@ -25,7 +25,7 @@ namespace Mlem
             InitializeComponent();
 
             LampPickerInit(GetUiLampsNum());
-            CalendarInit(GetUiLampsNum(), GetUiMaxLampsNum());
+            CalendarInit(GetUiLampsNum() + 1, GetUiMaxLampsNum() + 1);
             LampManager.OnLampNamesValidationStatusChanged += LampManager_OnLampNamesValidationStatusChanged;
             mlem = new Mlem("127.0.0.1", 50007);
         }
@@ -117,13 +117,12 @@ namespace Mlem
             {
                 int lampsNum = GetUiLampsNum();
                 ShowLampPicker(lampsNum);
-                UpdateTimelineRows(lampsNum);
+                UpdateTimelineRows(lampsNum + 1);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
-
         }
 
         private void button1_Click_1(object sender, EventArgs e)

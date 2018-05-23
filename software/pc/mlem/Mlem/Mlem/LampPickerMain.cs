@@ -44,7 +44,7 @@ namespace Mlem
             ColorDropDown cdd = (ColorDropDown)sender;
             int col = LampManager.GetColumnNumber(cdd);
             string colorName = cdd.SelectedItem.ToString();
-            calendarView1.MultiCalendarTimeLineViews[col-1].CalendarColor =
+            calendarView1.MultiCalendarTimeLineViews[col].CalendarColor =
                 CalendarUtils.CalendarColorFromString(colorName);
         }
 

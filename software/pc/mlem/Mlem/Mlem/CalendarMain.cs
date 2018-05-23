@@ -102,9 +102,9 @@ namespace Mlem
 
         void UpdateTimeline()
         {
-            for (int i = 0; i < calendarView1.DisplayedOwners.Count; i++)
+            for (int i = 1; i < calendarView1.DisplayedOwners.Count; i++)
             {
-                LampUI lamp = LampManager.GetLamp(i + 1);
+                LampUI lamp = LampManager.GetLamp(i);
                 calendarView1.DisplayedOwners[i] = lamp.Name;
                 // changing owner name causes random color change
                 calendarView1.MultiCalendarTimeLineViews[i].CalendarColor = lamp.Color;
