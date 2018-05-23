@@ -26,6 +26,7 @@ namespace Mlem
 
             LampPickerInit(GetUiLampsNum());
             CalendarInit(GetUiLampsNum() + 1, GetUiMaxLampsNum() + 1);
+            InitHeaterRow("Kabel", eCalendarColor.Steel);
             LampManager.OnLampNamesValidationStatusChanged += LampManager_OnLampNamesValidationStatusChanged;
             mlem = new Mlem("127.0.0.1", 50007);
         }
@@ -142,6 +143,12 @@ namespace Mlem
             {
                 Console.WriteLine(ex);
             }
+        }
+
+        private void InitHeaterRow(string name, eCalendarColor color)
+        {
+            calendarView1.DisplayedOwners[0] = name;
+            calendarView1.MultiCalendarTimeLineViews[0].CalendarColor = color;
         }
     }
 }
