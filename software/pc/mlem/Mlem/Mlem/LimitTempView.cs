@@ -9,8 +9,8 @@ namespace Mlem
 {
     class LimitInputView
     {
-        private TextBox txtTime;
-        private CheckBox cbSelected;
+        private TextBox txtTime = new TextBox();
+        private CheckBox cbSelected = new CheckBox();
 
         public TextBox TxtTime
         {
@@ -27,7 +27,7 @@ namespace Mlem
 
     class LimitTempView
     {
-        private Label labName;
+        private Label labName = new Label();
         private LimitInputView min = new LimitInputView();
         private LimitInputView max = new LimitInputView();
         private LimitTempModel model;
@@ -52,7 +52,6 @@ namespace Mlem
 
         public LimitTempView(LimitTempModel model)
         {
-            CreateGUI();
             this.model = model;
 
             labName.Text = model.Name;
@@ -62,17 +61,6 @@ namespace Mlem
 
             max.TxtTime.Text = "0";
             max.CbSelected.Checked = false;
-        }
-
-        private void CreateGUI()
-        {
-            labName = new Label();
-
-            min.TxtTime = new TextBox();
-            min.CbSelected = new CheckBox();
-
-            max.TxtTime = new TextBox();
-            max.CbSelected = new CheckBox();
         }
 
         public static List<LimitTempView> Create(List<LimitTempModel> models)
