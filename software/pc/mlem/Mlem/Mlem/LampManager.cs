@@ -132,6 +132,13 @@ namespace Mlem
             return lampsList;
         }
 
+        public static List<String> GetNames()
+        {
+            List<String> ret = new List<String>();
+            GetAllLamps().ForEach(lamp => ret.Add(lamp.Name));
+            return ret;
+        }
+
         public static void AddColumn(ColumnStyle style, List<Control> controls, int column)
         {
             PickerColumn pc = new PickerColumn(style, controls, column);

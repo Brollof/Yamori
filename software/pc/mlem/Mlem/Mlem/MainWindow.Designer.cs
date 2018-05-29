@@ -45,6 +45,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnRead = new System.Windows.Forms.Button();
+            this.btnLimits = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.contextMenuBar1)).BeginInit();
             this.lampPicker.SuspendLayout();
             this.SuspendLayout();
@@ -194,7 +195,7 @@
             // 
             this.lampPicker.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.lampPicker.ColumnCount = 1;
-            this.lampPicker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 87F));
+            this.lampPicker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 88F));
             this.lampPicker.Controls.Add(this.label2, 0, 1);
             this.lampPicker.Controls.Add(this.label1, 0, 0);
             this.lampPicker.Location = new System.Drawing.Point(148, 56);
@@ -211,7 +212,7 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Location = new System.Drawing.Point(4, 34);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(81, 39);
+            this.label2.Size = new System.Drawing.Size(82, 39);
             this.label2.TabIndex = 1;
             this.label2.Text = "Kolor";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -222,7 +223,7 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(4, 1);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(81, 32);
+            this.label1.Size = new System.Drawing.Size(82, 32);
             this.label1.TabIndex = 1;
             this.label1.Text = "Nazwa";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -237,11 +238,22 @@
             this.btnRead.UseVisualStyleBackColor = true;
             this.btnRead.Click += new System.EventHandler(this.btnRead_Click);
             // 
+            // btnLimits
+            // 
+            this.btnLimits.Location = new System.Drawing.Point(779, 66);
+            this.btnLimits.Name = "btnLimits";
+            this.btnLimits.Size = new System.Drawing.Size(75, 23);
+            this.btnLimits.TabIndex = 12;
+            this.btnLimits.Text = "Limity";
+            this.btnLimits.UseVisualStyleBackColor = true;
+            this.btnLimits.Click += new System.EventHandler(this.btnLimits_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(870, 428);
+            this.Controls.Add(this.btnLimits);
             this.Controls.Add(this.btnRead);
             this.Controls.Add(this.lampPicker);
             this.Controls.Add(this.cbShowPeriod);
@@ -282,6 +294,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnRead;
+        private System.Windows.Forms.Button btnLimits;
     }
 }
 

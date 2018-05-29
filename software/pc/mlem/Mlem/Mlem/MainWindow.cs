@@ -134,5 +134,16 @@ namespace Mlem
                 mlem.Close();
             }
         }
+
+        private void btnLimits_Click(object sender, EventArgs e)
+        {
+            List<string> names = LampManager.GetNames();
+
+            List<LimitTempModel> models = LimitTempModel.Create(names);
+            List<LimitTempView> views = LimitTempView.Create(models);
+
+            LimitWindow window = new LimitWindow(views);
+            window.Show();
+        }
     }
 }
