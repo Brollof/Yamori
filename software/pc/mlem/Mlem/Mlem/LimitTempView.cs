@@ -7,29 +7,12 @@ using System.Windows.Forms;
 
 namespace Mlem
 {
-    class LimitInputView
+    class LimitTempView
     {
+        private Label labName = new Label();
         private TextBox txtTime = new TextBox();
         private CheckBox cbSelected = new CheckBox();
-        private LimitInputModel model = new LimitInputModel();
-
-        public LimitInputView()
-        {
-            txtTime.TextChanged += txtTime_TextChanged;
-            cbSelected.CheckedChanged += cbSelected_CheckedChanged;
-        }
-
-        void cbSelected_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox cb = (CheckBox)sender;
-            model.Selected = cb.Checked;
-        }
-
-        void txtTime_TextChanged(object sender, EventArgs e)
-        {
-            TextBox txt = (TextBox)sender;
-            model.Time = Convert.ToInt32(txt.Text);
-        }
+        private LimitTempModel model;
 
         public TextBox TxtTime
         {
@@ -43,36 +26,10 @@ namespace Mlem
             set { cbSelected = value; }
         }
 
-        internal LimitInputModel Model
-        {
-            get { return model; }
-            set { model = value; }
-        }
-    }
-
-    class LimitTempView
-    {
-        private Label labName = new Label();
-        private LimitInputView min = new LimitInputView();
-        private LimitInputView max = new LimitInputView();
-        private LimitTempModel model;
-
         internal LimitTempModel Model
         {
             get { return model; }
             set { model = value; }
-        }
-
-        internal LimitInputView Min
-        {
-            get { return min; }
-            set { min = value; }
-        }
-
-        internal LimitInputView Max
-        {
-            get { return max; }
-            set { max = value; }
         }
 
         public Label LabName
@@ -87,11 +44,11 @@ namespace Mlem
 
             labName.Text = model.Name;
 
-            min.TxtTime.Text = "0";
-            min.CbSelected.Checked = false;
+            txtTime.Text = "0";
+            cbSelected.Checked = false;
 
-            max.TxtTime.Text = "0";
-            max.CbSelected.Checked = false;
+            txtTime.TextChanged += txtTime_TextChanged;
+            cbSelected.CheckedChanged += cbSelected_CheckedChanged;
         }
 
         public static List<LimitTempView> Create(List<LimitTempModel> models)
@@ -103,6 +60,18 @@ namespace Mlem
                 ret.Add(view);
             }
             return ret;
+        }
+
+        void cbSelected_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cb = (CheckBox)sender;
+            model.Selected = cb.Checked;
+        }
+
+        void txtTime_TextChanged(object sender, EventArgs e)
+        {
+            TextBox txt = (TextBox)sender;
+            model.Time = Convert.ToInt32(txt.Text);
         }
     }
 }

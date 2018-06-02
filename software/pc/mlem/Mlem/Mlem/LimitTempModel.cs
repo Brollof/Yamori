@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Mlem
 {
-    class LimitInputModel
+    class LimitTempModel
     {
+        private string name;
         private bool selected;
         private int time;
 
@@ -22,22 +23,17 @@ namespace Mlem
             get { return time; }
             set { time = value; }
         }
-    }
-
-    class LimitTempModel
-    {
-        private string name;
-
-        public LimitTempModel() { }
-        public LimitTempModel(string name)
-        {
-            this.name = name;
-        }
 
         public string Name
         {
             get { return name; }
             set { name = value; }
+        }
+
+        public LimitTempModel() { }
+        public LimitTempModel(string name)
+        {
+            this.name = name;
         }
 
         public static List<LimitTempModel> Create(List<string> names)

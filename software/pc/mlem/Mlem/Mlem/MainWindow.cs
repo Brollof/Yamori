@@ -151,8 +151,8 @@ namespace Mlem
 
         void window_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Console.WriteLine(views[0].Max.TxtTime.Text);
-            int minutes = views[0].Max.Model.Time;
+            Console.WriteLine(views[0].TxtTime.Text);
+            int minutes = views[0].Model.Time;
             Console.WriteLine(minutes);
         }
     }
