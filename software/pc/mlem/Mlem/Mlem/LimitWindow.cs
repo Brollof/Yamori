@@ -14,11 +14,12 @@ namespace Mlem
         private System.Windows.Forms.TableLayoutPanel limitSetter;
         private Label label1;
         private Label label2;
-        private TextBox txtMaxTemp;
-        private TextBox txtMinTemp;
         private GroupBox groupBox1;
         private Label label4;
         private Label label3;
+        private Button btnOK;
+        private NumericTextBox txtMaxTemp;
+        private NumericTextBox txtMinTemp;
         private const int COL_WIDTH = 80;
     
         protected override void Dispose(bool disposing)
@@ -31,11 +32,12 @@ namespace Mlem
             this.limitSetter = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtMaxTemp = new System.Windows.Forms.TextBox();
-            this.txtMinTemp = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.btnOK = new System.Windows.Forms.Button();
+            this.txtMinTemp = new Mlem.NumericTextBox();
+            this.txtMaxTemp = new Mlem.NumericTextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,30 +72,14 @@ namespace Mlem
             this.label2.TabIndex = 4;
             this.label2.Text = "Minimalna temperatura:";
             // 
-            // txtMaxTemp
-            // 
-            this.txtMaxTemp.Location = new System.Drawing.Point(140, 13);
-            this.txtMaxTemp.MaxLength = 2;
-            this.txtMaxTemp.Name = "txtMaxTemp";
-            this.txtMaxTemp.Size = new System.Drawing.Size(48, 20);
-            this.txtMaxTemp.TabIndex = 5;
-            // 
-            // txtMinTemp
-            // 
-            this.txtMinTemp.Location = new System.Drawing.Point(140, 38);
-            this.txtMinTemp.MaxLength = 2;
-            this.txtMinTemp.Name = "txtMinTemp";
-            this.txtMinTemp.Size = new System.Drawing.Size(48, 20);
-            this.txtMinTemp.TabIndex = 5;
-            // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtMinTemp);
+            this.groupBox1.Controls.Add(this.txtMaxTemp);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.txtMinTemp);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.txtMaxTemp);
             this.groupBox1.Location = new System.Drawing.Point(33, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(218, 64);
@@ -119,9 +105,40 @@ namespace Mlem
             this.label3.TabIndex = 6;
             this.label3.Text = "°C";
             // 
+            // btnOK
+            // 
+            this.btnOK.Location = new System.Drawing.Point(230, 168);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.TabIndex = 7;
+            this.btnOK.Text = "OK";
+            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
+            // txtMinTemp
+            // 
+            this.txtMinTemp.Location = new System.Drawing.Point(140, 38);
+            this.txtMinTemp.MaxLength = 2;
+            this.txtMinTemp.Name = "txtMinTemp";
+            this.txtMinTemp.ShortcutsEnabled = false;
+            this.txtMinTemp.Size = new System.Drawing.Size(48, 20);
+            this.txtMinTemp.TabIndex = 8;
+            this.txtMinTemp.Text = "0";
+            // 
+            // txtMaxTemp
+            // 
+            this.txtMaxTemp.Location = new System.Drawing.Point(140, 13);
+            this.txtMaxTemp.MaxLength = 2;
+            this.txtMaxTemp.Name = "txtMaxTemp";
+            this.txtMaxTemp.ShortcutsEnabled = false;
+            this.txtMaxTemp.Size = new System.Drawing.Size(48, 20);
+            this.txtMaxTemp.TabIndex = 8;
+            this.txtMaxTemp.Text = "0";
+            // 
             // LimitWindow
             // 
             this.ClientSize = new System.Drawing.Size(545, 203);
+            this.Controls.Add(this.btnOK);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.limitSetter);
             this.DoubleBuffered = true;
@@ -170,37 +187,36 @@ namespace Mlem
             }
         }
 
-        public LimitWindow(List<LimitTempView> views) : this()
+        public LimitWindow(List<LimitTempView> views)
+            : this()
         {
-            try
+            for (int i = 0; i < views.Count; i++)
             {
-                for (int i = 0; i < views.Count; i++)
+                LimitTempView col = views[i];
+                // Do not add new column on the first iteration
+                // because there is already one
+                if (!(limitSetter.ColumnCount == 1 && i == 0))
                 {
-                    LimitTempView col = views[i];
-                    // Do not add new column on the first iteration
-                    // because there is already one
-                    if (!(limitSetter.ColumnCount == 1 && i == 0))
-                    {
-                        limitSetter.ColumnCount++;
-                        limitSetter.Width += COL_WIDTH;
-                    }
-                    ColumnStyle style = new ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F);
-                    limitSetter.ColumnStyles.Add(style);
-
-                    limitSetter.Controls.Add(col.LabName, i, 0);
-                    FillCell(col.CbSelected, col.TxtTime, i, 1);
+                    limitSetter.ColumnCount++;
+                    limitSetter.Width += COL_WIDTH;
                 }
+                ColumnStyle style = new ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F);
+                limitSetter.ColumnStyles.Add(style);
 
-                UpdateColumnStyles();
-
-                int w = views[0].CbSelected.Width;
-                Console.WriteLine(w);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
+                limitSetter.Controls.Add(col.LabName, i, 0);
+                FillCell(col.CbSelected, col.TxtTime, i, 1);
             }
 
+            UpdateColumnStyles();
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            // validate textboxes
+
+            // 1. check if any textbox is empty
+            // 2. check if max temp is greater than min temp
+            // 3. check if any temp is greater than 0
         }
     }
 }

@@ -10,11 +10,11 @@ namespace Mlem
     class LimitTempView
     {
         private Label labName = new Label();
-        private TextBox txtTime = new TextBox();
+        private NumericTextBox txtTime = new NumericTextBox();
         private CheckBox cbSelected = new CheckBox();
         private LimitTempModel model;
 
-        public TextBox TxtTime
+        public NumericTextBox TxtTime
         {
             get { return txtTime; }
             set { txtTime = value; }
@@ -43,10 +43,7 @@ namespace Mlem
             this.model = model;
 
             labName.Text = model.Name;
-
-            txtTime.Text = "0";
             cbSelected.Checked = false;
-
             txtTime.TextChanged += txtTime_TextChanged;
             cbSelected.CheckedChanged += cbSelected_CheckedChanged;
         }
@@ -71,7 +68,14 @@ namespace Mlem
         void txtTime_TextChanged(object sender, EventArgs e)
         {
             TextBox txt = (TextBox)sender;
-            model.Time = Convert.ToInt32(txt.Text);
+            if (txt.Text.Length > 0)
+            {
+                model.Time = Convert.ToInt32(txt.Text);
+            }
+            else
+            {
+                model.Time = 0;
+            }
         }
     }
 }

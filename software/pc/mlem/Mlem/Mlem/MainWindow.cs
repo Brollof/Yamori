@@ -18,7 +18,7 @@ namespace Mlem
 {
     public partial class MainWindow : Office2007Form
     {
-        private Mlem mlem;
+        private Link link;
 
         public MainWindow()
         {
@@ -28,7 +28,10 @@ namespace Mlem
             CalendarInit(GetUiLampsNum() + 1, GetUiMaxLampsNum() + 1);
             InitHeaterRow("Kabel", eCalendarColor.Steel);
             LampManager.OnLampNamesValidationStatusChanged += LampManager_OnLampNamesValidationStatusChanged;
-            mlem = new Mlem("127.0.0.1", 50007);
+            link = new Link("127.0.0.1", 50007);
+
+            // for debug only !
+            btnLimits.Enabled = true;
         }
 
         void LampManager_OnLampNamesValidationStatusChanged(ValidationEventArgs args)
@@ -52,10 +55,10 @@ namespace Mlem
             //mlem.Send("Hello :)");
             //mlem.Receive();
 
-            if (mlem.Connect())
+            if (link.Connect())
             {
                 SendJsonData();
-                mlem.Close();
+                link.Close();
             }
         }
 
@@ -117,7 +120,7 @@ namespace Mlem
 
                 string output = JsonCreator.GetJson(heater, lamps, LampManager.GetLampsConfig());
                 Console.WriteLine(output);
-                mlem.Send(output);
+                link.Send(output);
             }
             catch (Exception ex)
             {
@@ -127,12 +130,12 @@ namespace Mlem
 
         private void btnRead_Click(object sender, EventArgs e)
         {
-            if (mlem.Connect())
+            if (link.Connect())
             {
                 Console.WriteLine("Read config");
-                mlem.Send("read command");
-                mlem.Receive();
-                mlem.Close();
+                link.Send("read command");
+                link.Receive();
+                link.Close();
             }
         }
 
@@ -154,6 +157,7 @@ namespace Mlem
             Console.WriteLine(views[0].TxtTime.Text);
             int minutes = views[0].Model.Time;
             Console.WriteLine(minutes);
+            LimitWindow window = (LimitWindow)sender;
         }
     }
 }

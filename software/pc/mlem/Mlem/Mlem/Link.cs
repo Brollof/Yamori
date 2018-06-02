@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mlem
 {
-    class Mlem
+    class Link
     {
         // min - czerwona 0.5h
         // max - off wszystko 1h, dalej normalnie
@@ -23,7 +23,7 @@ namespace Mlem
             set { connected = value; }
         }
 
-        public Mlem(string server, int port)
+        public Link(string server, int port)
         {
             this.server = server;
             this.port = port;
