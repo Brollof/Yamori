@@ -46,5 +46,13 @@ namespace Mlem
             }
             return ret;
         }
+
+        public LimitTempModel Clone()
+        {
+            LimitTempModel model = new LimitTempModel(this.Name);
+            model.selected = this.selected;
+            model.time = this.time;
+            return model;
+        }
     }
 }

@@ -47,7 +47,9 @@ namespace Mlem
             labName.Anchor = AnchorStyles.None;
             LabName.TextAlign = ContentAlignment.MiddleCenter;
 
-            cbSelected.Checked = false;
+            cbSelected.Checked = model.Selected;
+            txtTime.Text = model.Time.ToString();
+
             txtTime.TextChanged += txtTime_TextChanged;
             cbSelected.CheckedChanged += cbSelected_CheckedChanged;
         }

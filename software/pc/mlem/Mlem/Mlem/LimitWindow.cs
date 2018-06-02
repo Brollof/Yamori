@@ -24,6 +24,7 @@ namespace Mlem
         private List<LimitTempView> views;
         private bool isValid = false;
         public enum TempType { MIN, MAX };
+        private bool closeByOk = false;
 
         public bool IsValid
         {
@@ -158,7 +159,6 @@ namespace Mlem
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-
         }
 
         public LimitWindow()
@@ -166,6 +166,19 @@ namespace Mlem
             InitializeComponent();
             limitSetter.ColumnStyles[0].Width = COL_WIDTH;
             limitSetter.Width = COL_WIDTH;
+            closeByOk = false;
+            this.FormClosing += LimitWindow_FormClosing;
+        }
+
+        void LimitWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!closeByOk)
+            {
+                for (int i = 0; i < views.Count; i++)
+                {
+                    views[i].Model = beginState[i];
+                }
+            }
         }
 
         private void FillCell(CheckBox cb, TextBox txt, int col, int row)
@@ -195,6 +208,8 @@ namespace Mlem
             }
         }
 
+        private List<LimitTempModel> beginState = new List<LimitTempModel>();
+
         public LimitWindow(List<LimitTempView> gui)
             : this()
         {
@@ -217,6 +232,10 @@ namespace Mlem
             }
 
             UpdateColumnStyles();
+
+            // Copy current model state
+            beginState.Clear();
+            beginState.AddRange(views.ConvertAll(view => view.Model.Clone()));
         }
 
         private void ShowError(string msg)
@@ -269,6 +288,7 @@ namespace Mlem
             else
             {
                 isValid = true;
+                closeByOk = true;
                 this.Close();
             }
         }

@@ -150,7 +150,21 @@ namespace Mlem
             List<string> names = LampManager.GetNames();
             names.Insert(0, GetHeaterName());
 
-            List<LimitTempModel> models = LimitTempModel.Create(names);
+            List<LimitTempModel> models;
+            if (views == null)
+            {
+                models = LimitTempModel.Create(names);
+            }
+            else
+            {
+                models = views.ConvertAll(view => view.Model);
+                // update names
+                for (int i = 0; i < models.Count; i++)
+                {
+                    models[i].Name = names[i];
+                }
+            }
+
             views = LimitTempView.Create(models);
 
             LimitWindow window = new LimitWindow(views);
@@ -160,9 +174,6 @@ namespace Mlem
 
         void window_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //Console.WriteLine(views[0].TxtTime.Text);
-            //int minutes = views[0].Model.Time;
-            //Console.WriteLine(minutes);
             LimitWindow window = (LimitWindow)sender;
 
             if (window.IsValid)
