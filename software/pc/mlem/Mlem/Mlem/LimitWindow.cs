@@ -148,14 +148,14 @@ namespace Mlem
             Panel panel = new Panel();
             limitSetter.Controls.Add(panel, col, row);
 
-            txt.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            txt.Location = new Point(50, 0);
-            txt.Width = 50;
-
             cb.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            cb.Width = 45;
+            cb.Width = 20;
 
-            panel.Width = 100;
+            txt.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            txt.Location = new Point(cb.Width + 10, 0);
+            txt.Width = 40;
+
+            panel.Width = COL_WIDTH;
             panel.Controls.Add(cb);
             panel.Controls.Add(txt);
         }
@@ -192,6 +192,9 @@ namespace Mlem
                 }
 
                 UpdateColumnStyles();
+
+                int w = views[0].CbSelected.Width;
+                Console.WriteLine(w);
             }
             catch (Exception ex)
             {
