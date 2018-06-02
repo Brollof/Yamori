@@ -27,25 +27,11 @@ namespace Mlem
     class LimitTempModel
     {
         private string name;
-        LimitInputModel min = new LimitInputModel();
-        LimitInputModel max = new LimitInputModel();
 
         public LimitTempModel() { }
         public LimitTempModel(string name)
         {
             this.name = name;
-        }
-
-        internal LimitInputModel Min
-        {
-            get { return min; }
-            set { min = value; }
-        }
-
-        internal LimitInputModel Max
-        {
-            get { return max; }
-            set { max = value; }
         }
 
         public string Name

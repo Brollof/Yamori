@@ -11,6 +11,25 @@ namespace Mlem
     {
         private TextBox txtTime = new TextBox();
         private CheckBox cbSelected = new CheckBox();
+        private LimitInputModel model = new LimitInputModel();
+
+        public LimitInputView()
+        {
+            txtTime.TextChanged += txtTime_TextChanged;
+            cbSelected.CheckedChanged += cbSelected_CheckedChanged;
+        }
+
+        void cbSelected_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cb = (CheckBox)sender;
+            model.Selected = cb.Checked;
+        }
+
+        void txtTime_TextChanged(object sender, EventArgs e)
+        {
+            TextBox txt = (TextBox)sender;
+            model.Time = Convert.ToInt32(txt.Text);
+        }
 
         public TextBox TxtTime
         {
@@ -22,6 +41,12 @@ namespace Mlem
         {
             get { return cbSelected; }
             set { cbSelected = value; }
+        }
+
+        internal LimitInputModel Model
+        {
+            get { return model; }
+            set { model = value; }
         }
     }
 
