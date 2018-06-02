@@ -22,10 +22,6 @@ namespace Mlem
     
         protected override void Dispose(bool disposing)
         {
-            //if (disposing && (components != null))
-            //{
-            //    components.Dispose();
-            //}
             base.Dispose(disposing);
         }
 
@@ -46,14 +42,13 @@ namespace Mlem
             // 
             this.limitSetter.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.limitSetter.ColumnCount = 1;
-            this.limitSetter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.limitSetter.Location = new System.Drawing.Point(33, 77);
+            this.limitSetter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.limitSetter.Location = new System.Drawing.Point(33, 73);
             this.limitSetter.Name = "limitSetter";
             this.limitSetter.RowCount = 2;
-            this.limitSetter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.limitSetter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.limitSetter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.limitSetter.Size = new System.Drawing.Size(50, 60);
+            this.limitSetter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.limitSetter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.limitSetter.Size = new System.Drawing.Size(100, 60);
             this.limitSetter.TabIndex = 2;
             // 
             // label1
@@ -164,8 +159,8 @@ namespace Mlem
 
         private void UpdateColumnStyles()
         {
-            float percent = 100f / (limitSetter.ColumnCount - 1);
-            for (int i = 1; i < limitSetter.ColumnCount; i++)
+            float percent = 100f / limitSetter.ColumnCount;
+            for (int i = 0; i < limitSetter.ColumnCount; i++)
             {
                 limitSetter.ColumnStyles[i].SizeType = SizeType.Percent;
                 limitSetter.ColumnStyles[i].Width = percent;
@@ -179,13 +174,18 @@ namespace Mlem
                 for (int i = 0; i < views.Count; i++)
                 {
                     LimitTempView col = views[i];
-                    limitSetter.ColumnCount++;
-                    limitSetter.Width += 100;
+                    // Do not add new column on the first iteration
+                    // because there is already one
+                    if (!(limitSetter.ColumnCount == 1 && i == 0))
+                    {
+                        limitSetter.ColumnCount++;
+                        limitSetter.Width += (int)limitSetter.ColumnStyles[0].Width;
+                    }
                     ColumnStyle style = new ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F);
                     limitSetter.ColumnStyles.Add(style);
 
-                    limitSetter.Controls.Add(col.LabName, i + 1, 0);
-                    FillCell(col.CbSelected, col.TxtTime, i + 1, 1);
+                    limitSetter.Controls.Add(col.LabName, i, 0);
+                    FillCell(col.CbSelected, col.TxtTime, i, 1);
                 }
 
                 UpdateColumnStyles();
