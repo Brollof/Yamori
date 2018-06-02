@@ -21,6 +21,14 @@ namespace Mlem
         private NumericTextBox txtMaxTemp;
         private NumericTextBox txtMinTemp;
         private const int COL_WIDTH = 80;
+        private List<LimitTempView> views;
+        private bool isValid = false;
+        public enum TempType { MIN, MAX };
+
+        public bool IsValid
+        {
+            get { return isValid; }
+        }
     
         protected override void Dispose(bool disposing)
         {
@@ -187,9 +195,10 @@ namespace Mlem
             }
         }
 
-        public LimitWindow(List<LimitTempView> views)
+        public LimitWindow(List<LimitTempView> gui)
             : this()
         {
+            views = gui;
             for (int i = 0; i < views.Count; i++)
             {
                 LimitTempView col = views[i];
@@ -210,13 +219,72 @@ namespace Mlem
             UpdateColumnStyles();
         }
 
+        private void ShowError(string msg)
+        {
+            MessageBox.Show(msg, "Błąd danych wejściowych", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
         private void btnOK_Click(object sender, EventArgs e)
         {
-            // validate textboxes
+            string msg = "";
+            if (string.IsNullOrEmpty(txtMinTemp.Text) ||
+                string.IsNullOrEmpty(txtMaxTemp.Text))
+            {
+                msg = "Pola nie mogą być puste!";
+                goto finish;
+            }
 
-            // 1. check if any textbox is empty
-            // 2. check if max temp is greater than min temp
-            // 3. check if any temp is greater than 0
+            int min = Convert.ToInt32(txtMinTemp.Text);
+            int max = Convert.ToInt32(txtMaxTemp.Text);
+
+            if (min >= max)
+            {
+                msg = "Temperatura minimalna musi być mniejsza niż temperatura maksymalna!";
+                goto finish;
+            }
+
+            foreach (var view in views)
+            {
+                if (view.CbSelected.Checked)
+                {
+                    if (string.IsNullOrEmpty(view.TxtTime.Text))
+                    {
+                        msg = "Pola nie mogą być puste!";
+                        goto finish;
+                    }
+                    else if (view.TxtTime.Text == "0")
+                    {
+                        msg = "Czas musi być większy od 0!";
+                        goto finish;
+                    }
+                }
+            }
+
+        finish:
+            if (!string.IsNullOrEmpty(msg))
+            {
+                isValid = false;
+                ShowError(msg);
+            }
+            else
+            {
+                isValid = true;
+                this.Close();
+            }
+        }
+
+        public int GetTemp(TempType type)
+        {
+            if (type == TempType.MIN)
+            {
+                return Convert.ToInt32(txtMinTemp.Text);
+            }
+            else if (type == TempType.MAX)
+            {
+                return Convert.ToInt32(txtMaxTemp.Text);
+            }
+
+            return 0;
         }
     }
 }

@@ -154,10 +154,18 @@ namespace Mlem
 
         void window_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Console.WriteLine(views[0].TxtTime.Text);
-            int minutes = views[0].Model.Time;
-            Console.WriteLine(minutes);
+            //Console.WriteLine(views[0].TxtTime.Text);
+            //int minutes = views[0].Model.Time;
+            //Console.WriteLine(minutes);
             LimitWindow window = (LimitWindow)sender;
+
+            if (window.IsValid)
+            {
+                int min = window.GetTemp(LimitWindow.TempType.MIN);
+                int max = window.GetTemp(LimitWindow.TempType.MAX);
+                Console.WriteLine("min temp limit: " + min);
+                Console.WriteLine("max temp limit: " + max);
+            }
         }
     }
 }
