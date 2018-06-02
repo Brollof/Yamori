@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +44,9 @@ namespace Mlem
             this.model = model;
 
             labName.Text = model.Name;
+            labName.Anchor = AnchorStyles.None;
+            LabName.TextAlign = ContentAlignment.MiddleCenter;
+
             cbSelected.Checked = false;
             txtTime.TextChanged += txtTime_TextChanged;
             cbSelected.CheckedChanged += cbSelected_CheckedChanged;
