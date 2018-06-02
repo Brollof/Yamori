@@ -55,23 +55,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CalendarMain.cs">
+    <Compile Include="MainWindow\CalendarMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CalendarUtils.cs" />
     <Compile Include="ColorDropDown.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="EventsMain.cs">
+    <Compile Include="MainWindow\EventsMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="JsonData.cs" />
     <Compile Include="LampManager.cs" />
-    <Compile Include="LampPickerMain.cs">
+    <Compile Include="MainWindow\LampPickerMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LimitTempModel.cs" />
-    <Compile Include="LimitTempView.cs" />
+    <Compile Include="LimitTempViewModel\LimitTempModel.cs" />
+    <Compile Include="LimitTempViewModel\LimitTempView.cs" />
     <Compile Include="LimitWindow.cs">
       <SubType>Form</SubType>
     </Compile>

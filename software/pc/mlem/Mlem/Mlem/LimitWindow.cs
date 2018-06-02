@@ -121,7 +121,7 @@ namespace Mlem
             // 
             // LimitWindow
             // 
-            this.ClientSize = new System.Drawing.Size(517, 203);
+            this.ClientSize = new System.Drawing.Size(545, 203);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.limitSetter);
             this.DoubleBuffered = true;
