@@ -13,6 +13,13 @@ namespace Mlem
     {
         private System.Windows.Forms.Label labMin;
         private System.Windows.Forms.TableLayoutPanel limitSetter;
+        private Label label1;
+        private Label label2;
+        private TextBox txtMaxTemp;
+        private TextBox txtMinTemp;
+        private GroupBox groupBox1;
+        private Label label4;
+        private Label label3;
         private System.Windows.Forms.Label labMax;
     
         protected override void Dispose(bool disposing)
@@ -29,7 +36,15 @@ namespace Mlem
             this.labMin = new System.Windows.Forms.Label();
             this.labMax = new System.Windows.Forms.Label();
             this.limitSetter = new System.Windows.Forms.TableLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtMaxTemp = new System.Windows.Forms.TextBox();
+            this.txtMinTemp = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.limitSetter.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // labMin
@@ -57,7 +72,7 @@ namespace Mlem
             this.limitSetter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.limitSetter.Controls.Add(this.labMin, 0, 2);
             this.limitSetter.Controls.Add(this.labMax, 0, 1);
-            this.limitSetter.Location = new System.Drawing.Point(33, 34);
+            this.limitSetter.Location = new System.Drawing.Point(33, 77);
             this.limitSetter.Name = "limitSetter";
             this.limitSetter.RowCount = 3;
             this.limitSetter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
@@ -66,9 +81,77 @@ namespace Mlem
             this.limitSetter.Size = new System.Drawing.Size(50, 100);
             this.limitSetter.TabIndex = 2;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(128, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Maksymalna temperatura:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 41);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(116, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Minimalna temperatura:";
+            // 
+            // txtMaxTemp
+            // 
+            this.txtMaxTemp.Location = new System.Drawing.Point(140, 13);
+            this.txtMaxTemp.MaxLength = 2;
+            this.txtMaxTemp.Name = "txtMaxTemp";
+            this.txtMaxTemp.Size = new System.Drawing.Size(48, 20);
+            this.txtMaxTemp.TabIndex = 5;
+            // 
+            // txtMinTemp
+            // 
+            this.txtMinTemp.Location = new System.Drawing.Point(140, 38);
+            this.txtMinTemp.MaxLength = 2;
+            this.txtMinTemp.Name = "txtMinTemp";
+            this.txtMinTemp.Size = new System.Drawing.Size(48, 20);
+            this.txtMinTemp.TabIndex = 5;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.txtMinTemp);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.txtMaxTemp);
+            this.groupBox1.Location = new System.Drawing.Point(33, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(218, 64);
+            this.groupBox1.TabIndex = 6;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Limity";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(194, 16);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(18, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "°C";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(194, 41);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(18, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "°C";
+            // 
             // LimitWindow
             // 
             this.ClientSize = new System.Drawing.Size(517, 203);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.limitSetter);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -78,6 +161,8 @@ namespace Mlem
             this.ShowInTaskbar = false;
             this.limitSetter.ResumeLayout(false);
             this.limitSetter.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -137,6 +222,7 @@ namespace Mlem
             {
                 Console.WriteLine(ex);
             }
+
         }
     }
 }
