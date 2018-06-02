@@ -103,6 +103,11 @@ namespace Mlem
             calendarView1.MultiCalendarTimeLineViews[0].CalendarColor = color;
         }
 
+        private string GetHeaterName()
+        {
+            return calendarView1.DisplayedOwners[0];
+        }
+
         private void SendJsonData()
         {
             try
@@ -143,6 +148,7 @@ namespace Mlem
         private void btnLimits_Click(object sender, EventArgs e)
         {
             List<string> names = LampManager.GetNames();
+            names.Insert(0, GetHeaterName());
 
             List<LimitTempModel> models = LimitTempModel.Create(names);
             views = LimitTempView.Create(models);
