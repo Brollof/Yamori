@@ -35,7 +35,7 @@ namespace Mlem
             // labMin
             // 
             this.labMin.AutoSize = true;
-            this.labMin.Location = new System.Drawing.Point(4, 65);
+            this.labMin.Location = new System.Drawing.Point(4, 67);
             this.labMin.Name = "labMin";
             this.labMin.Size = new System.Drawing.Size(30, 13);
             this.labMin.TabIndex = 0;
@@ -44,7 +44,7 @@ namespace Mlem
             // labMax
             // 
             this.labMax.AutoSize = true;
-            this.labMax.Location = new System.Drawing.Point(4, 33);
+            this.labMax.Location = new System.Drawing.Point(4, 34);
             this.labMax.Name = "labMax";
             this.labMax.Size = new System.Drawing.Size(33, 13);
             this.labMax.TabIndex = 1;
@@ -71,7 +71,11 @@ namespace Mlem
             this.ClientSize = new System.Drawing.Size(517, 203);
             this.Controls.Add(this.limitSetter);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.Name = "LimitWindow";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.limitSetter.ResumeLayout(false);
             this.limitSetter.PerformLayout();
             this.ResumeLayout(false);

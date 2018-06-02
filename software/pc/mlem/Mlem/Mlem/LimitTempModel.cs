@@ -9,7 +9,7 @@ namespace Mlem
     class LimitInputModel
     {
         private bool selected;
-        private TimeSpan time;
+        private int time;
 
         public bool Selected
         {
@@ -17,7 +17,7 @@ namespace Mlem
             set { selected = value; }
         }
 
-        public TimeSpan Time
+        public int Time
         {
             get { return time; }
             set { time = value; }

@@ -32,12 +32,18 @@ namespace Mlem
         private LimitInputView max = new LimitInputView();
         private LimitTempModel model;
 
+        internal LimitTempModel Model
+        {
+            get { return model; }
+            set { model = value; }
+        }
+
         internal LimitInputView Min
         {
             get { return min; }
             set { min = value; }
         }
-        
+
         internal LimitInputView Max
         {
             get { return max; }

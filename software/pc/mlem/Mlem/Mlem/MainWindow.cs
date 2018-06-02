@@ -34,6 +34,7 @@ namespace Mlem
         void LampManager_OnLampNamesValidationStatusChanged(ValidationEventArgs args)
         {
             btnSend.Enabled = args.IsValid;
+            btnLimits.Enabled = args.IsValid;
         }
 
         private int GetUiLampsNum()
@@ -135,15 +136,24 @@ namespace Mlem
             }
         }
 
+        private List<LimitTempView> views = null;
         private void btnLimits_Click(object sender, EventArgs e)
         {
             List<string> names = LampManager.GetNames();
 
             List<LimitTempModel> models = LimitTempModel.Create(names);
-            List<LimitTempView> views = LimitTempView.Create(models);
+            views = LimitTempView.Create(models);
 
             LimitWindow window = new LimitWindow(views);
-            window.Show();
+            window.FormClosing += window_FormClosing;
+            window.ShowDialog();
+        }
+
+        void window_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Console.WriteLine(views[0].Max.TxtTime.Text);
+            int minutes = views[0].Model.Max.Time;
+            Console.WriteLine(minutes);
         }
     }
 }
