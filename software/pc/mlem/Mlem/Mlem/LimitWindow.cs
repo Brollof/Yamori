@@ -19,6 +19,7 @@ namespace Mlem
         private GroupBox groupBox1;
         private Label label4;
         private Label label3;
+        private const int COL_WIDTH = 80;
     
         protected override void Dispose(bool disposing)
         {
@@ -138,6 +139,8 @@ namespace Mlem
         public LimitWindow()
         {
             InitializeComponent();
+            limitSetter.ColumnStyles[0].Width = COL_WIDTH;
+            limitSetter.Width = COL_WIDTH;
         }
 
         private void FillCell(CheckBox cb, TextBox txt, int col, int row)
@@ -179,7 +182,7 @@ namespace Mlem
                     if (!(limitSetter.ColumnCount == 1 && i == 0))
                     {
                         limitSetter.ColumnCount++;
-                        limitSetter.Width += (int)limitSetter.ColumnStyles[0].Width;
+                        limitSetter.Width += COL_WIDTH;
                     }
                     ColumnStyle style = new ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F);
                     limitSetter.ColumnStyles.Add(style);
