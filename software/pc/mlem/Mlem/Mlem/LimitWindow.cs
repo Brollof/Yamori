@@ -145,7 +145,7 @@ namespace Mlem
             // 
             // LimitWindow
             // 
-            this.ClientSize = new System.Drawing.Size(545, 203);
+            this.ClientSize = new System.Drawing.Size(615, 203);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.limitSetter);
