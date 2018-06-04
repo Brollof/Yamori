@@ -153,20 +153,9 @@ namespace Mlem
             List<string> names = LampManager.GetNames();
             names.Insert(0, GetHeaterName());
 
-            List<LimitTempModel> models;
-            if (views == null)
-            {
-                models = LimitTempModel.Create(names);
-            }
-            else
-            {
-                models = views.ConvertAll(view => view.Model);
-                // update names
-                for (int i = 0; i < models.Count; i++)
-                {
-                    models[i].Name = names[i];
-                }
-            }
+            List<LimitTempModel> models = (views == null) ?
+                LimitTempModel.Create(names) :
+                 LimitTempModel.Create(names, views.ConvertAll(view => view.Model));
 
             views = LimitTempView.Create(models);
 

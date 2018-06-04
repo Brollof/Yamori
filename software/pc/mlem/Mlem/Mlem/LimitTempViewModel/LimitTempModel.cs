@@ -47,6 +47,27 @@ namespace Mlem
             return ret;
         }
 
+        public static List<LimitTempModel> Create(List<string> names, List<LimitTempModel> models)
+        {
+            List<LimitTempModel> ret = new List<LimitTempModel>();
+            for (int i = 0; i < names.Count; i++)
+            {
+                LimitTempModel model;
+                if (i < models.Count)
+                {
+                    model = models[i].Clone();
+                    model.Name = names[i];
+                }
+                else
+                {
+                    model = new LimitTempModel(names[i]);
+                }
+
+                ret.Add(model);
+            }
+            return ret;
+        }
+
         public LimitTempModel Clone()
         {
             LimitTempModel model = new LimitTempModel(this.Name);
