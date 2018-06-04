@@ -265,6 +265,12 @@ namespace Mlem
                 goto finish;
             }
 
+            if (!views.Any(view => view.Model.Selected))
+            {
+                msg = "Przynajmniej jedno urządzenie musi być włączone przy zbyt niskiej temperaturze!";
+                goto finish;
+            }
+
             foreach (var view in views)
             {
                 if (view.CbSelected.Checked)

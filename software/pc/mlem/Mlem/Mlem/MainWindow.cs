@@ -29,14 +29,10 @@ namespace Mlem
             InitHeaterRow("Kabel", eCalendarColor.Steel);
             LampManager.OnLampNamesValidationStatusChanged += LampManager_OnLampNamesValidationStatusChanged;
             link = new Link("127.0.0.1", 50007);
-
-            // for debug only !
-            btnLimits.Enabled = true;
         }
 
         void LampManager_OnLampNamesValidationStatusChanged(ValidationEventArgs args)
         {
-            btnSend.Enabled = args.IsValid;
             btnLimits.Enabled = args.IsValid;
         }
 
@@ -176,10 +172,9 @@ namespace Mlem
 
             if (window.IsValid)
             {
+                btnSend.Enabled = true;
                 minTempLimit = window.GetTemp(LimitWindow.TempType.MIN);
                 maxTempLimit = window.GetTemp(LimitWindow.TempType.MAX);
-                Console.WriteLine("min temp limit: " + minTempLimit);
-                Console.WriteLine("max temp limit: " + maxTempLimit);
             }
         }
     }
