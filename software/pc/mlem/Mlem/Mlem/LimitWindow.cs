@@ -210,10 +210,13 @@ namespace Mlem
 
         private List<LimitTempModel> beginState = new List<LimitTempModel>();
 
-        public LimitWindow(List<LimitTempView> gui)
+        public LimitWindow(List<LimitTempView> gui, int min, int max)
             : this()
         {
             views = gui;
+            txtMinTemp.Text = min.ToString();
+            txtMaxTemp.Text = max.ToString();
+
             for (int i = 0; i < views.Count; i++)
             {
                 LimitTempView col = views[i];

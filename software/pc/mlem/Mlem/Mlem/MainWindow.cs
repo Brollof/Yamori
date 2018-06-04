@@ -145,6 +145,9 @@ namespace Mlem
         }
 
         private List<LimitTempView> views = null;
+        private int minTempLimit = 0;
+        private int maxTempLimit = 0;
+
         private void btnLimits_Click(object sender, EventArgs e)
         {
             List<string> names = LampManager.GetNames();
@@ -167,7 +170,7 @@ namespace Mlem
 
             views = LimitTempView.Create(models);
 
-            LimitWindow window = new LimitWindow(views);
+            LimitWindow window = new LimitWindow(views, minTempLimit, maxTempLimit);
             window.FormClosing += window_FormClosing;
             window.ShowDialog();
         }
@@ -178,10 +181,10 @@ namespace Mlem
 
             if (window.IsValid)
             {
-                int min = window.GetTemp(LimitWindow.TempType.MIN);
-                int max = window.GetTemp(LimitWindow.TempType.MAX);
-                Console.WriteLine("min temp limit: " + min);
-                Console.WriteLine("max temp limit: " + max);
+                minTempLimit = window.GetTemp(LimitWindow.TempType.MIN);
+                maxTempLimit = window.GetTemp(LimitWindow.TempType.MAX);
+                Console.WriteLine("min temp limit: " + minTempLimit);
+                Console.WriteLine("max temp limit: " + maxTempLimit);
             }
         }
     }
