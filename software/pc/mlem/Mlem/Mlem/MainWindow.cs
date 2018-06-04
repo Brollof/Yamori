@@ -19,11 +19,12 @@ namespace Mlem
     public partial class MainWindow : Office2007Form
     {
         private Link link;
+        private const int DEFAULT_LAMP_CNT = 4;
 
         public MainWindow()
         {
             InitializeComponent();
-
+            ddLampNum.Text = DEFAULT_LAMP_CNT.ToString();
             LampPickerInit(GetUiLampsNum());
             CalendarInit(GetUiLampsNum() + 1, GetUiMaxLampsNum() + 1);
             InitHeaterRow("Kabel", eCalendarColor.Steel);
