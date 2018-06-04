@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mlem
 {
-    class LimitTempModel
+    public class LimitTempModel
     {
         private string name;
         private bool selected;

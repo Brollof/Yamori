@@ -123,8 +123,14 @@ namespace Mlem
                     lamps.Add(new Lamp(lampName, events));
                 }
 
-                string output = JsonCreator.GetJson(heater, lamps, LampManager.GetLampsConfig());
-                Console.WriteLine(output);
+                string output = JsonCreator.GetJson(
+                    heater,
+                    lamps,
+                    LampManager.GetLampsConfig(),
+                    minTempLimit,
+                    maxTempLimit,
+                    views.ConvertAll(view => view.Model));
+
                 link.Send(output);
             }
             catch (Exception ex)

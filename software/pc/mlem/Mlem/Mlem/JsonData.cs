@@ -28,11 +28,30 @@ namespace Mlem
             return new JProperty(propName, array);
         }
 
-        public static string GetJson(List<Event> heater, List<Lamp> lamps, List<LampConfig> lampConfig)
+        private static JObject GetConfigJsonObj(List<LampConfig> lampConfig, int min, int max, List<LimitTempModel> limitTempModels)
+        {
+            JObject config = new JObject();
+            JObject limits = new JObject();
+
+            config.Add(JsonCreator.PropertyFromList("Lamps", lampConfig));
+
+            // filter models - remove not selected one
+            limitTempModels.RemoveAll(model => !model.Selected);
+
+            limits.Add(JsonCreator.PropertyFromList("Events", limitTempModels));
+            limits.Add(new JProperty("Min", min));
+            limits.Add(new JProperty("Max", max));
+
+            config.Add("Limits", limits);
+
+            return config;
+        }
+
+        public static string GetJson(List<Event> heater, List<Lamp> lamps, List<LampConfig> lampConfig, int min, int max, List<LimitTempModel> limitTempModels)
         {
             JObject data = new JObject();
             JObject events = new JObject();
-            JObject config = new JObject();
+            JObject config = GetConfigJsonObj(lampConfig, min, max, limitTempModels);
 
             // Heater
             events.Add(JsonCreator.PropertyFromList("Heater", heater));
@@ -45,9 +64,6 @@ namespace Mlem
             }
 
             events.Add(new JProperty("Lamps", lampsRoot));
-
-            // Config
-            config.Add(JsonCreator.PropertyFromList("Lamps", lampConfig));
 
             data.Add("Events", events);
             data.Add("Config", config);
