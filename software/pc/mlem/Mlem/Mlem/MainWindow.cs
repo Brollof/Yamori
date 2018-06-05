@@ -20,10 +20,13 @@ namespace Mlem
     {
         private Link link;
         private const int DEFAULT_LAMP_CNT = 4;
+        private Version v = new Version(1, 0);
 
         public MainWindow()
         {
             InitializeComponent();
+            this.Text = "Mlem " + v.ToString();
+
             ddLampNum.Text = DEFAULT_LAMP_CNT.ToString();
             LampPickerInit(GetUiLampsNum());
             CalendarInit(GetUiLampsNum() + 1, GetUiMaxLampsNum() + 1);
