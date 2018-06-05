@@ -60,7 +60,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.displayView(0)
 
         # styles
-        self.initStyles();
+        self.initStyles()
 
         self.io = ter_io.IOManager()
         self.tman = ter_temp.TempSensorsManager()
@@ -70,7 +70,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.diagThread.start()
 
         self.linkThread = LinkThread()
-        self.linkThread.start();
+        self.linkThread.start()
 
     def updateDiagPage(self, stats):
         self.labTTemp1.setText('%.1f' % stats['temp1'].lastVal)
@@ -90,7 +90,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         styles.removeStyle(self.menu[self.activeMenu], MENU_INDICATOR)
         styles.addStyle(self.menu[viewNum], MENU_INDICATOR)
         self.mainView.setCurrentIndex(viewNum)
-        self.activeMenu = viewNum;
+        self.activeMenu = viewNum
 
     def createLampButtonCallback(self, color):
         return lambda: self.lampToggle(color)
@@ -117,6 +117,15 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         else:
             styles.setAlpha(self.lamps[lamp]['btn'], 30)
         self.log.debug('Lamp {} {}'.format(lamp, convertBool(state, 'ON', 'OFF')))
+
+    def showInitScreen(self):
+        self.verticalLayoutWidget.hide() # hides all controls
+        self.initLabel = QLabel(self.centralwidget)
+        self.initLabel.setObjectName("initLabel")
+        self.initLabel.setText('ZAINICJALIZUJ\nURZĄDZENIE')
+        self.initLabel.setStyleSheet('font-size: 80px; color: darkblue')
+        self.initLabel.setAlignment(PyQt5.QtCore.Qt.AlignHCenter | PyQt5.QtCore.Qt.AlignVCenter)
+        self.initLabel.setFixedSize(self.width(), self.height())
 
 
 def main():
