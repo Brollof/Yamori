@@ -102,7 +102,7 @@ class IOManager():
         """
 
         super(self.__class__, self).__init__()
-        self.log = logging.getLogger('IOM thread')
+        self.log = logging.getLogger('IOM_T')
         self.asyncIO = AsyncIO(self.QUEUE_CHECK_PERIOD, self.__onRead, self.__onWrite, self.__onStart)
         self.ios = TerIO()
         self.events = {

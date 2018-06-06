@@ -40,7 +40,7 @@ class DiagThread(QThread):
 
     def __init__(self, tman):
         super(self.__class__, self).__init__()
-        self.log = logging.getLogger('DIAG thread')
+        self.log = logging.getLogger('DIAG_T')
         self.temp1Stats = Stat('temp1')
         self.temp2Stats = Stat('temp2')
         self.cpuTemp = Stat('cpuTemp')

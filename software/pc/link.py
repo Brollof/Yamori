@@ -2,14 +2,13 @@ import logging
 import socket
 import json
 from PyQt5.QtCore import QThread 
-
-import data_parser
 from config_manager import ConfigWorker
+
 
 class LinkThread(QThread):
     def __init__(self):
         super(self.__class__, self).__init__()
-        self.log = logging.getLogger('LINK thread')
+        self.log = logging.getLogger('LINK_T')
         self.host = ''
         self.port = 50007
 
@@ -18,16 +17,16 @@ class LinkThread(QThread):
         while True:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.bind((self.host, self.port))
-                print('Binded')
+                self.log.info('Socket binded')
                 s.listen(1)
                 conn, addr = s.accept()
-                print('Accepted')
+                self.log.info('Connection accepted')
                 with conn:
-                    print('Connected by', addr)
+                    self.log.info('Connected by', addr)
                     while True:
                         data = conn.recv(1024)
                         if not data:
-                            print('Disconnected...')
+                            self.log.info('Disconnected...')
                             break
                         # else:
                             # conn.sendall(data)
@@ -38,9 +37,3 @@ class LinkThread(QThread):
                             data = json.loads(data)
                             cw = ConfigWorker(data)
                             cw.start()
-                            # print(data)
-                            # print(data_parser.getConfig(data))
-                            # print("Heater: ")
-                            # print(data['Heater'])
-                            # for i in data['Events']['Lamps']:
-                                # print(i)

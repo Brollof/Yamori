@@ -6,7 +6,7 @@ class TempSensorsManager():
     QUEUE_CHECK_PERIOD = 0.2 # seconds
 
     def __init__(self):
-        self.log = logging.getLogger('Temp Thread')
+        self.log = logging.getLogger('TEMP_T')
         self.ds = ds18b20.DS18B20()
         self.asyncIO = AsyncIO(self.QUEUE_CHECK_PERIOD, self.__onRead, None, self.__onStart)
 
@@ -15,7 +15,6 @@ class TempSensorsManager():
 
     def __onStart(self):
         self.log.info('Temp sensor thread started')
-        print('Started')
 
     def read(self):
         return self.asyncIO.read(None)
