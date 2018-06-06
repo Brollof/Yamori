@@ -3,7 +3,7 @@ from PyQt5.QtCore import QThread
 from threading import Lock, Thread
 from time import sleep
 import json
-
+from ter_utils import saveJsonFile, readJsonFile
 # DEBUG ONLY
 # import ter_logger
 # ter_logger.init()
@@ -18,22 +18,10 @@ class ConfigWorker(Thread):
         self.data = data
 
     def saveData(self, data):
-        try:
-            with open(ConfigWorker.FILENAME, 'w') as f:
-                json.dump(data, f, indent=2)
-        except Exception as e:
-            self.log.error("File writing failed")
-            self.log.error(e)
+        saveJsonFile(ConfigWorker.FILENAME, data, self.log)
 
     def loadData(self):
-        try:
-            with open(ConfigWorker.FILENAME, 'r') as f:
-                return json.load(f)
-        except Exception as e:
-            self.log.error("File reading failed")
-            self.log.error(e)
-            return None
-
+        return readJsonFile(ConfigWorker.FILENAME, self.log)
 
     def run(self):
         if ConfigWorker.mutex.acquire(timeout=1) == False:

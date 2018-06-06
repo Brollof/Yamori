@@ -1,8 +1,35 @@
+import json
+
 def convertBool(boolVal, ifTrue, ifFalse):
     if type(boolVal) is not bool:
         print(type(boolVal))
         raise TypeError
     return ifTrue if boolVal else ifFalse
+
+def readJsonFile(filename, logger=None):
+    try:
+        with open(filename, 'r') as f:
+            return json.load(f)
+    except Exception as e:
+        if logger:
+            logger.error("File reading failed!")
+            logger.error(e)
+        else:
+            print("File reading failed!")
+            print(e)
+        return None
+
+def saveJsonFile(filename, data, logger=None):
+    try:
+        with open(filename, 'w') as f:
+            json.dump(data, f, indent=2)
+    except Exception as e:
+        if logger:
+            logger.error("File writing failed!")
+            logger.error(e)
+        else:
+            print("File writing failed!")
+            print(e)
 
 # test functions
 def main():
