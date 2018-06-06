@@ -3,6 +3,9 @@ import socket
 import json
 from PyQt5.QtCore import QThread 
 
+import data_parser
+from config_manager import ConfigWorker
+
 class LinkThread(QThread):
     def __init__(self):
         super(self.__class__, self).__init__()
@@ -33,8 +36,11 @@ class LinkThread(QThread):
                             conn.sendall(b'sending current config')
                         else:
                             data = json.loads(data)
-                            print(data)
+                            cw = ConfigWorker(data)
+                            cw.start()
+                            # print(data)
+                            # print(data_parser.getConfig(data))
                             # print("Heater: ")
                             # print(data['Heater'])
-                            for i in data['Events']['Lamps']:
-                                print(i)
+                            # for i in data['Events']['Lamps']:
+                                # print(i)
