@@ -1,5 +1,4 @@
 import logging
-from PyQt5.QtCore import QThread
 from threading import Lock, Thread
 from time import sleep
 import json

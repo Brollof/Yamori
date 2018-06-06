@@ -1,10 +1,11 @@
 import logging
 import socket
 import json
-from PyQt5.QtCore import QThread 
+from PyQt5.QtCore import QThread
 from config_manager import ConfigWorker
 
-
+# QThread is used instead of Thread
+# QT closes this thread when the application is closed
 class LinkThread(QThread):
     def __init__(self):
         super(self.__class__, self).__init__()
@@ -19,6 +20,7 @@ class LinkThread(QThread):
                 s.bind((self.host, self.port))
                 self.log.info('Socket binded')
                 s.listen(1)
+                # socket.setdefaulttimeout(1) # non blocking accept
                 conn, addr = s.accept()
                 self.log.info('Connection accepted')
                 with conn:
