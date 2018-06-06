@@ -22,7 +22,7 @@ class LinkThread(QThread):
                 conn, addr = s.accept()
                 self.log.info('Connection accepted')
                 with conn:
-                    self.log.info('Connected by', addr)
+                    self.log.info('Connected by {}'.format(addr))
                     while True:
                         data = conn.recv(1024)
                         if not data:
