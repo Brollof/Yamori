@@ -19,7 +19,7 @@ def readJsonFile(filename, logger=None):
             print(e)
         return None
 
-def saveJsonFile(filename, data, logger=None):
+def writeJsonFile(filename, data, logger=None):
     try:
         with open(filename, 'w') as f:
             json.dump(data, f, indent=2)

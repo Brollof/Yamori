@@ -8,10 +8,12 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import QThread, pyqtSignal
 
+import ter_logger
+import settings
+
 import gui
 import ter_io
-import ter_logger
-from ter_utils import convertBool
+from utils import convertBool
 import styles
 import icons_rc
 import ter_temp
@@ -129,8 +131,6 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
 
 
 def main():
-    ter_logger.init()
-    ter_logger.printProgramStart()
     app = QApplication(sys.argv)
     # ['windowsvista', 'Windows', 'Fusion']
     # app.setStyle(QStyleFactory.create('Fusion'))

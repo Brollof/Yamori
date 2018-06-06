@@ -3,7 +3,7 @@ from PyQt5.QtCore import QThread
 from threading import Lock, Thread
 from time import sleep
 import json
-from ter_utils import saveJsonFile, readJsonFile
+from utils import writeJsonFile, readJsonFile
 # DEBUG ONLY
 # import ter_logger
 # ter_logger.init()
@@ -18,7 +18,7 @@ class ConfigWorker(Thread):
         self.data = data
 
     def saveData(self, data):
-        saveJsonFile(ConfigWorker.FILENAME, data, self.log)
+        writeJsonFile(ConfigWorker.FILENAME, data, self.log)
 
     def loadData(self):
         return readJsonFile(ConfigWorker.FILENAME, self.log)

@@ -1,12 +1,13 @@
 import logging
-from ter_utils import convertBool
+from utils import convertBool
 from PyQt5.QtCore import QThread, QSemaphore
 from time import sleep, time
 from queue import Queue
 import uuid
 import os
+import settings
 
-if os.name in ["posix", "unix"]: # rpi
+if settings.getPlatform() == 'rpi':
     from gpiozero import DigitalOutputDevice
 else:
     from dummy import DigitalOutputDevice
