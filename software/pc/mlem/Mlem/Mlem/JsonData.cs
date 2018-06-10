@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Mlem.Device;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -28,12 +29,10 @@ namespace Mlem
             return new JProperty(propName, array);
         }
 
-        private static JObject GetConfigJsonObj(List<LampConfig> lampConfig, int min, int max, List<LimitTempModel> limitTempModels)
+        private static JObject GetConfigJsonObj(int min, int max, List<LimitTempModel> limitTempModels)
         {
             JObject config = new JObject();
             JObject limits = new JObject();
-
-            config.Add(JsonCreator.PropertyFromList("Lamps", lampConfig));
 
             // filter models - remove not selected one
             limitTempModels.RemoveAll(model => !model.Selected);
@@ -47,25 +46,23 @@ namespace Mlem
             return config;
         }
 
-        public static string GetJson(List<Event> heater, List<Lamp> lamps, List<LampConfig> lampConfig, int min, int max, List<LimitTempModel> limitTempModels)
+        public static string GetJson(List<DeviceConfig> devConfs, int min, int max, List<LimitTempModel> limitTempModels)
         {
             JObject data = new JObject();
-            JObject events = new JObject();
-            JObject config = GetConfigJsonObj(lampConfig, min, max, limitTempModels);
+            JObject devices = new JObject();
+            JObject config = GetConfigJsonObj(min, max, limitTempModels);
 
-            // Heater
-            events.Add(JsonCreator.PropertyFromList("Heater", heater));
-
-            // Lamps
-            JObject lampsRoot = new JObject();
-            foreach (var lamp in lamps)
+            for (int i = 0; i < devConfs.Count; i++)
             {
-                lampsRoot.Add(JsonCreator.PropertyFromList(lamp.Name, lamp.Events));
+                JObject content = new JObject();
+                content.Add(JsonCreator.PropertyFromList("Events", devConfs[i].Events));
+                content.Add("Slot", devConfs[i].Slot);
+                content.Add("Color", JObject.FromObject(devConfs[i].Color));
+                content.Add("Type", devConfs[i].Type);
+                devices.Add(new JProperty(devConfs[i].Name, content));
             }
 
-            events.Add(new JProperty("Lamps", lampsRoot));
-
-            data.Add("Events", events);
+            data.Add("Devices", devices);
             data.Add("Config", config);
 
             Console.WriteLine(data);

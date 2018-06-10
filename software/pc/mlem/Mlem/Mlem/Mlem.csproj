@@ -55,6 +55,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Device\DeviceConfig.cs" />
+    <Compile Include="Device\DeviceManager.cs" />
+    <Compile Include="Device\DeviceViewModel\DeviceModel.cs" />
+    <Compile Include="Device\DeviceViewModel\DeviceView.cs" />
     <Compile Include="MainWindow\CalendarMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,9 +71,6 @@
     </Compile>
     <Compile Include="JsonData.cs" />
     <Compile Include="LampManager.cs" />
-    <Compile Include="MainWindow\LampPickerMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="LimitTempViewModel\LimitTempModel.cs" />
     <Compile Include="LimitTempViewModel\LimitTempView.cs" />
     <Compile Include="LimitWindow.cs">

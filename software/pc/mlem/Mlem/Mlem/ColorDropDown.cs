@@ -13,6 +13,14 @@ namespace Mlem
     {
         private List<Color> colors;
 
+        public ColorDropDown()
+        {
+            this.FormattingEnabled = true;
+            this.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.DrawMode = DrawMode.OwnerDrawFixed;
+            this.DrawItem += this_DrawItem;
+        }
+
         public ColorDropDown(int x, int y, List<Color> colors)
         {
             this.colors = colors;
@@ -25,6 +33,18 @@ namespace Mlem
             this.DrawMode = DrawMode.OwnerDrawFixed;
             this.DrawItem += this_DrawItem;
 
+            string[] names = typeof(eCalendarColor).GetEnumNames();
+            foreach (string name in names)
+            {
+                if (name != "Automatic")
+                    this.Items.Add(name);
+            }
+            this.SelectedIndex = 0;
+        }
+
+        public void FillWithColors(List<Color> colors)
+        {
+            this.colors = colors;
             string[] names = typeof(eCalendarColor).GetEnumNames();
             foreach (string name in names)
             {

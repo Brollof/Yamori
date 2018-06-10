@@ -39,15 +39,17 @@
             this.AppDeleteContextItem = new DevComponents.DotNetBar.ButtonItem();
             this.IntervalHeaderContextMenu = new DevComponents.DotNetBar.ButtonItem();
             this.labelItem7 = new DevComponents.DotNetBar.LabelItem();
-            this.ddLampNum = new System.Windows.Forms.ComboBox();
             this.cbShowPeriod = new System.Windows.Forms.CheckBox();
-            this.lampPicker = new System.Windows.Forms.TableLayoutPanel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.btnRead = new System.Windows.Forms.Button();
             this.btnLimits = new System.Windows.Forms.Button();
+            this.gbAddDevice = new System.Windows.Forms.GroupBox();
+            this.ddDeviceSlot = new System.Windows.Forms.ComboBox();
+            this.txtDeviceName = new System.Windows.Forms.TextBox();
+            this.cddDeviceColor = new Mlem.ColorDropDown();
+            this.ddDeviceType = new System.Windows.Forms.ComboBox();
+            this.btnAddDevice = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.contextMenuBar1)).BeginInit();
-            this.lampPicker.SuspendLayout();
+            this.gbAddDevice.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSend
@@ -89,6 +91,7 @@
             this.calendarView1.TimeIndicator.Tag = null;
             this.calendarView1.TimeIndicator.Visibility = DevComponents.DotNetBar.Schedule.eTimeIndicatorVisibility.AllResources;
             this.calendarView1.TimeSlotDuration = 15;
+            this.calendarView1.Visible = false;
             this.calendarView1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.calendarView1_MouseUp);
             this.calendarView1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.calendarView1_KeyUp);
             // 
@@ -163,23 +166,6 @@
             this.labelItem7.SingleLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
             this.labelItem7.Text = "Interval Time";
             // 
-            // ddLampNum
-            // 
-            this.ddLampNum.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ddLampNum.FormattingEnabled = true;
-            this.ddLampNum.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"});
-            this.ddLampNum.Location = new System.Drawing.Point(148, 21);
-            this.ddLampNum.Name = "ddLampNum";
-            this.ddLampNum.Size = new System.Drawing.Size(121, 21);
-            this.ddLampNum.TabIndex = 8;
-            this.ddLampNum.SelectedIndexChanged += new System.EventHandler(this.cbLampsNum_SelectedIndexChanged);
-            // 
             // cbShowPeriod
             // 
             this.cbShowPeriod.AutoSize = true;
@@ -190,43 +176,6 @@
             this.cbShowPeriod.Text = "Pokaż czas";
             this.cbShowPeriod.UseVisualStyleBackColor = true;
             this.cbShowPeriod.CheckedChanged += new System.EventHandler(this.cbShowPeriod_CheckedChanged);
-            // 
-            // lampPicker
-            // 
-            this.lampPicker.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.lampPicker.ColumnCount = 1;
-            this.lampPicker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93F));
-            this.lampPicker.Controls.Add(this.label2, 0, 1);
-            this.lampPicker.Controls.Add(this.label1, 0, 0);
-            this.lampPicker.Location = new System.Drawing.Point(148, 56);
-            this.lampPicker.Name = "lampPicker";
-            this.lampPicker.RowCount = 2;
-            this.lampPicker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.lampPicker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
-            this.lampPicker.Size = new System.Drawing.Size(60, 74);
-            this.lampPicker.TabIndex = 10;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(4, 34);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(87, 39);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Kolor";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(4, 1);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(87, 32);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Nazwa";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnRead
             // 
@@ -249,16 +198,84 @@
             this.btnLimits.UseVisualStyleBackColor = true;
             this.btnLimits.Click += new System.EventHandler(this.btnLimits_Click);
             // 
+            // gbAddDevice
+            // 
+            this.gbAddDevice.Controls.Add(this.ddDeviceSlot);
+            this.gbAddDevice.Controls.Add(this.txtDeviceName);
+            this.gbAddDevice.Controls.Add(this.cddDeviceColor);
+            this.gbAddDevice.Controls.Add(this.ddDeviceType);
+            this.gbAddDevice.Controls.Add(this.btnAddDevice);
+            this.gbAddDevice.Location = new System.Drawing.Point(148, 48);
+            this.gbAddDevice.Name = "gbAddDevice";
+            this.gbAddDevice.Size = new System.Drawing.Size(476, 67);
+            this.gbAddDevice.TabIndex = 13;
+            this.gbAddDevice.TabStop = false;
+            this.gbAddDevice.Text = "Dodaj urządzenie";
+            // 
+            // ddDeviceSlot
+            // 
+            this.ddDeviceSlot.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ddDeviceSlot.FormattingEnabled = true;
+            this.ddDeviceSlot.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"});
+            this.ddDeviceSlot.Location = new System.Drawing.Point(361, 29);
+            this.ddDeviceSlot.Name = "ddDeviceSlot";
+            this.ddDeviceSlot.Size = new System.Drawing.Size(75, 21);
+            this.ddDeviceSlot.TabIndex = 4;
+            // 
+            // txtDeviceName
+            // 
+            this.txtDeviceName.Location = new System.Drawing.Point(103, 31);
+            this.txtDeviceName.Name = "txtDeviceName";
+            this.txtDeviceName.Size = new System.Drawing.Size(79, 20);
+            this.txtDeviceName.TabIndex = 3;
+            // 
+            // cddDeviceColor
+            // 
+            this.cddDeviceColor.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cddDeviceColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cddDeviceColor.FormattingEnabled = true;
+            this.cddDeviceColor.Location = new System.Drawing.Point(282, 30);
+            this.cddDeviceColor.Name = "cddDeviceColor";
+            this.cddDeviceColor.Size = new System.Drawing.Size(73, 21);
+            this.cddDeviceColor.TabIndex = 2;
+            // 
+            // ddDeviceType
+            // 
+            this.ddDeviceType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ddDeviceType.FormattingEnabled = true;
+            this.ddDeviceType.Location = new System.Drawing.Point(188, 30);
+            this.ddDeviceType.Name = "ddDeviceType";
+            this.ddDeviceType.Size = new System.Drawing.Size(88, 21);
+            this.ddDeviceType.TabIndex = 1;
+            this.ddDeviceType.SelectedIndexChanged += new System.EventHandler(this.ddDeviceType_SelectedIndexChanged);
+            // 
+            // btnAddDevice
+            // 
+            this.btnAddDevice.Location = new System.Drawing.Point(6, 29);
+            this.btnAddDevice.Name = "btnAddDevice";
+            this.btnAddDevice.Size = new System.Drawing.Size(75, 23);
+            this.btnAddDevice.TabIndex = 0;
+            this.btnAddDevice.Text = "Dodaj";
+            this.btnAddDevice.UseVisualStyleBackColor = true;
+            this.btnAddDevice.Click += new System.EventHandler(this.btnAddDevice_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(870, 428);
+            this.Controls.Add(this.gbAddDevice);
             this.Controls.Add(this.btnLimits);
             this.Controls.Add(this.btnRead);
-            this.Controls.Add(this.lampPicker);
             this.Controls.Add(this.cbShowPeriod);
-            this.Controls.Add(this.ddLampNum);
             this.Controls.Add(this.contextMenuBar1);
             this.Controls.Add(this.calendarView1);
             this.Controls.Add(this.btnSend);
@@ -270,8 +287,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mlem 0.1";
             ((System.ComponentModel.ISupportInitialize)(this.contextMenuBar1)).EndInit();
-            this.lampPicker.ResumeLayout(false);
-            this.lampPicker.PerformLayout();
+            this.gbAddDevice.ResumeLayout(false);
+            this.gbAddDevice.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -289,13 +306,15 @@
         private DevComponents.DotNetBar.ButtonItem IntervalHeaderContextMenu;
         private DevComponents.DotNetBar.LabelItem labelItem7;
         private DevComponents.DotNetBar.StyleManager styleManager1;
-        private System.Windows.Forms.ComboBox ddLampNum;
         private System.Windows.Forms.CheckBox cbShowPeriod;
-        private System.Windows.Forms.TableLayoutPanel lampPicker;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnRead;
         private System.Windows.Forms.Button btnLimits;
+        private System.Windows.Forms.GroupBox gbAddDevice;
+        private System.Windows.Forms.ComboBox ddDeviceType;
+        private System.Windows.Forms.Button btnAddDevice;
+        private ColorDropDown cddDeviceColor;
+        private System.Windows.Forms.TextBox txtDeviceName;
+        private System.Windows.Forms.ComboBox ddDeviceSlot;
     }
 }
 

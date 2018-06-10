@@ -13,41 +13,47 @@ using DevComponents.DotNetBar;
 using DevComponents.Schedule.Model;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using Mlem.Device;
+using Mlem.Device.DeviceViewModel;
 
 namespace Mlem
 {
     public partial class MainWindow : Office2007Form
     {
         private Link link;
-        private const int DEFAULT_LAMP_CNT = 4;
         private Version v = new Version(1, 0);
+        private const int MAX_DEVICES = 8;
 
         public MainWindow()
         {
             InitializeComponent();
             this.Text = "Mlem " + v.ToString();
 
-            ddLampNum.Text = DEFAULT_LAMP_CNT.ToString();
-            LampPickerInit(GetUiLampsNum());
-            CalendarInit(GetUiLampsNum() + 1, GetUiMaxLampsNum() + 1);
-            InitHeaterRow("Kabel", eCalendarColor.Steel);
-            LampManager.OnLampNamesValidationStatusChanged += LampManager_OnLampNamesValidationStatusChanged;
+            InitDeviceTypePicker();
+            InitDeviceColorPicker();
+            InitDeviceSlotPicker();
+            CalendarInit(MAX_DEVICES);
             link = new Link("127.0.0.1", 50007);
         }
 
-        void LampManager_OnLampNamesValidationStatusChanged(ValidationEventArgs args)
+        private void InitDeviceTypePicker()
         {
-            btnLimits.Enabled = args.IsValid;
+            foreach (DeviceType val in typeof(DeviceType).GetEnumValues())
+            {
+                string desc = DeviceManager.GetDescription(val);
+                ddDeviceType.Items.Add(desc);
+            }
+            ddDeviceType.SelectedIndex = 0;
         }
 
-        private int GetUiLampsNum()
+        private void InitDeviceColorPicker()
         {
-            return Convert.ToInt32(ddLampNum.Text);
+            cddDeviceColor.FillWithColors(CalendarUtils.Colors);
         }
 
-        private int GetUiMaxLampsNum()
+        private void InitDeviceSlotPicker()
         {
-            return Convert.ToInt32(ddLampNum.Items[ddLampNum.Items.Count - 1]);
+            ddDeviceSlot.SelectedIndex = 0;
         }
 
         private void btnSend_Click(object sender, EventArgs e)
@@ -83,26 +89,6 @@ namespace Mlem
             }
         }
 
-        private void cbLampsNum_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                int lampsNum = GetUiLampsNum();
-                ShowLampPicker(lampsNum);
-                UpdateTimelineRows(lampsNum + 1);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-        }
-
-        private void InitHeaterRow(string name, eCalendarColor color)
-        {
-            calendarView1.DisplayedOwners[0] = name;
-            calendarView1.MultiCalendarTimeLineViews[0].CalendarColor = color;
-        }
-
         private string GetHeaterName()
         {
             return calendarView1.DisplayedOwners[0];
@@ -113,20 +99,22 @@ namespace Mlem
             try
             {
                 ConcatAppointments();
-                List<Event> heater = GetEventsFromTimeline(0);
-                List<Lamp> lamps = new List<Lamp>();
+                List<DeviceConfig> devConfs = new List<DeviceConfig>();
+                List<DeviceModel> devices = DeviceManager.Devices;
 
-                for (int i = 1; i < calendarView1.DisplayedOwners.Count; i++)
+                for (int i = 0; i < devices.Count; i++)
                 {
-                    string lampName = calendarView1.DisplayedOwners[i];
-                    List<Event> events = GetEventsFromTimeline(i);
-                    lamps.Add(new Lamp(lampName, events));
+                    DeviceConfig config = new DeviceConfig(devices[i].Name);
+                    Color color = CalendarUtils.ConvertColor(devices[i].Color);
+                    config.Color = new RGB(color.R, color.G, color.B);
+                    config.Events = GetEventsFromTimeline(i);
+                    config.Slot = devices[i].Slot;
+                    config.Type = DeviceManager.GetDescription(devices[i].Type);
+                    devConfs.Add(config);
                 }
 
                 string output = JsonCreator.GetJson(
-                    heater,
-                    lamps,
-                    LampManager.GetLampsConfig(),
+                    devConfs,
                     minTempLimit,
                     maxTempLimit,
                     views.ConvertAll(view => view.Model));
@@ -156,8 +144,7 @@ namespace Mlem
 
         private void btnLimits_Click(object sender, EventArgs e)
         {
-            List<string> names = LampManager.GetNames();
-            names.Insert(0, GetHeaterName());
+            List<string> names = DeviceManager.GetNames();
 
             List<LimitTempModel> models = (views == null) ?
                 LimitTempModel.Create(names) :
@@ -180,6 +167,44 @@ namespace Mlem
                 minTempLimit = window.GetTemp(LimitWindow.TempType.MIN);
                 maxTempLimit = window.GetTemp(LimitWindow.TempType.MAX);
             }
+        }
+
+        private void btnAddDevice_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string devName = txtDeviceName.Text;
+                if (string.IsNullOrEmpty(devName))
+                {
+                    return;
+                }
+
+                DeviceType type = (DeviceType)ddDeviceType.SelectedIndex;
+                eCalendarColor color;
+                int slot = Convert.ToInt32(ddDeviceSlot.Text);
+
+                if (DeviceManager.HasColor(type))
+                    color = CalendarUtils.CalendarColorFromString(cddDeviceColor.SelectedItem.ToString());
+                else
+                    color = DeviceManager.GetDefaultColor(type);
+
+                DeviceManager.AddDevice(devName, type, slot, color);
+                calendarView1.Visible = true;
+                btnLimits.Enabled = true;
+                TimelineAddNewRow(devName, color);
+                txtDeviceName.Text = "";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        private void ddDeviceType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox dd = (ComboBox)sender;
+            DeviceType type = (DeviceType)dd.SelectedIndex;
+            cddDeviceColor.Visible = DeviceManager.HasColor(type);
         }
     }
 }

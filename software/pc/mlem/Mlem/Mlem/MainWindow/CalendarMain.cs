@@ -18,13 +18,12 @@ namespace Mlem
         private const int TIMELINE_ROW_HEIGHT = 55; // px
         private int MAX_ROWS;
 
-        private void CalendarInit(int rows, int maxRows)
+        private void CalendarInit(int maxRows)
         {
             CalendarModel model = NewCalendarModelInit(TimelineFill.COLOR);
             calendarView1.CalendarModel = model;
 
             MAX_ROWS = maxRows;
-            UpdateTimelineRows(rows);
 
             calendarView1.TimeLineShowIntervalHeader = true;
             calendarView1.TimeLineShowPeriodHeader = false;
@@ -68,7 +67,7 @@ namespace Mlem
             }
         }
 
-        private void AddNewRow()
+        private void TimelineAddNewRow(string name, eCalendarColor color)
         {
             if (calendarView1.DisplayedOwners.Count == MAX_ROWS)
                 return;
@@ -80,36 +79,36 @@ namespace Mlem
             }
 
             // default empty name and color
-            calendarView1.DisplayedOwners.Add(" ");
+            calendarView1.DisplayedOwners.Add(name);
             int cnt = calendarView1.DisplayedOwners.Count;
-            calendarView1.MultiCalendarTimeLineViews[cnt - 1].CalendarColor = eCalendarColor.Blue;
+            calendarView1.MultiCalendarTimeLineViews[cnt - 1].CalendarColor = color;
         }
 
-        void UpdateTimelineRows(int rows)
-        {
-            int currentRows = calendarView1.DisplayedOwners.Count;
-            if (currentRows < rows)
-            {
-                for (int i = 0; i < rows - currentRows; i++)
-                    AddNewRow();
-            }
-            else
-            {
-                for (int i = 0; i < currentRows - rows; i++)
-                    RemoveLastRow();
-            }
-        }
+        //void UpdateTimelineRows(int rows)
+        //{
+        //    int currentRows = calendarView1.DisplayedOwners.Count;
+        //    if (currentRows < rows)
+        //    {
+        //        for (int i = 0; i < rows - currentRows; i++)
+        //            AddNewRow();
+        //    }
+        //    else
+        //    {
+        //        for (int i = 0; i < currentRows - rows; i++)
+        //            RemoveLastRow();
+        //    }
+        //}
 
-        void UpdateTimeline()
-        {
-            for (int i = 1; i < calendarView1.DisplayedOwners.Count; i++)
-            {
-                LampUI lamp = LampManager.GetLamp(i);
-                calendarView1.DisplayedOwners[i] = lamp.Name;
-                // changing owner name causes random color change
-                calendarView1.MultiCalendarTimeLineViews[i].CalendarColor = lamp.Color;
-            }
-        }
+        //void UpdateTimeline()
+        //{
+        //    for (int i = 1; i < calendarView1.DisplayedOwners.Count; i++)
+        //    {
+        //        LampUI lamp = LampManager.GetLamp(i);
+        //        calendarView1.DisplayedOwners[i] = lamp.Name;
+        //        // changing owner name causes random color change
+        //        calendarView1.MultiCalendarTimeLineViews[i].CalendarColor = lamp.Color;
+        //    }
+        //}
 
         void calendarView1_AppointmentViewChanging(object sender, AppointmentViewChangingEventArgs e)
         {
@@ -287,8 +286,7 @@ namespace Mlem
                 }
             }
 
-            if (LampManager.AreNamesValid)
-                ShowContextMenu(InContentContextMenu);
+            ShowContextMenu(InContentContextMenu);
         }
 
         #endregion
