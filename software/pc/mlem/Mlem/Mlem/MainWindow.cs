@@ -169,6 +169,11 @@ namespace Mlem
             }
         }
 
+        private string getSlotFormat(int slot)
+        {
+            return " [" + slot.ToString() + "]";
+        }
+
         private void btnAddDevice_Click(object sender, EventArgs e)
         {
             try
@@ -182,6 +187,7 @@ namespace Mlem
                 DeviceType type = (DeviceType)ddDeviceType.SelectedIndex;
                 eCalendarColor color;
                 int slot = Convert.ToInt32(ddDeviceSlot.Text);
+                devName += getSlotFormat(slot);
 
                 if (DeviceManager.HasColor(type))
                     color = CalendarUtils.CalendarColorFromString(cddDeviceColor.SelectedItem.ToString());
