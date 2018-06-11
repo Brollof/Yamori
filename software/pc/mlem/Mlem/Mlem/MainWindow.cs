@@ -107,7 +107,7 @@ namespace Mlem
                     config.Color = new RGB(color.R, color.G, color.B);
                     config.Events = GetEventsFromTimeline(i);
                     config.Slot = devices[i].Slot;
-                    config.Type = DeviceManager.GetDescription(devices[i].Type);
+                    config.Type = devices[i].Type.ToString();
                     devConfs.Add(config);
                 }
 
