@@ -49,6 +49,10 @@
             this.txtDeviceName = new System.Windows.Forms.TextBox();
             this.ddDeviceType = new System.Windows.Forms.ComboBox();
             this.btnAddDevice = new System.Windows.Forms.Button();
+            this.labDeviceName = new System.Windows.Forms.Label();
+            this.labDeviceType = new System.Windows.Forms.Label();
+            this.labDeviceSlot = new System.Windows.Forms.Label();
+            this.labDeviceColor = new System.Windows.Forms.Label();
             this.cddDeviceColor = new Mlem.ColorDropDown();
             ((System.ComponentModel.ISupportInitialize)(this.contextMenuBar1)).BeginInit();
             this.gbAddDevice.SuspendLayout();
@@ -217,14 +221,18 @@
             // 
             // gbAddDevice
             // 
+            this.gbAddDevice.Controls.Add(this.labDeviceColor);
+            this.gbAddDevice.Controls.Add(this.labDeviceSlot);
+            this.gbAddDevice.Controls.Add(this.labDeviceType);
+            this.gbAddDevice.Controls.Add(this.labDeviceName);
             this.gbAddDevice.Controls.Add(this.ddDeviceSlot);
             this.gbAddDevice.Controls.Add(this.txtDeviceName);
             this.gbAddDevice.Controls.Add(this.cddDeviceColor);
             this.gbAddDevice.Controls.Add(this.ddDeviceType);
             this.gbAddDevice.Controls.Add(this.btnAddDevice);
-            this.gbAddDevice.Location = new System.Drawing.Point(148, 48);
+            this.gbAddDevice.Location = new System.Drawing.Point(148, 21);
             this.gbAddDevice.Name = "gbAddDevice";
-            this.gbAddDevice.Size = new System.Drawing.Size(476, 67);
+            this.gbAddDevice.Size = new System.Drawing.Size(444, 68);
             this.gbAddDevice.TabIndex = 13;
             this.gbAddDevice.TabStop = false;
             this.gbAddDevice.Text = "Dodaj urządzenie";
@@ -233,14 +241,14 @@
             // 
             this.ddDeviceSlot.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ddDeviceSlot.FormattingEnabled = true;
-            this.ddDeviceSlot.Location = new System.Drawing.Point(361, 29);
+            this.ddDeviceSlot.Location = new System.Drawing.Point(270, 34);
             this.ddDeviceSlot.Name = "ddDeviceSlot";
-            this.ddDeviceSlot.Size = new System.Drawing.Size(75, 21);
+            this.ddDeviceSlot.Size = new System.Drawing.Size(76, 21);
             this.ddDeviceSlot.TabIndex = 4;
             // 
             // txtDeviceName
             // 
-            this.txtDeviceName.Location = new System.Drawing.Point(103, 31);
+            this.txtDeviceName.Location = new System.Drawing.Point(103, 34);
             this.txtDeviceName.Name = "txtDeviceName";
             this.txtDeviceName.Size = new System.Drawing.Size(79, 20);
             this.txtDeviceName.TabIndex = 3;
@@ -249,15 +257,15 @@
             // 
             this.ddDeviceType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ddDeviceType.FormattingEnabled = true;
-            this.ddDeviceType.Location = new System.Drawing.Point(188, 30);
+            this.ddDeviceType.Location = new System.Drawing.Point(188, 34);
             this.ddDeviceType.Name = "ddDeviceType";
-            this.ddDeviceType.Size = new System.Drawing.Size(88, 21);
+            this.ddDeviceType.Size = new System.Drawing.Size(76, 21);
             this.ddDeviceType.TabIndex = 1;
             this.ddDeviceType.SelectedIndexChanged += new System.EventHandler(this.ddDeviceType_SelectedIndexChanged);
             // 
             // btnAddDevice
             // 
-            this.btnAddDevice.Location = new System.Drawing.Point(6, 29);
+            this.btnAddDevice.Location = new System.Drawing.Point(6, 32);
             this.btnAddDevice.Name = "btnAddDevice";
             this.btnAddDevice.Size = new System.Drawing.Size(75, 23);
             this.btnAddDevice.TabIndex = 0;
@@ -265,12 +273,48 @@
             this.btnAddDevice.UseVisualStyleBackColor = true;
             this.btnAddDevice.Click += new System.EventHandler(this.btnAddDevice_Click);
             // 
+            // labDeviceName
+            // 
+            this.labDeviceName.AutoSize = true;
+            this.labDeviceName.Location = new System.Drawing.Point(109, 18);
+            this.labDeviceName.Name = "labDeviceName";
+            this.labDeviceName.Size = new System.Drawing.Size(40, 13);
+            this.labDeviceName.TabIndex = 5;
+            this.labDeviceName.Text = "Nazwa";
+            // 
+            // labDeviceType
+            // 
+            this.labDeviceType.AutoSize = true;
+            this.labDeviceType.Location = new System.Drawing.Point(199, 18);
+            this.labDeviceType.Name = "labDeviceType";
+            this.labDeviceType.Size = new System.Drawing.Size(25, 13);
+            this.labDeviceType.TabIndex = 5;
+            this.labDeviceType.Text = "Typ";
+            // 
+            // labDeviceSlot
+            // 
+            this.labDeviceSlot.AutoSize = true;
+            this.labDeviceSlot.Location = new System.Drawing.Point(279, 18);
+            this.labDeviceSlot.Name = "labDeviceSlot";
+            this.labDeviceSlot.Size = new System.Drawing.Size(25, 13);
+            this.labDeviceSlot.TabIndex = 5;
+            this.labDeviceSlot.Text = "Slot";
+            // 
+            // labDeviceColor
+            // 
+            this.labDeviceColor.AutoSize = true;
+            this.labDeviceColor.Location = new System.Drawing.Point(361, 18);
+            this.labDeviceColor.Name = "labDeviceColor";
+            this.labDeviceColor.Size = new System.Drawing.Size(31, 13);
+            this.labDeviceColor.TabIndex = 5;
+            this.labDeviceColor.Text = "Kolor";
+            // 
             // cddDeviceColor
             // 
             this.cddDeviceColor.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cddDeviceColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cddDeviceColor.FormattingEnabled = true;
-            this.cddDeviceColor.Location = new System.Drawing.Point(282, 30);
+            this.cddDeviceColor.Location = new System.Drawing.Point(352, 34);
             this.cddDeviceColor.Name = "cddDeviceColor";
             this.cddDeviceColor.Size = new System.Drawing.Size(73, 21);
             this.cddDeviceColor.TabIndex = 2;
@@ -325,6 +369,10 @@
         private System.Windows.Forms.ComboBox ddDeviceSlot;
         private DevComponents.DotNetBar.ButtonItem InTabContextMenu;
         private DevComponents.DotNetBar.ButtonItem InTabRemoveTab;
+        private System.Windows.Forms.Label labDeviceName;
+        private System.Windows.Forms.Label labDeviceColor;
+        private System.Windows.Forms.Label labDeviceSlot;
+        private System.Windows.Forms.Label labDeviceType;
     }
 }
 
