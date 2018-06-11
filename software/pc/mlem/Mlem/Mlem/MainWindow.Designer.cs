@@ -47,9 +47,9 @@
             this.gbAddDevice = new System.Windows.Forms.GroupBox();
             this.ddDeviceSlot = new System.Windows.Forms.ComboBox();
             this.txtDeviceName = new System.Windows.Forms.TextBox();
-            this.cddDeviceColor = new Mlem.ColorDropDown();
             this.ddDeviceType = new System.Windows.Forms.ComboBox();
             this.btnAddDevice = new System.Windows.Forms.Button();
+            this.cddDeviceColor = new Mlem.ColorDropDown();
             ((System.ComponentModel.ISupportInitialize)(this.contextMenuBar1)).BeginInit();
             this.gbAddDevice.SuspendLayout();
             this.SuspendLayout();
@@ -233,15 +233,6 @@
             // 
             this.ddDeviceSlot.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ddDeviceSlot.FormattingEnabled = true;
-            this.ddDeviceSlot.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8"});
             this.ddDeviceSlot.Location = new System.Drawing.Point(361, 29);
             this.ddDeviceSlot.Name = "ddDeviceSlot";
             this.ddDeviceSlot.Size = new System.Drawing.Size(75, 21);
@@ -253,16 +244,6 @@
             this.txtDeviceName.Name = "txtDeviceName";
             this.txtDeviceName.Size = new System.Drawing.Size(79, 20);
             this.txtDeviceName.TabIndex = 3;
-            // 
-            // cddDeviceColor
-            // 
-            this.cddDeviceColor.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cddDeviceColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cddDeviceColor.FormattingEnabled = true;
-            this.cddDeviceColor.Location = new System.Drawing.Point(282, 30);
-            this.cddDeviceColor.Name = "cddDeviceColor";
-            this.cddDeviceColor.Size = new System.Drawing.Size(73, 21);
-            this.cddDeviceColor.TabIndex = 2;
             // 
             // ddDeviceType
             // 
@@ -283,6 +264,16 @@
             this.btnAddDevice.Text = "Dodaj";
             this.btnAddDevice.UseVisualStyleBackColor = true;
             this.btnAddDevice.Click += new System.EventHandler(this.btnAddDevice_Click);
+            // 
+            // cddDeviceColor
+            // 
+            this.cddDeviceColor.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cddDeviceColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cddDeviceColor.FormattingEnabled = true;
+            this.cddDeviceColor.Location = new System.Drawing.Point(282, 30);
+            this.cddDeviceColor.Name = "cddDeviceColor";
+            this.cddDeviceColor.Size = new System.Drawing.Size(73, 21);
+            this.cddDeviceColor.TabIndex = 2;
             // 
             // MainWindow
             // 

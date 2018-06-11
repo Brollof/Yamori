@@ -22,7 +22,8 @@ namespace Mlem
     {
         private Link link;
         private Version v = new Version(1, 0);
-        private const int MAX_DEVICES = 8;
+        int[] SLOTS = { 1, 2, 3, 4, 5, 6, 7, 8 };
+
 
         public MainWindow()
         {
@@ -32,7 +33,7 @@ namespace Mlem
             InitDeviceTypePicker();
             InitDeviceColorPicker();
             InitDeviceSlotPicker();
-            CalendarInit(MAX_DEVICES);
+            CalendarInit(SLOTS.Length);
             link = new Link("127.0.0.1", 50007);
         }
 
@@ -53,6 +54,8 @@ namespace Mlem
 
         private void InitDeviceSlotPicker()
         {
+            foreach (var slot in SLOTS)
+                ddDeviceSlot.Items.Add(slot.ToString());
             ddDeviceSlot.SelectedIndex = 0;
         }
 
@@ -178,11 +181,12 @@ namespace Mlem
         {
             try
             {
+                if (DeviceManager.Devices.Count >= 8)
+                    return;
+
                 string devName = txtDeviceName.Text;
                 if (string.IsNullOrEmpty(devName))
-                {
                     return;
-                }
 
                 DeviceType type = (DeviceType)ddDeviceType.SelectedIndex;
                 eCalendarColor color;
@@ -209,6 +213,36 @@ namespace Mlem
             ComboBox dd = (ComboBox)sender;
             DeviceType type = (DeviceType)dd.SelectedIndex;
             cddDeviceColor.Visible = DeviceManager.HasColor(type);
+        }
+
+        void calendarView1_DisplayedOwnersChanged(object sender, EventArgs e)
+        {
+            if (calendarView1.DisplayedOwners.Count > 0)
+            {
+                calendarView1.Visible = true;
+                btnLimits.Enabled = true;
+            }
+            else
+            {
+                calendarView1.Visible = false;
+                btnLimits.Enabled = false;
+                btnSend.Enabled = false;
+            }
+
+            // remove all
+            foreach (var slot in SLOTS)
+                ddDeviceSlot.Items.Remove(slot.ToString());
+
+            // add all
+            foreach (var slot in SLOTS)
+                ddDeviceSlot.Items.Add(slot.ToString());
+
+            // remove used
+            foreach (var dev in DeviceManager.Devices)
+                ddDeviceSlot.Items.Remove(dev.Slot.ToString());
+
+            if (ddDeviceSlot.Items.Count > 0)
+                ddDeviceSlot.SelectedIndex = 0;
         }
     }
 }

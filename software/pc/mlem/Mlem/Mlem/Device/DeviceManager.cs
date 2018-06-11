@@ -93,7 +93,5 @@ namespace Mlem.Device
                 Console.WriteLine("Color: " + dev.Color.ToString());
             }
         }
-
-
     }
 }

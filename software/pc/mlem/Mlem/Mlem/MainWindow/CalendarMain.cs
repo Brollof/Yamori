@@ -54,21 +54,6 @@ namespace Mlem
             calendarView1.DisplayedOwnersChanged += calendarView1_DisplayedOwnersChanged;
         }
 
-        void calendarView1_DisplayedOwnersChanged(object sender, EventArgs e)
-        {
-            if (calendarView1.DisplayedOwners.Count > 0)
-            {
-                calendarView1.Visible = true;
-                btnLimits.Enabled = true;
-            }
-            else
-            {
-                calendarView1.Visible = false;
-                btnLimits.Enabled = false;
-                btnSend.Enabled = false;
-            }
-        }
-
         private void RemoveLastRow()
         {
             int lastIndex = calendarView1.DisplayedOwners.Count - 1;
