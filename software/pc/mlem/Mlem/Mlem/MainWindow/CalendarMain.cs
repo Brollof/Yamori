@@ -50,6 +50,19 @@ namespace Mlem
             calendarView1.AppointmentViewChanged += calendarView1_AppointmentViewChanged;
             calendarView1.CalendarModel.AppointmentAdded += CalendarModel_AppointmentAdded;
             calendarView1.AppointmentViewChanging += calendarView1_AppointmentViewChanging;
+            calendarView1.DisplayedOwnersChanged += calendarView1_DisplayedOwnersChanged;
+        }
+
+        void calendarView1_DisplayedOwnersChanged(object sender, EventArgs e)
+        {
+            if (calendarView1.DisplayedOwners.Count > 0)
+            {
+                calendarView1.Visible = true;
+            }
+            else
+            {
+                calendarView1.Visible = false;
+            }
         }
 
         private void RemoveLastRow()

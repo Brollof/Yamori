@@ -89,11 +89,6 @@ namespace Mlem
             }
         }
 
-        private string GetHeaterName()
-        {
-            return calendarView1.DisplayedOwners[0];
-        }
-
         private void SendJsonData()
         {
             try
@@ -195,7 +190,6 @@ namespace Mlem
                     color = DeviceManager.GetDefaultColor(type);
 
                 DeviceManager.AddDevice(devName, type, slot, color);
-                calendarView1.Visible = true;
                 btnLimits.Enabled = true;
                 TimelineAddNewRow(devName, color);
                 txtDeviceName.Text = "";
