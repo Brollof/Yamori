@@ -39,6 +39,8 @@
             this.AppDeleteContextItem = new DevComponents.DotNetBar.ButtonItem();
             this.IntervalHeaderContextMenu = new DevComponents.DotNetBar.ButtonItem();
             this.labelItem7 = new DevComponents.DotNetBar.LabelItem();
+            this.InTabContextMenu = new DevComponents.DotNetBar.ButtonItem();
+            this.InTabRemoveTab = new DevComponents.DotNetBar.ButtonItem();
             this.cbShowPeriod = new System.Windows.Forms.CheckBox();
             this.btnRead = new System.Windows.Forms.Button();
             this.btnLimits = new System.Windows.Forms.Button();
@@ -107,7 +109,8 @@
             this.contextMenuBar1.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.InContentContextMenu,
             this.AppointmentContextMenu,
-            this.IntervalHeaderContextMenu});
+            this.IntervalHeaderContextMenu,
+            this.InTabContextMenu});
             this.contextMenuBar1.Location = new System.Drawing.Point(87, 244);
             this.contextMenuBar1.Name = "contextMenuBar1";
             this.contextMenuBar1.Size = new System.Drawing.Size(565, 25);
@@ -165,6 +168,20 @@
             this.labelItem7.PaddingTop = 1;
             this.labelItem7.SingleLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
             this.labelItem7.Text = "Interval Time";
+            // 
+            // InTabContextMenu
+            // 
+            this.InTabContextMenu.AutoExpandOnClick = true;
+            this.InTabContextMenu.Name = "InTabContextMenu";
+            this.InTabContextMenu.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.InTabRemoveTab});
+            this.InTabContextMenu.Text = "InTab";
+            // 
+            // InTabRemoveTab
+            // 
+            this.InTabRemoveTab.Name = "InTabRemoveTab";
+            this.InTabRemoveTab.Text = "Usuń urządzenie";
+            this.InTabRemoveTab.Click += new System.EventHandler(this.InTabRemoveTab_Click);
             // 
             // cbShowPeriod
             // 
@@ -315,6 +332,8 @@
         private ColorDropDown cddDeviceColor;
         private System.Windows.Forms.TextBox txtDeviceName;
         private System.Windows.Forms.ComboBox ddDeviceSlot;
+        private DevComponents.DotNetBar.ButtonItem InTabContextMenu;
+        private DevComponents.DotNetBar.ButtonItem InTabRemoveTab;
     }
 }
 

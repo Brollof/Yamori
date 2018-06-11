@@ -263,6 +263,8 @@ namespace Mlem
 
             if (area == eViewArea.InContent)
                 InContentMouseUp(view, e);
+            else if (area == eViewArea.InTab)
+                InTabMouseUp();
         }
 
         #endregion
@@ -289,6 +291,24 @@ namespace Mlem
             ShowContextMenu(InContentContextMenu);
         }
 
+        #endregion
+
+        #region InTabMouseUp
+        private void InTabMouseUp()
+        {
+            InTabRemoveTab.Visible = true;
+            InTabRemoveTab.Text = "Usuń \"" + calendarView1.SelectedOwner + "\"";
+            ShowContextMenu(InTabContextMenu);
+        }
+        #endregion
+
+        #region InTabRemoveTab_Click
+        private void InTabRemoveTab_Click(object sender, EventArgs e)
+        {
+            if (calendarView1.SelectedOwnerIndex >= 0)
+                calendarView1.DisplayedOwners.RemoveAt(calendarView1.SelectedOwnerIndex);
+
+        }
         #endregion
 
         #region IsDateSelected
