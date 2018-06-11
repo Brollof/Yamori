@@ -221,8 +221,9 @@ namespace Mlem
         {
             ComboBox dd = (ComboBox)sender;
             DeviceType type = (DeviceType)dd.SelectedIndex;
-            cddDeviceColor.Visible = DeviceManager.HasColor(type);
-            labDeviceColor.Visible = cddDeviceColor.Visible;
+            bool show = DeviceManager.HasColor(type);
+            cddDeviceColor.Visible = show;
+            labDeviceColor.Visible = show;
         }
 
         void calendarView1_DisplayedOwnersChanged(object sender, EventArgs e)
