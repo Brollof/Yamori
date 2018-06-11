@@ -188,6 +188,15 @@ namespace Mlem
                 if (string.IsNullOrEmpty(devName))
                     return;
 
+                if (!DeviceManager.CanAdd(devName))
+                {
+                    MessageBox.Show("Urządzenie o podanej nazwie już istnieje",
+                        "Niepoprawna nazwa",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Exclamation);
+                    return;
+                }
+
                 DeviceType type = (DeviceType)ddDeviceType.SelectedIndex;
                 eCalendarColor color;
                 int slot = Convert.ToInt32(ddDeviceSlot.Text);

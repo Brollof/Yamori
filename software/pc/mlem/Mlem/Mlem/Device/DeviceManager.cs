@@ -93,5 +93,10 @@ namespace Mlem.Device
                 Console.WriteLine("Color: " + dev.Color.ToString());
             }
         }
+
+        public static bool CanAdd(string name)
+        {
+            return !devices.Any(dev => dev.Name == name);
+        }
     }
 }
