@@ -78,6 +78,11 @@ namespace Mlem.Device
             devices.Add(device);
         }
 
+        public static void RemoveDevice(string name)
+        {
+            devices.RemoveAll(dev => dev.Name == name);
+        }
+
         public static void Print()
         {
             foreach(var dev in devices)

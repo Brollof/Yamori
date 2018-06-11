@@ -9,6 +9,7 @@ using DevComponents.Schedule.Model;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Drawing;
+using Mlem.Device;
 
 namespace Mlem
 {
@@ -58,10 +59,13 @@ namespace Mlem
             if (calendarView1.DisplayedOwners.Count > 0)
             {
                 calendarView1.Visible = true;
+                btnLimits.Enabled = true;
             }
             else
             {
                 calendarView1.Visible = false;
+                btnLimits.Enabled = false;
+                btnSend.Enabled = false;
             }
         }
 
@@ -319,7 +323,11 @@ namespace Mlem
         private void InTabRemoveTab_Click(object sender, EventArgs e)
         {
             if (calendarView1.SelectedOwnerIndex >= 0)
+            {
+                string name = calendarView1.DisplayedOwners[calendarView1.SelectedOwnerIndex];
+                DeviceManager.RemoveDevice(removeSlotFormat(name));
                 calendarView1.DisplayedOwners.RemoveAt(calendarView1.SelectedOwnerIndex);
+            }
 
         }
         #endregion

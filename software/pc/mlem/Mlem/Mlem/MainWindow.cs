@@ -166,7 +166,12 @@ namespace Mlem
 
         private string getSlotFormat(int slot)
         {
-            return " [" + slot.ToString() + "]";
+            return "[" + slot.ToString() + "]";
+        }
+
+        private string removeSlotFormat(string s)
+        {
+            return s.Remove(s.Length - 3, 3);
         }
 
         private void btnAddDevice_Click(object sender, EventArgs e)
@@ -182,7 +187,6 @@ namespace Mlem
                 DeviceType type = (DeviceType)ddDeviceType.SelectedIndex;
                 eCalendarColor color;
                 int slot = Convert.ToInt32(ddDeviceSlot.Text);
-                devName += getSlotFormat(slot);
 
                 if (DeviceManager.HasColor(type))
                     color = CalendarUtils.CalendarColorFromString(cddDeviceColor.SelectedItem.ToString());
@@ -190,7 +194,7 @@ namespace Mlem
                     color = DeviceManager.GetDefaultColor(type);
 
                 DeviceManager.AddDevice(devName, type, slot, color);
-                btnLimits.Enabled = true;
+                devName += getSlotFormat(slot);
                 TimelineAddNewRow(devName, color);
                 txtDeviceName.Text = "";
             }
