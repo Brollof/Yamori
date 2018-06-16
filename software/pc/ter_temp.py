@@ -1,4 +1,4 @@
-from ter_io import AsyncIO
+from terio.async import AsyncIO
 import logging
 import ds18b20
 

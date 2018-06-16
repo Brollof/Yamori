@@ -1,9 +1,13 @@
 from threading import Lock
+import sys
+sys.path.append('..')
 import utils
 import logging
 import os
 
 filename = 'settings.json'
+filepath = os.path.join(os.path.dirname(__file__), filename)
+
 mutex = Lock()
 log = logging.getLogger('SET')
 settings = None
@@ -13,7 +17,7 @@ def readSettings():
     if mutex.acquire(timeout=1) == False:
         log.error('mutex timeout')
         return
-    data = utils.readJsonFile(filename, log)
+    data = utils.readJsonFile(filepath, log)
     mutex.release()
     return data
 
@@ -22,7 +26,7 @@ def writeSettings(data):
         log.error('mutex timeout')
         return
 
-    utils.writeJsonFile(filename, data, log)
+    utils.writeJsonFile(filepath, data, log)
     mutex.release()
 
 def init():
@@ -53,4 +57,4 @@ init()
 
 if __name__ == '__main__':
     plat = getPlatform()
-    print(plat)
+    # print(plat)

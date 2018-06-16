@@ -1,0 +1,96 @@
+import logging
+import sys
+
+sys.path.append("..")
+from settings import settings
+
+if settings.getPlatform() == 'rpi':
+    from gpiozero import DigitalOutputDevice
+else:
+    from terio.dummy import DigitalOutputDevice
+
+log = logging.getLogger("DEVICE")
+
+SLOT_TO_PIN = {
+    1: 26,
+    2: 19,
+    3: 13,
+    4: 6,
+    5: 5,
+    6: 7,
+    7: 8,
+    8: 9
+}
+
+MAX_DEVICE_NUM = len(SLOT_TO_PIN)
+
+Devices = {}
+
+class Device():
+    def __init__(self, name, slot, color=None, active_high=False, initial_value=False):
+        self.name = name
+        self.slot = slot
+        self.color = color
+        self.pin = getPin(slot)
+        self.io = DigitalOutputDevice(self.pin, active_high=active_high, initial_value=initial_value)
+        log.info('Device with slot {} created'.format(self.slot))
+
+    def __str__(self):
+        return "Slot:{}, Pin:{}, State:{}, Name:{}, Color:{}".format(self.slot, self.pin, self.io.value, self.name, self.color)
+
+def getPin(slot):
+    return SLOT_TO_PIN[slot]
+
+def create(name, slot, color=None):
+    Devices[slot] = Device(name, slot, color)
+
+def getDevice(slot):
+    try:
+        return Devices[slot]
+    except Exception:
+        log.warning('Device with slot {} number doesnt exist!'.format(slot))
+        return None
+
+def printInfo(name=None):
+    if name:
+        slot = nameToSlot(name)
+        print(Devices[slot])
+    else:
+        print("----- DEVICES -----")
+        for slot in Devices:
+            print(Devices[slot])
+        print("-------------------")
+
+def nameToSlot(name):
+    for slot, dev in Devices.items():
+        if dev.name == name:
+            return slot
+
+def setState(name, action):
+    action = action.lower()
+    slot = nameToSlot(name)
+    if action == 'on':
+        Devices[slot].io.on()
+    elif action == 'off':
+        Devices[slot].io.off()
+    elif action == 'toggle':
+        Devices[slot].io.toggle()
+    else:
+        raise NameError
+
+def getState(name):
+    slot = nameToSlot(name)
+    return Devices[slot].io.value;
+
+def getNames():
+    return [Devices[slot].name for slot in Devices]
+
+if __name__ == '__main__':
+    create('garbage', 1)
+    create('blue', 1)
+    create('red', 2)
+    create('green', 3, (0, 255, 0))
+    printInfo()
+    setState('blue', 'on')
+
+    print(getNames())

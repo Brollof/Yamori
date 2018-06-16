@@ -2,7 +2,7 @@ import os
 import glob
 import time
 import logging
-import settings
+from settings import settings
 
 class DS18B20():
     def __init__(self):

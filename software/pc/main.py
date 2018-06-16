@@ -9,10 +9,11 @@ from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import QThread, pyqtSignal
 
 import ter_logger
-import settings
+from settings import settings
 
 import gui
-import ter_io
+from terio.manager import IOManager
+
 from utils import convertBool
 import styles
 import icons_rc
@@ -41,6 +42,15 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
             'cold': QIcon(':i_cold.png'),
         }
 
+        # for backward compatiblity only
+        # will be removed in the future
+        from terio import device
+        device.create('blueL', 1)
+        device.create('red', 2)
+        device.create('blueR', 3)
+        device.create('white', 4)
+        device.create('heater', 5)
+
         # map buttons
         self.lamps['blueL'] = {'btn': self.btnMan1, 'color': 'rgba(0, 0, 255, 30%)'}
         self.lamps['red'] = {'btn': self.btnMan2, 'color': 'rgba(255, 0, 0, 30%)'}
@@ -64,7 +74,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         # styles
         self.initStyles()
 
-        self.io = ter_io.IOManager()
+        self.io = IOManager()
         self.tman = ter_temp.TempSensorsManager()
 
         self.diagThread = DiagThread(self.tman)

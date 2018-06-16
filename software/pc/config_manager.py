@@ -35,7 +35,8 @@ class ConfigWorker(Thread):
 
         # 2. wyslanie konfiguracji lamp (kolory, nazwy) do watku glownego GUI
         #   2.1. Wykorzystanie signal do aktualizacji kontrolek ?
-        # 3. wyslanie pozostalych danych do automatu
+        # 3. inicjalizacja GPIO (połączenie urządzenia z pinem)
+        # 4. wyslanie pozostalych danych do automatu
         self.log.info('thread ended')
         ConfigWorker.mutex.release()
 
