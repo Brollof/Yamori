@@ -2,9 +2,9 @@ import logging
 import sys
 
 sys.path.append("..")
-from settings import settings
+from config import config
 
-if settings.getPlatform() == 'rpi':
+if config.getPlatform() == 'rpi':
     from gpiozero import DigitalOutputDevice
 else:
     from terio.dummy import DigitalOutputDevice
@@ -27,12 +27,13 @@ MAX_DEVICE_NUM = len(SLOT_TO_PIN)
 Devices = {}
 
 class Device():
-    def __init__(self, name, slot, color=None, active_high=False, initial_value=False):
+    def __init__(self, name, slot, dtype, color=None):
         self.name = name
         self.slot = slot
         self.color = color
+        self.dtype = dtype
         self.pin = getPin(slot)
-        self.io = DigitalOutputDevice(self.pin, active_high=active_high, initial_value=initial_value)
+        self.io = DigitalOutputDevice(self.pin, active_high=False, initial_value=False)
         log.info('Device with slot {} created'.format(self.slot))
 
     def __str__(self):
@@ -41,8 +42,8 @@ class Device():
 def getPin(slot):
     return SLOT_TO_PIN[slot]
 
-def create(name, slot, color=None):
-    Devices[slot] = Device(name, slot, color)
+def add(dev):
+    Devices[dev.slot] = dev
 
 def getDevice(slot):
     try:
@@ -56,10 +57,10 @@ def printInfo(name=None):
         slot = nameToSlot(name)
         print(Devices[slot])
     else:
-        print("----- DEVICES -----")
+        print("--------------- DEVICES ---------------")
         for slot in Devices:
             print(Devices[slot])
-        print("-------------------")
+        print("---------------------------------------")
 
 def nameToSlot(name):
     for slot, dev in Devices.items():

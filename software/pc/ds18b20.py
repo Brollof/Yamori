@@ -2,12 +2,12 @@ import os
 import glob
 import time
 import logging
-from settings import settings
+from config import config
 
 class DS18B20():
     def __init__(self):
         self.log = logging.getLogger('DS18B20')
-        if settings.getPlatform() == 'rpi':
+        if config.getPlatform() == 'rpi':
             baseDir = '/sys/bus/w1/devices/'
         else:
             baseDir = './sys/bus/w1/devices/' # sensors simulation

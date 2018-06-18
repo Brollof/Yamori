@@ -9,7 +9,7 @@ from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import QThread, pyqtSignal
 
 import ter_logger
-from settings import settings
+from config import config
 
 import gui
 from terio.manager import IOManager
@@ -23,6 +23,7 @@ from diagnostic import DiagThread
 
 # debug
 import random
+from config import config_ex
 
 MENU_INDICATOR = 'background-color: #ffe0b2; border-radius: 10px'
 
@@ -45,27 +46,20 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         # for backward compatiblity only
         # will be removed in the future
         from terio import device
-        device.create('blueL', 1)
-        device.create('red', 2)
-        device.create('blueR', 3)
-        device.create('white', 4)
-        device.create('heater', 5)
+        device.add(device.Device('blueL', 1, "LAMP"))
+        device.add(device.Device('red', 2, "LAMP"))
+        device.add(device.Device('blueR', 3, "LAMP"))
+        device.add(device.Device('white', 4, "LAMP"))
+        device.add(device.Device('heater', 5, "CABLE"))
 
-        # map buttons
-        self.lamps['blueL'] = {'btn': self.btnMan1, 'color': 'rgba(0, 0, 255, 30%)'}
-        self.lamps['red'] = {'btn': self.btnMan2, 'color': 'rgba(255, 0, 0, 30%)'}
-        self.btnHeat = self.btnMan3
-        self.lamps['blueR'] = {'btn': self.btnMan4, 'color': 'rgba(0, 0, 255, 30%)'}
-        self.lamps['white'] = {'btn': self.btnMan5, 'color': 'rgba(255, 255, 0, 30%)'}
-        self.menu = [self.btnManual, self.btnAuto, self.btnDiag]
-
-        self.btnHeat.setIcon(self.icons['cold'])
+        if config_ex.isInitialized() == True:
+            self.initButtons(config_ex.getButtonsConfig())
+            self.log.info("Device is initialized!")
+        else:
+            self.log.warning("Device NOT initialized!")
+            self.showInitScreen()
         
-        # events
-        self.btnHeat.clicked.connect(self.guiHeaterToggle)
-        for color, gui in self.lamps.items():
-            gui['btn'].clicked.connect(self.createLampButtonCallback(color))
-
+        self.menu = [self.btnManual, self.btnAuto, self.btnDiag]
         self.menu[0].clicked.connect(lambda: self.displayView(0))
         self.menu[1].clicked.connect(lambda: self.displayView(1))
         self.menu[2].clicked.connect(lambda: self.displayView(2))
@@ -84,6 +78,24 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.linkThread = LinkThread()
         self.linkThread.start()
 
+        config_ex.configWorkerInit(self.updateButtons)
+
+    def initButtons(self, data):
+        pass
+        # # map buttons
+        # self.lamps['blueL'] = {'btn': self.btnMan1, 'color': 'rgba(0, 0, 255, 30%)'}
+        # self.lamps['red'] = {'btn': self.btnMan2, 'color': 'rgba(255, 0, 0, 30%)'}
+        # self.btnHeat = self.btnMan3
+        # self.lamps['blueR'] = {'btn': self.btnMan4, 'color': 'rgba(0, 0, 255, 30%)'}
+        # self.lamps['white'] = {'btn': self.btnMan5, 'color': 'rgba(255, 255, 0, 30%)'}
+
+        # self.btnHeat.setIcon(self.icons['cold'])
+
+        # # events
+        # self.btnHeat.clicked.connect(self.guiHeaterToggle)
+        # for color, gui in self.lamps.items():
+        #     gui['btn'].clicked.connect(self.createLampButtonCallback(color))
+
     def updateDiagPage(self, stats):
         self.labTTemp1.setText('%.1f' % stats['temp1'].lastVal)
         self.labTTemp1Avg.setText('%.1f' % stats['temp1'].avg)
@@ -94,6 +106,10 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.labTTemp2Avg.setText('%.1f' % stats['temp2'].avg)
         self.labTTemp2Min.setText('%.1f' % stats['temp2'].min)
         self.labTTemp2Max.setText('%.1f' % stats['temp2'].max)
+
+    def updateButtons(self, data):
+        self.log.debug('Updating buttons with data:')
+        self.log.debug(data)
 
     def displayView(self, viewNum):
         if viewNum == self.activeMenu:

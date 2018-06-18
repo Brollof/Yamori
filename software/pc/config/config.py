@@ -5,15 +5,15 @@ import utils
 import logging
 import os
 
-filename = 'settings.json'
+filename = 'config.json'
 filepath = os.path.join(os.path.dirname(__file__), filename)
 
 mutex = Lock()
-log = logging.getLogger('SET')
-settings = None
+log = logging.getLogger('CFG')
+config = None
 moduleInitialized = False
 
-def readSettings():
+def readConfig():
     if mutex.acquire(timeout=1) == False:
         log.error('mutex timeout')
         return
@@ -21,7 +21,7 @@ def readSettings():
     mutex.release()
     return data
 
-def writeSettings(data):
+def writeConfig(data):
     if mutex.acquire(timeout=1) == False:
         log.error('mutex timeout')
         return
@@ -35,26 +35,35 @@ def init():
         return
 
     moduleInitialized = True
-    global settings
-    settings = readSettings()
-    if not settings:
-        raise ValueError("Settings file doesn't exist!")
+    global config
+    config = readConfig()
+    if not config:
+        log.warning('Config file is empty!')
 
     if os.name in ["posix", "unix"]:
-        settings['Platform'] = 'rpi'
+        config['Platform'] = 'rpi'
     else:
-        settings['Platform'] = 'pc'
+        config['Platform'] = 'pc'
 
-    log.info('Settings module initialized')
+    log.info('OS detected: {}'.format(config['Platform']))
+    log.info('Config module initialized')
 
 def isInitialized():
-    return settings['Initialized']
+    try:
+        dev = config['Devices']
+        return True
+    except Exception:
+        return False
 
 def getPlatform():
-    return settings['Platform']
+    return config['Platform']
+
+
+
 
 init()
 
 if __name__ == '__main__':
-    plat = getPlatform()
-    # print(plat)
+    pass
+    x = isInitialized()
+    print(x)

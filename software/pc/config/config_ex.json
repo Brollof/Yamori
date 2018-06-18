@@ -1,0 +1,37 @@
+{
+  "Devices": {
+    "qwe": {
+      "Events": [],
+      "Slot": 1,
+      "Color": {
+        "R": 93,
+        "G": 140,
+        "B": 201
+      },
+      "Type": "LAMP"
+    },
+    "zxc": {
+      "Events": [],
+      "Slot": 2,
+      "Color": {
+        "R": 93,
+        "G": 140,
+        "B": 201
+      },
+      "Type": "LAMP"
+    }
+  },
+  "Config": {
+    "Limits": {
+      "Events": [
+        {
+          "Selected": true,
+          "Time": 2,
+          "Name": "qwe"
+        }
+      ],
+      "Min": 0,
+      "Max": 5
+    }
+  }
+}

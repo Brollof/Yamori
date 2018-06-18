@@ -7,17 +7,17 @@ def convertBool(boolVal, ifTrue, ifFalse):
     return ifTrue if boolVal else ifFalse
 
 def readJsonFile(filename, logger=None):
-    try:
-        with open(filename, 'r') as f:
-            return json.load(f)
-    except Exception as e:
-        if logger:
-            logger.error("File reading failed!")
-            logger.error(e)
-        else:
-            print("File reading failed!")
-            print(e)
-        return None
+    # try:
+    with open(filename, 'r') as f:
+        return json.load(f)
+    # except Exception as e:
+    #     if logger:
+    #         logger.error("File reading failed!")
+    #         logger.error(e)
+    #     else:
+    #         print("File reading failed!")
+    #         print(e)
+    return None
 
 def writeJsonFile(filename, data, logger=None):
     try:

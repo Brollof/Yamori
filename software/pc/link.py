@@ -2,7 +2,9 @@ import logging
 import socket
 import json
 from PyQt5.QtCore import QThread
-from config_manager import ConfigWorker
+# from config_manager import ConfigWorker
+# from config.config_manager import ConfigWorker
+from config.config_ex import ConfigWorker
 
 # QThread is used instead of Thread
 # QT closes this thread when the application is closed
