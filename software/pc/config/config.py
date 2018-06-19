@@ -58,9 +58,6 @@ def isInitialized():
 def getPlatform():
     return config['Platform']
 
-
-
-
 init()
 
 if __name__ == '__main__':

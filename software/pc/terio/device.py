@@ -45,6 +45,9 @@ def getPin(slot):
 def add(dev):
     Devices[dev.slot] = dev
 
+def clear():
+    Devices.clear()
+
 def getDevice(slot):
     try:
         return Devices[slot]

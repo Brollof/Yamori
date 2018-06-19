@@ -38,21 +38,14 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.activeMenu = -1 # current active menu page number
         self.log = logging.getLogger('GUI')
         self.lamps = {}
+        self.heater  = None
         self.icons = {
             'heat': QIcon(':i_heat.png'),
             'cold': QIcon(':i_cold.png'),
         }
 
-        # for backward compatiblity only
-        # will be removed in the future
-        from terio import device
-        device.add(device.Device('blueL', 1, "LAMP"))
-        device.add(device.Device('red', 2, "LAMP"))
-        device.add(device.Device('blueR', 3, "LAMP"))
-        device.add(device.Device('white', 4, "LAMP"))
-        device.add(device.Device('heater', 5, "CABLE"))
-
         if config_ex.isInitialized() == True:
+            config_ex.initDevices()
             self.initButtons(config_ex.getButtonsConfig())
             self.log.info("Device is initialized!")
         else:
@@ -80,21 +73,22 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
 
         config_ex.configWorkerInit(self.updateButtons)
 
-    def initButtons(self, data):
-        pass
-        # # map buttons
-        # self.lamps['blueL'] = {'btn': self.btnMan1, 'color': 'rgba(0, 0, 255, 30%)'}
-        # self.lamps['red'] = {'btn': self.btnMan2, 'color': 'rgba(255, 0, 0, 30%)'}
-        # self.btnHeat = self.btnMan3
-        # self.lamps['blueR'] = {'btn': self.btnMan4, 'color': 'rgba(0, 0, 255, 30%)'}
-        # self.lamps['white'] = {'btn': self.btnMan5, 'color': 'rgba(255, 255, 0, 30%)'}
+    def initButtons(self, config):
+        buttons = [self.btnMan1, self.btnMan2, self.btnMan4, self.btnMan5]
 
-        # self.btnHeat.setIcon(self.icons['cold'])
+        for cfg in config:
+            if cfg['type'] == 'LAMP':
+                color = 'rgba' + str(cfg['color'])[:-1] + ', 30%)'
+                self.lamps[cfg['name']] = {'btn': buttons.pop(0), 'color': color}
+            else:
+                self.heater = {'name': cfg['name'], 'btn': self.btnMan3}
 
-        # # events
-        # self.btnHeat.clicked.connect(self.guiHeaterToggle)
-        # for color, gui in self.lamps.items():
-        #     gui['btn'].clicked.connect(self.createLampButtonCallback(color))
+        if self.heater:
+            self.heater['btn'].clicked.connect(self.guiHeaterToggle)
+            self.heater['btn'].setIcon(self.icons['cold'])
+
+        for name, gui in self.lamps.items():
+            gui['btn'].clicked.connect(self.createLampButtonCallback(name))
 
     def updateDiagPage(self, stats):
         self.labTTemp1.setText('%.1f' % stats['temp1'].lastVal)
@@ -108,8 +102,24 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.labTTemp2Max.setText('%.1f' % stats['temp2'].max)
 
     def updateButtons(self, data):
-        self.log.debug('Updating buttons with data:')
+        self.log.debug('Updating GUI buttons with data')
         self.log.debug(data)
+
+        # initialize gui variables
+        self.lamps = {}
+        self.heater = None
+        buttons = [self.btnMan1, self.btnMan2, self.btnMan3, self.btnMan4, self.btnMan5]
+
+        # remove buttons callbacks
+        for btn in buttons:
+            try:
+                btn.clicked.disconnect()
+            except Exception:
+                pass
+
+        # create gui buttons
+        self.initButtons(data)
+        self.initStyles()
 
     def displayView(self, viewNum):
         if viewNum == self.activeMenu:
@@ -129,12 +139,12 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         # self.menuFrame.setStyleSheet('border: 4px solid #ffe0b2')
 
     def guiHeaterToggle(self):
-        self.io.write(('heater', 'toggle'))
-        state = self.io.read('heater')['heater']
+        self.io.write((self.heater['name'], 'toggle'))
+        state = self.io.read(self.heater['name'])[self.heater['name']]
         if state == True:
-            self.btnHeat.setIcon(self.icons['heat'])
+            self.heater['btn'].setIcon(self.icons['heat'])
         else:
-            self.btnHeat.setIcon(self.icons['cold'])
+            self.heater['btn'].setIcon(self.icons['cold'])
         self.log.debug('Heater {}'.format(convertBool(state, 'ON', 'OFF')))
 
     def lampToggle(self, lamp):

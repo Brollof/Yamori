@@ -17,8 +17,7 @@ class IOManager():
         super(self.__class__, self).__init__()
         self.log = logging.getLogger('IOM_T')
         self.asyncIO = async.AsyncIO(self.QUEUE_CHECK_PERIOD, self.__onRead, self.__onWrite, self.__onStart)
-        self.ioNames = device.getNames()
-        self.timers = {name: 0 for name in self.ioNames}
+        self.timers = {name: 0 for name in device.getNames()}
 
     def __onRead(self, data):
         return {name: device.getState(name) for name in data}
@@ -26,6 +25,11 @@ class IOManager():
     def __onWrite(self, data):
         now = time()
         for io, action in data:
+            # add if it doesn't exist
+            if not io in self.timers:
+                self.timers[io] = 0
+
+            # dump too frequent button changes
             if self.timers[io] + self.BUTTON_SUPPRESS_TIME < now:
                 self.log.debug('io: {}, action: {}'.format(io, action))
                 self.timers[io] = time()

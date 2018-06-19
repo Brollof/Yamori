@@ -24,7 +24,7 @@ def configWorkerInit(action):
 
 def isInitialized():
     try:
-        devices = loadData()['Devices']
+        devices = loadData()['Initialized']
         return True
     except Exception:
         return False
@@ -53,6 +53,16 @@ def getButtonsConfig(devices=None):
 
     return data
 
+def initDevices(devices=None):
+    if not devices:
+        devices = loadData()['Devices']
+
+    device.clear()
+    for name, config in devices.items():
+        r, g, b = config['Color']['R'], config['Color']['G'], config['Color']['B']
+        dev = device.Device(name, config['Slot'], config['Type'], (r, g, b))
+        device.add(dev)
+
 class ConfigWorker(QThread):
     mutex = Lock();
     update = pyqtSignal(list)
@@ -70,24 +80,19 @@ class ConfigWorker(QThread):
         log.info('thread started')
 
         # 1. Save data into file
+        self.data['Initialized'] = True
         saveData(self.data)
 
         # 2. Init devices
         devices = self.data['Devices']
-        for name, config in devices.items():
-            r, g, b = config['Color']['R'], config['Color']['G'], config['Color']['B']
-            dev = device.Device(name, config['Slot'], config['Type'], (r, g, b))
-            device.add(dev)
-
-        device.printInfo()
+        initDevices(devices)
 
         # 3. Update GUI with new config
         self.update.emit(getButtonsConfig(devices))
 
-        # 2. wyslanie konfiguracji lamp (kolory, nazwy) do watku glownego GUI
-        #   2.1. Wykorzystanie signal do aktualizacji kontrolek ?
-        # 3. inicjalizacja GPIO (połączenie urządzenia z pinem)
-        # 4. wyslanie pozostalych danych do automatu
+        # 4. Send remaining data to auto module
+        # TBD
+
         log.info('thread ended')
         ConfigWorker.mutex.release()
 
