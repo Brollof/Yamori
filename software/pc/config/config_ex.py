@@ -4,6 +4,7 @@ from utils import writeJsonFile, readJsonFile
 from PyQt5.QtCore import QThread, pyqtSignal
 import os
 from terio import device
+import event_handler
 
 filename = 'config_ex.json'
 filepath = os.path.join(os.path.dirname(__file__), filename)
@@ -91,8 +92,14 @@ class ConfigWorker(QThread):
         self.update.emit(getButtonsConfig(devices))
 
         # 4. Send remaining data to auto module
-        # TBD
+        evtData = {}
+        for name in devices:
+            evtData[name] = devices[name]['Events']
 
+        evtData['config'] = self.data['Config']
+        event_handler.send(evtData)
+
+        ##
         log.info('thread ended')
         ConfigWorker.mutex.release()
 

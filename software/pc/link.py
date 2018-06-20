@@ -28,7 +28,7 @@ class LinkThread(QThread):
                 with conn:
                     self.log.info('Connected by {}'.format(addr))
                     while True:
-                        data = conn.recv(1024)
+                        data = conn.recv(1024*8)
                         if not data:
                             self.log.info('Disconnected...')
                             break

@@ -20,6 +20,7 @@ import icons_rc
 import ter_temp
 from link import LinkThread
 from diagnostic import DiagThread
+from event_handler import EventHandler
 
 # debug
 import random
@@ -70,6 +71,9 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
 
         self.linkThread = LinkThread()
         self.linkThread.start()
+
+        self.evt = EventHandler()
+        self.evt.start()
 
         config_ex.configWorkerInit(self.updateButtons)
 
