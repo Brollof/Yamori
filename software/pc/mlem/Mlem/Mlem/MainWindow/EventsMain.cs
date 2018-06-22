@@ -11,15 +11,19 @@ namespace Mlem
     public class Event
     {
         public bool State { get; set; }
-        public DateTime Time { get; set; }
+        public String Time { get; set; }
+        private DateTime dateTime;
 
         public Event(bool state, DateTime time)
         {
             State = state;
-            Time = time;
+            Time = time.ToShortTimeString();
+            dateTime = time;
         }
 
         public Event() { }
+
+        public DateTime GetDateTime() { return this.dateTime; }
     }
 
     public class Lamp
@@ -36,13 +40,11 @@ namespace Mlem
 
     public partial class MainWindow
     {
-        /// <summary>
-        /// Gathers all events from given row (timeline) to list and returns it.
-        /// Returned list is sorted ascending.
-        /// Midnight periods are combined together.
-        /// </summary>
-        /// <param name="row"></param>
-        /// <returns></returns>
+        /*
+         * Gathers all events from given row (timeline) to list and returns it.
+         * Returned list is sorted ascending.
+         * Midnight periods are combined together.
+         */
         private List<Event> GetEventsFromTimeline(int row)
         {
             Debug.Assert(row < calendarView1.DisplayedOwners.Count, "Index error! (" + row + ")");
@@ -68,7 +70,7 @@ namespace Mlem
 
         private List<Event> SortEventsByTime(List<Event> events)
         {
-            events.Sort((a, b) => a.Time.CompareTo(b.Time));
+            events.Sort((a, b) => a.GetDateTime().CompareTo(b.GetDateTime()));
             return events;
         }
 
@@ -85,7 +87,7 @@ namespace Mlem
             Event first = events.First();
             Event last = events.Last();
 
-            if (first.Time.TimeOfDay == last.Time.TimeOfDay)
+            if (first.GetDateTime().TimeOfDay == last.GetDateTime().TimeOfDay)
             {
                 // List length of two means that there is only one period which lasts
                 // whole day. In that case remove only last event so the controlled
