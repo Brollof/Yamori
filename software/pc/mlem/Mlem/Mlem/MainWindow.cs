@@ -23,7 +23,7 @@ namespace Mlem
         private Link link;
         private Version v = new Version(1, 0);
         int[] SLOTS = { 1, 2, 3, 4, 5, 6, 7, 8 };
-
+        bool OFFLINE = true;
 
         public MainWindow()
         {
@@ -63,11 +63,15 @@ namespace Mlem
         {
             //mlem.Send("Hello :)");
             //mlem.Receive();
-
-            if (link.Connect())
-            {
+            if (OFFLINE)
                 SendJsonData();
-                link.Close();
+            else
+            {
+                if (link.Connect())
+                {
+                    SendJsonData();
+                    link.Close();
+                }
             }
         }
 
@@ -91,6 +95,8 @@ namespace Mlem
                 calendarView1.CalendarModel.Appointments.Remove(view.Appointment);
             }
         }
+
+        private string sentData = null;
 
         private void SendJsonData()
         {
@@ -116,8 +122,10 @@ namespace Mlem
                     minTempLimit,
                     maxTempLimit,
                     views.ConvertAll(view => view.Model));
-
-                link.Send(output);
+                if (OFFLINE)
+                    sentData = output;
+                else
+                    link.Send(output);
             }
             catch (Exception ex)
             {
@@ -125,14 +133,39 @@ namespace Mlem
             }
         }
 
+        private string json = @"{'Devices':{'qwe':{'Events':[],'Slot':1,'Color':{'R':93,'G':140,'B':201},'Type':
+'LAMP'}, 'asd':{'Events':[],'Slot':2,'Color':{'R':93,'G':140,'B':201},'Type':
+'LAMP'}},'Config':{'Limits':{'Events':[{'Selected':true,'Time':2,'Name':'qwe'}],
+'Min':0,'Max':5}}}";
         private void btnRead_Click(object sender, EventArgs e)
         {
-            if (link.Connect())
+            if (OFFLINE)
             {
-                Console.WriteLine("Read config");
-                link.Send("read command");
-                link.Receive();
-                link.Close();
+                Console.WriteLine("offline read");
+                try
+                {
+                    var data = JObject.Parse(json);
+                    var devices = data["Devices"].ToObject<Dictionary<string, JObject>>();
+                    foreach (var entry in devices)
+                    {
+                        //Console.WriteLine(entry.Key);
+                        Console.WriteLine(entry.Value["Color"]);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+            }
+            else
+            {
+                if (link.Connect())
+                {
+                    Console.WriteLine("Read config");
+                    link.Send("read command");
+                    link.Receive();
+                    link.Close();
+                }
             }
         }
 
