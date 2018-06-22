@@ -141,24 +141,27 @@ namespace Mlem
                 Console.WriteLine("offline read");
                 try
                 {
-                    List<DeviceConfig> devConfs = new List<DeviceConfig>();
                     var data = JObject.Parse(json);
                     var devices = data["Devices"].ToObject<Dictionary<string, JObject>>();
                     var config = data["Config"];
+
                     foreach (var entry in devices)
                     {
-                        DeviceConfig cfg = new DeviceConfig(entry.Key);
-                        cfg.Type = (string)entry.Value["Type"];
-                        cfg.Color = entry.Value["Color"].ToObject<RGB>();
-                        cfg.Slot = (int)entry.Value["Slot"];
+                        string devName = entry.Key;
+                        DeviceType devType = (DeviceType)Enum.Parse(typeof(DeviceType), (string)entry.Value["Type"]);
+                        RGB rgb = entry.Value["Color"].ToObject<RGB>();
+                        eCalendarColor color = CalendarUtils.ConvertColor(rgb);
+                        int slot = (int)entry.Value["Slot"];
                         List<Event> events = new List<Event>();
                         foreach (var evData in entry.Value["Events"])
                         {
                             Event ev = evData.ToObject<Event>();
                             events.Add(ev);
                         }
-                        cfg.Events = events;
-                        devConfs.Add(cfg);
+
+                        DeviceManager.AddDevice(devName, devType, slot, color);
+                        devName += getSlotFormat(slot);
+                        TimelineAddNewRow(devName, color);
                     }
 
                     ///////////////////////////////////////////////////////

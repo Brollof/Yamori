@@ -91,5 +91,11 @@ namespace Mlem
             }
             return eCalendarColor.Automatic;
         }
+
+        public static eCalendarColor ConvertColor(RGB rgb)
+        {
+            Color color = Color.FromArgb(rgb.R, rgb.G, rgb.B);
+            return ConvertColor(color);
+        }
     }
 }
