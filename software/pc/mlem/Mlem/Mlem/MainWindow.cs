@@ -133,10 +133,7 @@ namespace Mlem
             }
         }
 
-        private string json = @"{'Devices':{'qwe':{'Events':[],'Slot':1,'Color':{'R':93,'G':140,'B':201},'Type':
-'LAMP'}, 'asd':{'Events':[],'Slot':2,'Color':{'R':93,'G':140,'B':201},'Type':
-'LAMP'}},'Config':{'Limits':{'Events':[{'Selected':true,'Time':2,'Name':'qwe'}],
-'Min':0,'Max':5}}}";
+        private string json = @"{ 'Devices': { 'Niebieska': { 'Events': [ { 'State': true, 'Time': '2018-06-20T01:00:00' }, { 'State': false, 'Time': '2018-06-20T03:00:00' } ], 'Slot': 1, 'Color': { 'R': 93, 'G': 140, 'B': 201 }, 'Type': 'LAMP' }, 'Czerwona': { 'Events': [ { 'State': true, 'Time': '2018-06-20T00:00:00' } ], 'Slot': 2, 'Color': { 'R': 193, 'G': 105, 'B': 105 }, 'Type': 'LAMP' }, 'Zielona': { 'Events': [ { 'State': true, 'Time': '2018-06-20T00:30:00' }, { 'State': false, 'Time': '2018-06-20T02:30:00' }, { 'State': true, 'Time': '2018-06-20T05:00:00' }, { 'State': false, 'Time': '2018-06-20T07:00:00' }, { 'State': true, 'Time': '2018-06-20T10:00:00' }, { 'State': false, 'Time': '2018-06-20T10:30:00' } ], 'Slot': 3, 'Color': { 'R': 114, 'G': 164, 'B': 90 }, 'Type': 'LAMP' }, 'Zolta': { 'Events': [ { 'State': false, 'Time': '2018-06-20T00:30:00' }, { 'State': true, 'Time': '2018-06-20T21:00:00' }, { 'State': false, 'Time': '2018-06-20T21:01:00' }, { 'State': true, 'Time': '2018-06-20T23:00:00' } ], 'Slot': 4, 'Color': { 'R': 255, 'G': 209, 'B': 81 }, 'Type': 'LAMP' }, 'kabel': { 'Events': [], 'Slot': 5, 'Color': { 'R': 97, 'G': 106, 'B': 118 }, 'Type': 'CABLE' } }, 'Config': { 'Limits': { 'Events': [ { 'Selected': true, 'Time': 20, 'Name': 'Niebieska' } ], 'Min': 30, 'Max': 40 } }, 'Initialized': true}";
         private void btnRead_Click(object sender, EventArgs e)
         {
             if (OFFLINE)
@@ -144,13 +141,38 @@ namespace Mlem
                 Console.WriteLine("offline read");
                 try
                 {
+                    List<DeviceConfig> devConfs = new List<DeviceConfig>();
                     var data = JObject.Parse(json);
                     var devices = data["Devices"].ToObject<Dictionary<string, JObject>>();
+                    var config = data["Config"];
                     foreach (var entry in devices)
                     {
-                        //Console.WriteLine(entry.Key);
-                        Console.WriteLine(entry.Value["Color"]);
+                        DeviceConfig cfg = new DeviceConfig(entry.Key);
+                        cfg.Type = (string)entry.Value["Type"];
+                        cfg.Color = entry.Value["Color"].ToObject<RGB>();
+                        cfg.Slot = (int)entry.Value["Slot"];
+                        List<Event> events = new List<Event>();
+                        foreach (var evData in entry.Value["Events"])
+                        {
+                            Event ev = evData.ToObject<Event>();
+                            events.Add(ev);
+                        }
+                        cfg.Events = events;
+                        devConfs.Add(cfg);
                     }
+
+                    ///////////////////////////////////////////////////////
+                    minTempLimit = (int)config["Limits"]["Min"];
+                    maxTempLimit = (int)config["Limits"]["Max"];
+
+                    List<LimitTempView> _views = new List<LimitTempView>();
+                    foreach (var limit in config["Limits"]["Events"])
+                    {
+                        LimitTempModel model = limit.ToObject<LimitTempModel>();
+                        _views.Add(new LimitTempView(model));
+                    }
+
+                    views = _views;
                 }
                 catch (Exception ex)
                 {
