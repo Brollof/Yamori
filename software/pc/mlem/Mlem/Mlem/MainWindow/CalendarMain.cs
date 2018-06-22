@@ -86,6 +86,15 @@ namespace Mlem
             calendarView1.MultiCalendarTimeLineViews[cnt - 1].CalendarColor = color;
         }
 
+        void TimelineClear()
+        {
+            int n = calendarView1.DisplayedOwners.Count;
+            for (int i = 0; i < n; i ++)
+            {
+                RemoveLastRow();
+            }
+        }
+
         void calendarView1_AppointmentViewChanging(object sender, AppointmentViewChangingEventArgs e)
         {
             // check whether this appointment exceeds timeline end date

@@ -144,7 +144,8 @@ namespace Mlem
                     var data = JObject.Parse(json);
                     var devices = data["Devices"].ToObject<Dictionary<string, JObject>>();
                     var config = data["Config"];
-
+                    DeviceManager.Clear();
+                    TimelineClear();
                     foreach (var entry in devices)
                     {
                         string devName = entry.Key;
