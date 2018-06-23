@@ -48,6 +48,8 @@ namespace Mlem
             calendarView1.TimeLineHeight = TIMELINE_ROW_HEIGHT;
             // Disable current time indicator
             calendarView1.TimeIndicator.Visibility = eTimeIndicatorVisibility.Hidden;
+
+            // Event handling
             calendarView1.AppointmentViewChanged += calendarView1_AppointmentViewChanged;
             calendarView1.CalendarModel.AppointmentAdded += CalendarModel_AppointmentAdded;
             calendarView1.AppointmentViewChanging += calendarView1_AppointmentViewChanging;
@@ -93,6 +95,7 @@ namespace Mlem
             {
                 RemoveLastRow();
             }
+            calendarView1.CalendarModel.Appointments.Clear();
         }
 
         void calendarView1_AppointmentViewChanging(object sender, AppointmentViewChangingEventArgs e)
@@ -118,7 +121,7 @@ namespace Mlem
             // Remove appointment if it was created on existing one
             foreach (var app in calendarView1.CalendarModel.Appointments)
             {
-                if (app.OwnerKey == calendarView1.SelectedOwner &&
+                if (app.OwnerKey == current.OwnerKey &&
                     app != current &&
                     arePeriodsOverlapping(app.StartTime, app.EndTime, current.StartTime, current.EndTime))
                 {
@@ -325,21 +328,25 @@ namespace Mlem
 
         private Appointment AddNewAppointment(DateTime startDate, DateTime endDate)
         {
-            Appointment appointment = new Appointment();
+            return AddNewAppointment(startDate, endDate, calendarView1.SelectedOwner);
+        }
 
-            appointment.StartTime = startDate;
-            appointment.EndTime = endDate;
-            appointment.OwnerKey = calendarView1.SelectedOwner;
+        private Appointment AddNewAppointment(DateTime startDate, DateTime endDate, string owner)
+        {
+            Appointment app = new Appointment();
+            app.StartTime = startDate;
+            app.EndTime = endDate;
+            app.OwnerKey = owner;
             if (cbShowPeriod.Checked)
-                appointment.DisplayTemplate = "[StartTime] - [EndTime]";
+                app.DisplayTemplate = "[StartTime] - [EndTime]";
             else
-                appointment.DisplayTemplate = " ";
-            
-            updateAppointmentTooltip(appointment);    
-        
-            calendarView1.CalendarModel.Appointments.Add(appointment);
+                app.DisplayTemplate = " ";
 
-            return appointment;
+            updateAppointmentTooltip(app);
+
+            calendarView1.CalendarModel.Appointments.Add(app);
+
+            return app;
         }
 
         #endregion

@@ -133,7 +133,7 @@ namespace Mlem
             }
         }
 
-        private string json = @"{ 'Devices': { 'Niebieska': { 'Events': [ { 'State': true, 'Time': '2018-06-20T01:00:00' }, { 'State': false, 'Time': '2018-06-20T03:00:00' } ], 'Slot': 1, 'Color': { 'R': 93, 'G': 140, 'B': 201 }, 'Type': 'LAMP' }, 'Czerwona': { 'Events': [ { 'State': true, 'Time': '2018-06-20T00:00:00' } ], 'Slot': 2, 'Color': { 'R': 193, 'G': 105, 'B': 105 }, 'Type': 'LAMP' }, 'Zielona': { 'Events': [ { 'State': true, 'Time': '2018-06-20T00:30:00' }, { 'State': false, 'Time': '2018-06-20T02:30:00' }, { 'State': true, 'Time': '2018-06-20T05:00:00' }, { 'State': false, 'Time': '2018-06-20T07:00:00' }, { 'State': true, 'Time': '2018-06-20T10:00:00' }, { 'State': false, 'Time': '2018-06-20T10:30:00' } ], 'Slot': 3, 'Color': { 'R': 114, 'G': 164, 'B': 90 }, 'Type': 'LAMP' }, 'Zolta': { 'Events': [ { 'State': false, 'Time': '2018-06-20T00:30:00' }, { 'State': true, 'Time': '2018-06-20T21:00:00' }, { 'State': false, 'Time': '2018-06-20T21:01:00' }, { 'State': true, 'Time': '2018-06-20T23:00:00' } ], 'Slot': 4, 'Color': { 'R': 255, 'G': 209, 'B': 81 }, 'Type': 'LAMP' }, 'kabel': { 'Events': [], 'Slot': 5, 'Color': { 'R': 97, 'G': 106, 'B': 118 }, 'Type': 'CABLE' } }, 'Config': { 'Limits': { 'Events': [ { 'Selected': true, 'Time': 20, 'Name': 'Niebieska' } ], 'Min': 30, 'Max': 40 } }, 'Initialized': true}";
+        private string json = @"{ 'Devices': { 'Niebieska': { 'Events': [ { 'State': true, 'Time': '01:00' }, { 'State': false, 'Time': '03:00' } ], 'Slot': 1, 'Color': { 'R': 93, 'G': 140, 'B': 201 }, 'Type': 'LAMP' }, 'Czerwona': { 'Events': [ { 'State': true, 'Time': '00:00' } ], 'Slot': 2, 'Color': { 'R': 193, 'G': 105, 'B': 105 }, 'Type': 'LAMP' }, 'Zielona': { 'Events': [ { 'State': true, 'Time': '00:30' }, { 'State': false, 'Time': '02:30' }, { 'State': true, 'Time': '05:00' }, { 'State': false, 'Time': '07:00' }, { 'State': true, 'Time': '10:00' }, { 'State': false, 'Time': '10:30' } ], 'Slot': 3, 'Color': { 'R': 114, 'G': 164, 'B': 90 }, 'Type': 'LAMP' }, 'Zolta': { 'Events': [ { 'State': false, 'Time': '00:30' }, { 'State': true, 'Time': '21:00' }, { 'State': false, 'Time': '21:01' }, { 'State': true, 'Time': '23:00' } ], 'Slot': 4, 'Color': { 'R': 255, 'G': 209, 'B': 81 }, 'Type': 'LAMP' }, 'kabel': { 'Events': [], 'Slot': 5, 'Color': { 'R': 97, 'G': 106, 'B': 118 }, 'Type': 'CABLE' } }, 'Config': { 'Limits': { 'Events': [ { 'Selected': true, 'Time': 20, 'Name': 'Niebieska' } ], 'Min': 30, 'Max': 40 } }, 'Initialized': true}";
         private void btnRead_Click(object sender, EventArgs e)
         {
             if (OFFLINE)
@@ -146,6 +146,8 @@ namespace Mlem
                     var config = data["Config"];
                     DeviceManager.Clear();
                     TimelineClear();
+
+                    List<Event> temp = new List<Event>();
                     foreach (var entry in devices)
                     {
                         string devName = entry.Key;
@@ -163,6 +165,7 @@ namespace Mlem
                         DeviceManager.AddDevice(devName, devType, slot, color);
                         devName += getSlotFormat(slot);
                         TimelineAddNewRow(devName, color);
+                        FillTimeline(events, devName);
                     }
 
                     ///////////////////////////////////////////////////////

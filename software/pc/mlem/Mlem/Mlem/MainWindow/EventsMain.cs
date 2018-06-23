@@ -99,5 +99,44 @@ namespace Mlem
 
             return events;
         }
+
+        private void FillTimeline(List<Event> events, string name)
+        {
+            // special case - whole day
+            if (events.Count == 1)
+            {
+                DateTime start = DateTime.Parse("00:00");
+                DateTime end = start.AddDays(1);
+                AddNewAppointment(start, end, name);
+            }
+            else if (events.Count > 1)
+            {
+                Debug.Assert(events.Count % 2 == 0, "JSON DATA CORRUPTED: odd number of events");
+                // midnight
+                if (events.First().State == false && events.Last().State == true)
+                {
+                    // unmerge midnight
+                    Console.WriteLine("Unmerging midnight for " + name);
+                    DateTime start = DateTime.Parse("00:00");
+                    DateTime end = DateTime.Parse(events.First().Time);
+                    AddNewAppointment(start, end, name);
+
+                    start = DateTime.Parse(events.Last().Time);
+                    end = DateTime.Parse("00:00").AddDays(1);
+                    AddNewAppointment(start, end, name);
+
+                    events.RemoveAt(0);
+                    events.RemoveAt(events.Count - 1);
+                }
+
+                // other "regular" events
+                for (int i = 0; i < events.Count; i += 2)
+                {
+                    DateTime start = DateTime.Parse(events[i].Time);
+                    DateTime end = DateTime.Parse(events[i + 1].Time);
+                    AddNewAppointment(start, end, name);
+                }
+            }
+        }
     }
 }
