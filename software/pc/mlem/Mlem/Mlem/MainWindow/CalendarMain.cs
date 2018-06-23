@@ -59,15 +59,19 @@ namespace Mlem
         private void RemoveLastRow()
         {
             int lastIndex = calendarView1.DisplayedOwners.Count - 1;
-            if (lastIndex >= 0)
-            {
-                calendarView1.DisplayedOwners.RemoveAt(lastIndex);
+            RemoveRow(lastIndex);
+        }
 
-                if (calendarView1.DisplayedOwners.Count >= 4)
-                {
-                    calendarView1.Height -= TIMELINE_ROW_HEIGHT;
-                    this.Height -= TIMELINE_ROW_HEIGHT;
-                }
+        private void RemoveRow(int row)
+        {
+            Debug.Assert(row < calendarView1.DisplayedOwners.Count, "Index exceeds range!");
+            Debug.Assert(row >= 0, "Index exceeds range!");
+
+            calendarView1.DisplayedOwners.RemoveAt(row);
+            if (calendarView1.DisplayedOwners.Count >= 4)
+            {
+                calendarView1.Height -= TIMELINE_ROW_HEIGHT;
+                this.Height -= TIMELINE_ROW_HEIGHT;
             }
         }
 
@@ -297,9 +301,8 @@ namespace Mlem
             {
                 string name = calendarView1.DisplayedOwners[calendarView1.SelectedOwnerIndex];
                 DeviceManager.RemoveDevice(removeSlotFormat(name));
-                calendarView1.DisplayedOwners.RemoveAt(calendarView1.SelectedOwnerIndex);
+                RemoveRow(calendarView1.SelectedOwnerIndex);
             }
-
         }
         #endregion
 
