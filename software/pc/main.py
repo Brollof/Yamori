@@ -18,7 +18,7 @@ from utils import convertBool
 import styles
 import icons_rc
 import ter_temp
-from link import LinkThread
+import link
 from diagnostic import DiagThread
 from event_handler import EventHandler
 
@@ -69,7 +69,8 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.diagThread.update.connect(self.updateDiagPage)
         self.diagThread.start()
 
-        self.linkThread = LinkThread()
+        link.addCommand("TER_READ", config_ex.getJson)
+        self.linkThread = link.LinkThread()
         self.linkThread.start()
 
         self.evt = EventHandler()

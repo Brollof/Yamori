@@ -23,7 +23,7 @@ namespace Mlem
         private Link link;
         private Version v = new Version(1, 0);
         int[] SLOTS = { 1, 2, 3, 4, 5, 6, 7, 8 };
-        bool OFFLINE = true;
+        bool OFFLINE = false;
 
         public MainWindow()
         {
@@ -133,68 +133,70 @@ namespace Mlem
             }
         }
 
-        private string json = @"{ 'Devices': { 'Niebieska': { 'Events': [ { 'State': true, 'Time': '01:00' }, { 'State': false, 'Time': '03:00' } ], 'Slot': 1, 'Color': { 'R': 93, 'G': 140, 'B': 201 }, 'Type': 'LAMP' }, 'Czerwona': { 'Events': [ { 'State': true, 'Time': '00:00' } ], 'Slot': 2, 'Color': { 'R': 193, 'G': 105, 'B': 105 }, 'Type': 'LAMP' }, 'Zielona': { 'Events': [ { 'State': true, 'Time': '00:30' }, { 'State': false, 'Time': '02:30' }, { 'State': true, 'Time': '05:00' }, { 'State': false, 'Time': '07:00' }, { 'State': true, 'Time': '10:00' }, { 'State': false, 'Time': '10:30' } ], 'Slot': 3, 'Color': { 'R': 114, 'G': 164, 'B': 90 }, 'Type': 'LAMP' }, 'Zolta': { 'Events': [ { 'State': false, 'Time': '00:30' }, { 'State': true, 'Time': '21:00' }, { 'State': false, 'Time': '21:01' }, { 'State': true, 'Time': '23:00' } ], 'Slot': 4, 'Color': { 'R': 255, 'G': 209, 'B': 81 }, 'Type': 'LAMP' }, 'kabel': { 'Events': [], 'Slot': 5, 'Color': { 'R': 97, 'G': 106, 'B': 118 }, 'Type': 'CABLE' } }, 'Config': { 'Limits': { 'Events': [ { 'Selected': true, 'Time': 20, 'Name': 'Niebieska' } ], 'Min': 30, 'Max': 40 } }, 'Initialized': true}";
+        private string rx = @"{ 'Devices': { 'Niebieska': { 'Events': [ { 'State': true, 'Time': '01:00' }, { 'State': false, 'Time': '03:00' } ], 'Slot': 1, 'Color': { 'R': 93, 'G': 140, 'B': 201 }, 'Type': 'LAMP' }, 'Czerwona': { 'Events': [ { 'State': true, 'Time': '00:00' } ], 'Slot': 2, 'Color': { 'R': 193, 'G': 105, 'B': 105 }, 'Type': 'LAMP' }, 'Zielona': { 'Events': [ { 'State': true, 'Time': '00:30' }, { 'State': false, 'Time': '02:30' }, { 'State': true, 'Time': '05:00' }, { 'State': false, 'Time': '07:00' }, { 'State': true, 'Time': '10:00' }, { 'State': false, 'Time': '10:30' } ], 'Slot': 3, 'Color': { 'R': 114, 'G': 164, 'B': 90 }, 'Type': 'LAMP' }, 'Zolta': { 'Events': [ { 'State': false, 'Time': '00:30' }, { 'State': true, 'Time': '21:00' }, { 'State': false, 'Time': '21:01' }, { 'State': true, 'Time': '23:00' } ], 'Slot': 4, 'Color': { 'R': 255, 'G': 209, 'B': 81 }, 'Type': 'LAMP' }, 'kabel': { 'Events': [], 'Slot': 5, 'Color': { 'R': 97, 'G': 106, 'B': 118 }, 'Type': 'CABLE' } }, 'Config': { 'Limits': { 'Events': [ { 'Selected': true, 'Time': 20, 'Name': 'Niebieska' } ], 'Min': 30, 'Max': 40 } }, 'Initialized': true}";
         private void btnRead_Click(object sender, EventArgs e)
         {
-            if (OFFLINE)
+            try
             {
+                string json = null;
+                if (OFFLINE)
+                {
+                    json = rx;
+                }
+                else
+                {
+                    if (link.Connect())
+                    {
+                        Console.WriteLine("Read config");
+                        link.Send("TER_READ");
+                        json = link.Receive();
+                        link.Close();
+                    }
+                }
                 Console.WriteLine("offline read");
-                try
+                var data = JObject.Parse(json);
+                var devices = data["Devices"].ToObject<Dictionary<string, JObject>>();
+                var config = data["Config"];
+                DeviceManager.Clear();
+                TimelineClear();
+
+                List<Event> temp = new List<Event>();
+                foreach (var entry in devices)
                 {
-                    var data = JObject.Parse(json);
-                    var devices = data["Devices"].ToObject<Dictionary<string, JObject>>();
-                    var config = data["Config"];
-                    DeviceManager.Clear();
-                    TimelineClear();
-
-                    List<Event> temp = new List<Event>();
-                    foreach (var entry in devices)
+                    string devName = entry.Key;
+                    DeviceType devType = (DeviceType)Enum.Parse(typeof(DeviceType), (string)entry.Value["Type"]);
+                    RGB rgb = entry.Value["Color"].ToObject<RGB>();
+                    eCalendarColor color = CalendarUtils.ConvertColor(rgb);
+                    int slot = (int)entry.Value["Slot"];
+                    List<Event> events = new List<Event>();
+                    foreach (var evData in entry.Value["Events"])
                     {
-                        string devName = entry.Key;
-                        DeviceType devType = (DeviceType)Enum.Parse(typeof(DeviceType), (string)entry.Value["Type"]);
-                        RGB rgb = entry.Value["Color"].ToObject<RGB>();
-                        eCalendarColor color = CalendarUtils.ConvertColor(rgb);
-                        int slot = (int)entry.Value["Slot"];
-                        List<Event> events = new List<Event>();
-                        foreach (var evData in entry.Value["Events"])
-                        {
-                            Event ev = evData.ToObject<Event>();
-                            events.Add(ev);
-                        }
-
-                        DeviceManager.AddDevice(devName, devType, slot, color);
-                        devName += getSlotFormat(slot);
-                        TimelineAddNewRow(devName, color);
-                        FillTimeline(events, devName);
+                        Event ev = evData.ToObject<Event>();
+                        events.Add(ev);
                     }
 
-                    ///////////////////////////////////////////////////////
-                    minTempLimit = (int)config["Limits"]["Min"];
-                    maxTempLimit = (int)config["Limits"]["Max"];
-
-                    List<LimitTempView> _views = new List<LimitTempView>();
-                    foreach (var limit in config["Limits"]["Events"])
-                    {
-                        LimitTempModel model = limit.ToObject<LimitTempModel>();
-                        _views.Add(new LimitTempView(model));
-                    }
-
-                    views = _views;
+                    DeviceManager.AddDevice(devName, devType, slot, color);
+                    devName += getSlotFormat(slot);
+                    TimelineAddNewRow(devName, color);
+                    FillTimeline(events, devName);
                 }
-                catch (Exception ex)
+
+                ///////////////////////////////////////////////////////
+                minTempLimit = (int)config["Limits"]["Min"];
+                maxTempLimit = (int)config["Limits"]["Max"];
+
+                List<LimitTempView> _views = new List<LimitTempView>();
+                foreach (var limit in config["Limits"]["Events"])
                 {
-                    Console.WriteLine(ex);
+                    LimitTempModel model = limit.ToObject<LimitTempModel>();
+                    _views.Add(new LimitTempView(model));
                 }
+
+                views = _views;
             }
-            else
+            catch (Exception ex)
             {
-                if (link.Connect())
-                {
-                    Console.WriteLine("Read config");
-                    link.Send("read command");
-                    link.Receive();
-                    link.Close();
-                }
+                Console.WriteLine(ex);
             }
         }
 

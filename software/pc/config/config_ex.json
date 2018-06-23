@@ -4,11 +4,11 @@
       "Events": [
         {
           "State": true,
-          "Time": "2018-06-20T01:00:00"
+          "Time": "01:00"
         },
         {
           "State": false,
-          "Time": "2018-06-20T03:00:00"
+          "Time": "03:00"
         }
       ],
       "Slot": 1,
@@ -23,7 +23,7 @@
       "Events": [
         {
           "State": true,
-          "Time": "2018-06-20T00:00:00"
+          "Time": "00:00"
         }
       ],
       "Slot": 2,
@@ -38,27 +38,27 @@
       "Events": [
         {
           "State": true,
-          "Time": "2018-06-20T00:30:00"
+          "Time": "00:30"
         },
         {
           "State": false,
-          "Time": "2018-06-20T02:30:00"
+          "Time": "02:30"
         },
         {
           "State": true,
-          "Time": "2018-06-20T05:00:00"
+          "Time": "05:00"
         },
         {
           "State": false,
-          "Time": "2018-06-20T07:00:00"
+          "Time": "07:00"
         },
         {
           "State": true,
-          "Time": "2018-06-20T10:00:00"
+          "Time": "10:00"
         },
         {
           "State": false,
-          "Time": "2018-06-20T10:30:00"
+          "Time": "10:30"
         }
       ],
       "Slot": 3,
@@ -73,19 +73,19 @@
       "Events": [
         {
           "State": false,
-          "Time": "2018-06-20T00:30:00"
+          "Time": "00:30"
         },
         {
           "State": true,
-          "Time": "2018-06-20T21:00:00"
+          "Time": "21:00"
         },
         {
           "State": false,
-          "Time": "2018-06-20T21:01:00"
+          "Time": "21:01"
         },
         {
           "State": true,
-          "Time": "2018-06-20T23:00:00"
+          "Time": "23:00"
         }
       ],
       "Slot": 4,
@@ -97,7 +97,16 @@
       "Type": "LAMP"
     },
     "kabel": {
-      "Events": [],
+      "Events": [
+        {
+          "State": true,
+          "Time": "09:30"
+        },
+        {
+          "State": false,
+          "Time": "16:00"
+        }
+      ],
       "Slot": 5,
       "Color": {
         "R": 97,
@@ -114,6 +123,11 @@
           "Selected": true,
           "Time": 20,
           "Name": "Niebieska"
+        },
+        {
+          "Selected": true,
+          "Time": 5,
+          "Name": "kabel"
         }
       ],
       "Min": 30,

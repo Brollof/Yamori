@@ -5,6 +5,7 @@ from PyQt5.QtCore import QThread, pyqtSignal
 import os
 from terio import device
 import event_handler
+import json
 
 filename = 'config_ex.json'
 filepath = os.path.join(os.path.dirname(__file__), filename)
@@ -18,6 +19,10 @@ def saveData(data):
 
 def loadData():
     return readJsonFile(filepath, log)
+
+def getJson():
+    data = loadData()
+    return json.dumps(data)
 
 def configWorkerInit(action):
     global guiAction
@@ -106,8 +111,4 @@ class ConfigWorker(QThread):
 
 
 if __name__ == '__main__':
-    data = {'asd': 1}
-    # cw = ConfigWorker(data)
-    # cw.start()
-    cfg = getButtonsConfig()
-    print(cfg)
+    pass

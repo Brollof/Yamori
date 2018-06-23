@@ -51,14 +51,12 @@ namespace Mlem
             throw new NotImplementedException();
         }
 
-        public void Receive()
+        public string Receive()
         {
-            Byte[] rawRx = new Byte[256];
-            string data = null;
+            Byte[] rawRx = new Byte[1024*8];
 
-            int bytes = stream.Read(rawRx, 0, rawRx.Length);
-            data = System.Text.Encoding.ASCII.GetString(rawRx, 0, bytes);
-            Console.WriteLine("Received: {0}", data);
+            int bytesNum = stream.Read(rawRx, 0, rawRx.Length);
+            return System.Text.Encoding.ASCII.GetString(rawRx, 0, bytesNum);
         }
 
         public bool Connect()
