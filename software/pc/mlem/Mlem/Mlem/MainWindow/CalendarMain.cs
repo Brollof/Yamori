@@ -347,6 +347,7 @@ namespace Mlem
 
             updateAppointmentTooltip(app);
 
+            Console.WriteLine("Adding {0}, s: {1}, e: {2}", app.OwnerKey, app.StartTime, app.EndTime);
             calendarView1.CalendarModel.Appointments.Add(app);
 
             return app;

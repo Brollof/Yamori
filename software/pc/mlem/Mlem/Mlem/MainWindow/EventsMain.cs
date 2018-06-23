@@ -134,6 +134,10 @@ namespace Mlem
                 {
                     DateTime start = DateTime.Parse(events[i].Time);
                     DateTime end = DateTime.Parse(events[i + 1].Time);
+                    if (end.Hour == 0 && end.Minute == 0)
+                    {
+                        end = end.AddDays(1);
+                    }
                     AddNewAppointment(start, end, name);
                 }
             }

@@ -45,7 +45,6 @@ class LinkThread(QThread):
                             log.info('Disconnected...')
                             break
 
-                        log.info(len(data))
                         if len(data) > MAX_CMD_NAME_LEN:
                             data = json.loads(data)
                             cw = ConfigWorker(data)

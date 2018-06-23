@@ -155,6 +155,7 @@ namespace Mlem
                 }
                 Console.WriteLine("offline read");
                 var data = JObject.Parse(json);
+                Console.WriteLine(data);
                 var devices = data["Devices"].ToObject<Dictionary<string, JObject>>();
                 var config = data["Config"];
                 DeviceManager.Clear();
