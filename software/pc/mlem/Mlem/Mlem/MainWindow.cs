@@ -192,7 +192,24 @@ namespace Mlem
                     _views.Add(new LimitTempView(model));
                 }
 
-                views = _views;
+                // Create views for Limit Temp window
+                List<string> names = DeviceManager.GetNames();
+                List<LimitTempModel> models = (views == null) ?
+                    LimitTempModel.Create(names) :
+                    LimitTempModel.Create(names, views.ConvertAll(view => view.Model));
+                views = LimitTempView.Create(models);
+
+                // Update those views with received data
+                foreach (var _view in _views)
+                {
+                    foreach (var view in views)
+                    {
+                        if (view.Model.Name == _view.Model.Name)
+                        {
+                            view.Model = _view.Model;
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
