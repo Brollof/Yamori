@@ -1,7 +1,7 @@
 import time
 import datetime
 from queue import Queue
-from PyQt5.QtCore import QThread
+from PyQt5.QtCore import QThread, pyqtSignal
 import logging
 
 log = logging.getLogger('EVT')
@@ -12,11 +12,13 @@ def reinit(data):
 
 class EventHandler(QThread):
     SLEEP_TIME = 0.2 
+    updateButtonsSig = pyqtSignal(dict)
 
-    def __init__(self, data, io):
+    def __init__(self, data, io, updateButtons):
         super(self.__class__, self).__init__()
         self.init(data)
         self.io = io
+        self.updateButtonsSig.connect(updateButtons)
         log.debug('thread initialized')
 
     def __filterEmpty(self, data):
@@ -70,6 +72,7 @@ class EventHandler(QThread):
                 self.currentStates[dev] = newState
                 stype = 'on' if newState else 'off'
                 self.io.write((dev, stype))
+                self.updateButtonsSig.emit({dev: stype})
 
     def run(self):
         log.info('thread started')

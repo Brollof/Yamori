@@ -73,10 +73,10 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.linkThread = link.LinkThread()
         self.linkThread.start()
 
-        self.evt = EventHandler(config_ex.loadData(), self.io)
+        self.evt = EventHandler(config_ex.loadData(), self.io, self.updateButtonStyle)
         self.evt.start()
 
-        config_ex.configWorkerInit(self.updateButtons)
+        config_ex.configWorkerInit(self.reinitButtons)
 
     def initButtons(self, config):
         buttons = [self.btnMan1, self.btnMan2, self.btnMan4, self.btnMan5]
@@ -106,7 +106,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.labTTemp2Min.setText('%.1f' % stats['temp2'].min)
         self.labTTemp2Max.setText('%.1f' % stats['temp2'].max)
 
-    def updateButtons(self, data):
+    def reinitButtons(self, data):
         self.log.debug('Updating GUI buttons with data')
         self.log.debug(data)
 
@@ -126,6 +126,13 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.initButtons(data)
         self.initStyles()
 
+    def updateButtonStyle(self, data):
+        for dev, state in data.items():
+            if dev in self.lamps:
+                self.guiLampStyle(dev, state)
+            else:
+                self.guiHeaterStyle(state)
+
     def displayView(self, viewNum):
         if viewNum == self.activeMenu:
             return
@@ -136,29 +143,37 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.activeMenu = viewNum
 
     def createLampButtonCallback(self, color):
-        return lambda: self.lampToggle(color)
+        return lambda: self.guiLampToggle(color)
 
     def initStyles(self):
         for lampName, props in self.lamps.items():
             styles.addStyle(props['btn'], 'background-color: {};'.format(props['color']))
         # self.menuFrame.setStyleSheet('border: 4px solid #ffe0b2')
 
-    def guiHeaterToggle(self):
-        self.io.write((self.heater['name'], 'toggle'))
-        state = self.io.read(self.heater['name'])[self.heater['name']]
-        if state == True:
+    def guiHeaterStyle(self, state):
+        self.log.debug('Updating heater to {}'.format(state))
+        if state in [True, 'on']:
             self.heater['btn'].setIcon(self.icons['heat'])
         else:
             self.heater['btn'].setIcon(self.icons['cold'])
+
+    def guiHeaterToggle(self):
+        self.io.write((self.heater['name'], 'toggle'))
+        state = self.io.read(self.heater['name'])[self.heater['name']]
+        self.guiHeaterStyle(state)
         self.log.debug('Heater {}'.format(convertBool(state, 'ON', 'OFF')))
 
-    def lampToggle(self, lamp):
-        self.io.write((lamp, 'toggle'))
-        state = self.io.read(lamp)[lamp]
-        if state == True:
+    def guiLampStyle(self, lamp, state):
+        self.log.debug('updating lamp "{}" to {}'.format(lamp, state))
+        if state in [True, 'on']:
             styles.setAlpha(self.lamps[lamp]['btn'], 100)
         else:
             styles.setAlpha(self.lamps[lamp]['btn'], 30)
+
+    def guiLampToggle(self, lamp):
+        self.io.write((lamp, 'toggle'))
+        state = self.io.read(lamp)[lamp]
+        self.guiLampStyle(lamp, state)
         self.log.debug('Lamp {} {}'.format(lamp, convertBool(state, 'ON', 'OFF')))
 
     def showInitScreen(self):
