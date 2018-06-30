@@ -73,7 +73,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.linkThread = link.LinkThread()
         self.linkThread.start()
 
-        self.evt = EventHandler()
+        self.evt = EventHandler(config_ex.loadData(), self.io)
         self.evt.start()
 
         config_ex.configWorkerInit(self.updateButtons)

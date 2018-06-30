@@ -96,13 +96,8 @@ class ConfigWorker(QThread):
         # 3. Update GUI with new config
         self.update.emit(getButtonsConfig(devices))
 
-        # 4. Send remaining data to auto module
-        evtData = {}
-        for name in devices:
-            evtData[name] = devices[name]['Events']
-
-        evtData['config'] = self.data['Config']
-        event_handler.send(evtData)
+        # 4. Re-initialize event handler with new data
+        event_handler.reinit(self.data)
 
         ##
         log.info('thread ended')

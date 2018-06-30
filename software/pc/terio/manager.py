@@ -15,7 +15,7 @@ class IOManager():
         """
 
         super(self.__class__, self).__init__()
-        self.log = logging.getLogger('IOM_T')
+        self.log = logging.getLogger('IOM')
         self.asyncIO = async.AsyncIO(self.QUEUE_CHECK_PERIOD, self.__onRead, self.__onWrite, self.__onStart)
         self.timers = {name: 0 for name in device.getNames()}
 
