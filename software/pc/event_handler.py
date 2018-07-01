@@ -1,4 +1,4 @@
-import time
+from time import sleep
 import datetime
 from queue import Queue
 from PyQt5.QtCore import QThread, pyqtSignal
@@ -16,27 +16,28 @@ class EventHandler(QThread):
 
     def __init__(self, data, io, updateButtons):
         super(self.__class__, self).__init__()
-        self.init(data)
-        self.io = io
+        self.__init(data)
+        self.__io = io
+        self.__enabled = True
         self.updateButtonsSig.connect(updateButtons)
         log.debug('thread initialized')
 
-    def __filterEmpty(self, data):
-        return dict(filter(lambda it: it[1] != [], data.items()))
-
-    def getCurrentState(self, dev):
+    def __getCurrentState(self, dev):
         events = self.events[dev]
         if events == []:
             return False
         now = datetime.datetime.now().time()
         devState = events[-1]['State']
         for evt in events:
-            if self.getEventTime(evt) <= now:
+            if self.__getEventTime(evt) <= now:
                 devState = evt['State']
 
         return devState
 
-    def init(self, data):
+    def __checkLimits(self):
+        pass
+
+    def __init(self, data):
         self.cfg = data['Config']
 
         self.events = {}
@@ -51,27 +52,27 @@ class EventHandler(QThread):
         log.debug('Evt:')
         log.debug(self.events)
 
-    def checkNewData(self):
+    def __checkNewData(self):
         if not queue.empty():
             data = queue.get()
             log.debug('Data received:')
             log.debug(data)
-            self.init(data)
+            self.__init(data)
 
-    def getEventTime(self, event):
+    def __getEventTime(self, event):
         switchTime = event['Time']
         h = int(switchTime[:2])
         m = int(switchTime[-2:])
         return datetime.time(h, m)
 
-    def checkEvents(self):
+    def __checkEvents(self):
         now = datetime.datetime.now().time()
         for dev in self.events:
-            newState = self.getCurrentState(dev)
+            newState = self.__getCurrentState(dev)
             if newState != self.currentStates[dev]:
                 self.currentStates[dev] = newState
                 stype = 'on' if newState else 'off'
-                self.io.write((dev, stype))
+                self.__io.write((dev, stype))
                 self.updateButtonsSig.emit({dev: stype})
 
     def run(self):
@@ -79,10 +80,12 @@ class EventHandler(QThread):
         n = 20
         while n:
             # n -= 1
-            self.checkNewData()
-            self.checkEvents()
+            self.__checkNewData()
+            if self.__enabled == True:
+                self.__checkEvents()
+            self.__checkLimits()
             # break
-            time.sleep(EventHandler.SLEEP_TIME)
+            sleep(EventHandler.SLEEP_TIME)
 
         log.critical('thread ended!')
 
