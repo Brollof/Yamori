@@ -13,18 +13,14 @@ def reinit(data):
 class EventHandler(QThread):
     SLEEP_TIME = 0.2 
     LIMIT_CHECK_PERIOD = 1
-    updateButtonsSig = pyqtSignal(dict)
 
-    def __init__(self, data, io, diag):
+    def __init__(self, data, gui, diag):
         super(self.__class__, self).__init__()
         self.__init(data)
-        self.__io = io
+        self.__gui = gui
         self.__enabled = True
         self.__diag = diag
         log.debug('thread initialized')
-
-    def setUpdateSignal(self, callback):
-        self.updateButtonsSig.connect(callback)
 
     def __getCurrentState(self, dev):
         events = self.events[dev]
@@ -73,8 +69,7 @@ class EventHandler(QThread):
             if newState != self.currentStates[dev]:
                 self.currentStates[dev] = newState
                 stype = 'on' if newState else 'off'
-                self.__io.write((dev, stype))
-                self.updateButtonsSig.emit({dev: stype})
+                self.__gui.set(dev, stype)
 
     def __checkLimits(self):
         self.healthCheckCounter += 1

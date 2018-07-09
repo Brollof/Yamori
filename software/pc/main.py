@@ -12,7 +12,6 @@ import ter_logger
 from config import config
 
 import gui
-from terio.manager import IOManager
 
 from utils import convertBool
 import styles
@@ -21,6 +20,7 @@ import ter_temp
 import link
 from diagnostic import DiagThread
 from event_handler import EventHandler
+import gui_clicker
 
 # debug
 import random
@@ -62,8 +62,11 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         # styles
         self.initStyles()
 
-        self.io = IOManager()
         self.tman = ter_temp.TempSensorsManager()
+
+        self.guiClicker = gui_clicker.GuiClicker()
+        self.guiClicker.setUpdateSignal(self.updateButtonStyle)
+        self.guiClicker.start()
 
         self.diagThread = DiagThread(self.tman)
         self.diagThread.update.connect(self.updateDiagPage)
@@ -73,8 +76,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.linkThread = link.LinkThread()
         self.linkThread.start()
 
-        self.evt = EventHandler(config_ex.loadData(), self.io, self.diagThread)
-        self.evt.setUpdateSignal(self.updateButtonStyle)
+        self.evt = EventHandler(config_ex.loadData(), self.guiClicker, self.diagThread)
         self.evt.start()
 
         config_ex.configWorkerInit(self.reinitButtons)
@@ -159,10 +161,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
             self.heater['btn'].setIcon(self.icons['cold'])
 
     def guiHeaterToggle(self):
-        self.io.write((self.heater['name'], 'toggle'))
-        state = self.io.read(self.heater['name'])[self.heater['name']]
-        self.guiHeaterStyle(state)
-        self.log.debug('Heater {}'.format(convertBool(state, 'ON', 'OFF')))
+        self.guiClicker.set(self.heater['name'], 'toggle')
 
     def guiLampStyle(self, lamp, state):
         self.log.debug('updating lamp "{}" to {}'.format(lamp, state))
@@ -172,10 +171,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
             styles.setAlpha(self.lamps[lamp]['btn'], 30)
 
     def guiLampToggle(self, lamp):
-        self.io.write((lamp, 'toggle'))
-        state = self.io.read(lamp)[lamp]
-        self.guiLampStyle(lamp, state)
-        self.log.debug('Lamp {} {}'.format(lamp, convertBool(state, 'ON', 'OFF')))
+        self.guiClicker.set(lamp, 'toggle')
 
     def showInitScreen(self):
         self.verticalLayoutWidget.hide() # hides all controls
