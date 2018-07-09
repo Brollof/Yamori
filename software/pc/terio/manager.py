@@ -43,3 +43,13 @@ class IOManager():
 
     def write(self, ios):
         self.asyncIO.write(ios)
+
+    def forceDisableAll(self):
+        devs = device.getNames()
+        while True:
+            for dev in devs:
+                self.write((dev, 'off'))
+
+            # check if set to false was succesfull
+
+            return

@@ -12,15 +12,19 @@ def reinit(data):
 
 class EventHandler(QThread):
     SLEEP_TIME = 0.2 
+    LIMIT_CHECK_PERIOD = 1
     updateButtonsSig = pyqtSignal(dict)
 
-    def __init__(self, data, io, updateButtons):
+    def __init__(self, data, io, diag):
         super(self.__class__, self).__init__()
         self.__init(data)
         self.__io = io
         self.__enabled = True
-        self.updateButtonsSig.connect(updateButtons)
+        self.__diag = diag
         log.debug('thread initialized')
+
+    def setUpdateSignal(self, callback):
+        self.updateButtonsSig.connect(callback)
 
     def __getCurrentState(self, dev):
         events = self.events[dev]
@@ -33,9 +37,6 @@ class EventHandler(QThread):
                 devState = evt['State']
 
         return devState
-
-    def __checkLimits(self):
-        pass
 
     def __init(self, data):
         self.cfg = data['Config']
@@ -75,16 +76,30 @@ class EventHandler(QThread):
                 self.__io.write((dev, stype))
                 self.updateButtonsSig.emit({dev: stype})
 
+    def __checkLimits(self):
+        self.healthCheckCounter += 1
+        if self.healthCheckCounter % (EventHandler.LIMIT_CHECK_PERIOD/EventHandler.SLEEP_TIME) == 0:
+            self.healthCheckCounter = 0
+            t1 = self.__diag.temp1Stats.lastVal
+            t2 = self.__diag.temp2Stats.lastVal
+            avgTemp = (t1 + t2) / 2
+
+            if avgTemp <= self.cfg['Limits']['Min']:
+                log.info('Min temperature cross')
+                self.__enabled = False
+            elif avgTemp >= self.cfg['Limits']['Max']:
+                log.info('Max temperature cross')
+                # force everything off
+                self.__enabled = False
+
     def run(self):
         log.info('thread started')
-        n = 20
-        while n:
-            # n -= 1
+        self.healthCheckCounter = 0
+        while True:
             self.__checkNewData()
             if self.__enabled == True:
                 self.__checkEvents()
-            self.__checkLimits()
-            # break
+
             sleep(EventHandler.SLEEP_TIME)
 
         log.critical('thread ended!')
