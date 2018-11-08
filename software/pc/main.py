@@ -23,13 +23,9 @@ from event_handler import EventHandler
 import gui_clicker
 
 # debug
-import random
 from config import config_ex
 
 MENU_INDICATOR = 'background-color: #ffe0b2; border-radius: 10px'
-
-# read GPIO state app after restart
-# temp limits view
 
 class MainWindow(QMainWindow, gui.Ui_MainWindow):
     def __init__(self):
@@ -45,6 +41,12 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
             'cold': QIcon(':i_cold.png'),
         }
 
+        link.addCommand("TER_READ", config_ex.getJson)
+        self.linkThread = link.LinkThread()
+        self.linkThread.start()
+
+        config_ex.configWorkerInit(self.reinitButtons)
+
         if config_ex.isInitialized() == True:
             config_ex.initDevices()
             self.initButtons(config_ex.getButtonsConfig())
@@ -52,6 +54,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         else:
             self.log.warning("Device NOT initialized!")
             self.showInitScreen()
+            return
         
         self.menu = [self.btnManual, self.btnAuto, self.btnDiag]
         self.menu[0].clicked.connect(lambda: self.displayView(0))
@@ -59,9 +62,7 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.menu[2].clicked.connect(lambda: self.displayView(2))
         self.displayView(0)
 
-        # styles
         self.initStyles()
-
         self.tman = ter_temp.TempSensorsManager()
 
         self.guiClicker = gui_clicker.GuiClicker()
@@ -72,14 +73,8 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.diagThread.update.connect(self.updateDiagPage)
         self.diagThread.start()
 
-        link.addCommand("TER_READ", config_ex.getJson)
-        self.linkThread = link.LinkThread()
-        self.linkThread.start()
-
         self.evt = EventHandler(config_ex.loadData(), self.guiClicker, self.diagThread)
         self.evt.start()
-
-        config_ex.configWorkerInit(self.reinitButtons)
 
     def initButtons(self, config):
         buttons = [self.btnMan1, self.btnMan2, self.btnMan4, self.btnMan5]
@@ -154,11 +149,14 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         # self.menuFrame.setStyleSheet('border: 4px solid #ffe0b2')
 
     def guiHeaterStyle(self, state):
-        self.log.debug('Updating heater to {}'.format(state))
-        if state in [True, 'on']:
-            self.heater['btn'].setIcon(self.icons['heat'])
+        if self.heater:
+            self.log.debug('Updating heater to {}'.format(state))
+            if state in [True, 'on']:
+                self.heater['btn'].setIcon(self.icons['heat'])
+            else:
+                self.heater['btn'].setIcon(self.icons['cold'])
         else:
-            self.heater['btn'].setIcon(self.icons['cold'])
+            self.log.warning('Heater is not present!')
 
     def guiHeaterToggle(self):
         self.guiClicker.set(self.heater['name'], 'toggle')
