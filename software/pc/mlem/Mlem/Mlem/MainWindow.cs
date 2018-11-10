@@ -24,7 +24,7 @@ namespace Mlem
         private Version v = new Version(1, 0);
         int[] SLOTS = { 1, 2, 3, 4, 5, 6, 7, 8 };
         bool OFFLINE = false;
-
+        bool DEBUG = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -34,7 +34,10 @@ namespace Mlem
             InitDeviceColorPicker();
             InitDeviceSlotPicker();
             CalendarInit(SLOTS.Length);
-            link = new Link("127.0.0.1", 50007);
+            if (DEBUG)
+                link = new Link("127.0.0.1", 50007);
+            else
+                link = new Link("192.168.0.193", 50007);
         }
 
         private void InitDeviceTypePicker()

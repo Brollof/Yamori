@@ -3,6 +3,7 @@ import socket
 import json
 from PyQt5.QtCore import QThread
 from config.config_ex import ConfigWorker
+import time
 
 MAX_CMD_NAME_LEN = 10
 COMMANDS = {}
@@ -30,6 +31,7 @@ class LinkThread(QThread):
     def run(self):
         log.info('Link thread started')
         while True:
+            time.sleep(0.3)
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.bind((self.host, self.port))
                 log.info('Socket binded')
@@ -46,7 +48,7 @@ class LinkThread(QThread):
                             break
 
                         if len(data) > MAX_CMD_NAME_LEN:
-                            data = json.loads(data)
+                            data = json.loads(data.decode('utf-8'))
                             cw = ConfigWorker(data)
                             cw.start()
                         else:
@@ -57,6 +59,7 @@ class LinkThread(QThread):
                                 conn.sendall(resposne.encode())
                             else:
                                 log.error('Command "{}" not found!'.format(data))
+
 
 if __name__ == '__main__':
     pass
