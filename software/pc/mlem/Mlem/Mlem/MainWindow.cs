@@ -37,7 +37,7 @@ namespace Mlem
             if (DEBUG)
                 link = new Link("127.0.0.1", 50007);
             else
-                link = new Link("192.168.0.193", 50007);
+                link = new Link("yamori", 50007);
         }
 
         private void InitDeviceTypePicker()
