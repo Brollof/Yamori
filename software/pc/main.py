@@ -76,6 +76,8 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.evt = EventHandler(config_ex.loadData(), self.guiClicker, self.diagThread)
         self.evt.start()
 
+        self.showFullScreen()
+
     def initButtons(self, config):
         buttons = [self.btnMan1, self.btnMan2, self.btnMan4, self.btnMan5]
 
