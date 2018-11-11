@@ -38,6 +38,8 @@ namespace Mlem
                 link = new Link("127.0.0.1", 50007);
             else
                 link = new Link("yamori", 50007);
+
+            btnLimits.Visible = false; // Limits are no longer supported
         }
 
         private void InitDeviceTypePicker()
@@ -317,6 +319,7 @@ namespace Mlem
             {
                 calendarView1.Visible = true;
                 btnLimits.Enabled = true;
+                btnSend.Enabled = true;
             }
             else
             {
