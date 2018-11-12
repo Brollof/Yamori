@@ -42,13 +42,19 @@ class LinkThread(QThread):
                 with conn:
                     log.info('Connected by {}'.format(addr))
                     while True:
-                        data = conn.recv(1024*8)
+                        data = conn.recv(1024*32)
+                        log.debug('%d bytes received' %len(data))
+                        log.debug(data)
                         if not data:
                             log.info('Disconnected...')
                             break
 
                         if len(data) > MAX_CMD_NAME_LEN:
-                            data = json.loads(data.decode('utf-8'))
+                            try:
+                                data = json.loads(data.decode('utf-8'))
+                            except Exception as e:
+                                log.error(e)
+                                continue
                             cw = ConfigWorker(data)
                             cw.start()
                         else:

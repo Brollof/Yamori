@@ -111,3 +111,20 @@ pi_10_11_2018.img
 -----------------------------------------------------------------------
 pi_10_11_2018_2.img
 -----------------------------------------------------------------------
+
+- CPU temperature logger
+- hostname changed
+- tmux plugins added
+- main app symlink on desktop created:
+  ln -s /path/to/app.sh /home/pi/Desktop/app.sh
+- running main app on boot by adding:
+  @sh /path/to/main/app.sh
+  to file:
+  ~/.config/lxsession/LXDE-pi/autostart 
+
+-----------------------------------------------------------------------
+pi_11_11_2018.img
+-----------------------------------------------------------------------
+
+pip install rpi_backlight
+https://raspberrypi.stackexchange.com/questions/46225/adjusting-the-brightness-of-the-official-touchscreen-display
