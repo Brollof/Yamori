@@ -21,8 +21,6 @@ import link
 from diagnostic import DiagThread
 from event_handler import EventHandler
 import gui_clicker
-
-# debug
 from config import config_ex
 
 MENU_INDICATOR = 'background-color: #ffe0b2; border-radius: 10px'
@@ -86,8 +84,10 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
             if cfg['type'] == 'LAMP':
                 color = 'rgba' + str(cfg['color'])[:-1] + ', 30%)'
                 self.lamps[cfg['name']] = {'btn': buttons.pop(0), 'color': color}
-            else:
+            elif cfg['type'] == 'CABLE':
                 self.heater = {'name': cfg['name'], 'btn': self.btnMan3}
+            else:
+                self.log.error('Skipping device "%s"' %cfg['type'])
 
         if self.heater:
             self.heater['btn'].clicked.connect(self.guiHeaterToggle)
@@ -131,8 +131,10 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         for dev, state in data.items():
             if dev in self.lamps:
                 self.guiLampStyle(dev, state)
-            else:
+            elif dev == self.heater['name']:
                 self.guiHeaterStyle(state)
+            else:
+                self.log.warning('Device "%s" is not available on GUI' %dev)
 
     def displayView(self, viewNum):
         if viewNum == self.activeMenu:
