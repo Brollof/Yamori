@@ -126,5 +126,5 @@ pi_10_11_2018_2.img
 pi_11_11_2018.img
 -----------------------------------------------------------------------
 
-pip install rpi_backlight
-https://raspberrypi.stackexchange.com/questions/46225/adjusting-the-brightness-of-the-official-touchscreen-display
+sudo apt-get install xscreensaver
+- set screensaver to blank screen after 3 mins
