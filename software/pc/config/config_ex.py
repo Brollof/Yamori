@@ -6,6 +6,7 @@ import os
 from terio import device
 import event_handler
 import json
+import time
 
 filename = 'config_ex.json'
 filepath = os.path.join(os.path.dirname(__file__), filename)
@@ -92,6 +93,7 @@ class ConfigWorker(QThread):
         # 2. Init devices
         devices = self.data['Devices']
         initDevices(devices)
+        time.sleep(1) # wait some time after GPIOs reinit
 
         # 3. Update GUI with new config
         self.update.emit(getButtonsConfig(devices))
