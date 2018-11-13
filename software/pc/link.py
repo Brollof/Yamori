@@ -20,6 +20,18 @@ def getResponse(name):
         if key == name:
             return COMMANDS[name]()
 
+def recvall(sock):
+    BUFF_SIZE = 512
+    data = b''
+    while True:
+        part = sock.recv(BUFF_SIZE)
+        data += part
+        if len(part) < BUFF_SIZE:
+            # either 0 or end of data
+            break
+        time.sleep(0.1)
+    return data
+
 # QThread is used instead of Thread
 # QT closes this thread when the application is closed
 class LinkThread(QThread):
@@ -42,7 +54,7 @@ class LinkThread(QThread):
                 with conn:
                     log.info('Connected by {}'.format(addr))
                     while True:
-                        data = conn.recv(1024*32)
+                        data = recvall(conn)
                         log.debug('%d bytes received' %len(data))
                         log.debug(data)
                         if not data:
