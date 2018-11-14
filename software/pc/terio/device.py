@@ -12,14 +12,14 @@ else:
 log = logging.getLogger("DEVICE")
 
 SLOT_TO_PIN = {
-    1: 26,
-    2: 19,
-    3: 13,
-    4: 6,
+    1: 0,
+    2: 1,
+    3: 2,
+    4: 3,
     5: 5,
-    6: 7,
-    7: 8,
-    8: 9
+    6: 6,
+    7: 7,
+    8: 8
 }
 
 MAX_DEVICE_NUM = len(SLOT_TO_PIN)
