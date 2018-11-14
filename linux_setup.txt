@@ -128,3 +128,5 @@ pi_11_11_2018.img
 
 sudo apt-get install xscreensaver
 - set screensaver to blank screen after 3 mins
+- backlight script:
+@sh /home/pi/tools/set_backlight.sh
