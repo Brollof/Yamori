@@ -130,3 +130,4 @@ sudo apt-get install xscreensaver
 - set screensaver to blank screen after 3 mins
 - backlight script:
 @sh /home/pi/tools/set_backlight.sh
+- alias max_temp
