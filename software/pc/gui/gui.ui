@@ -614,7 +614,7 @@ QFrame {
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="label_14">
+             <widget class="QLabel" name="labTCpu">
               <property name="text">
                <string>0 *C</string>
               </property>
@@ -645,7 +645,7 @@ QFrame {
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="label_19">
+             <widget class="QLabel" name="labTCpuAvg">
               <property name="text">
                <string>0 *C</string>
               </property>
@@ -676,7 +676,7 @@ QFrame {
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="label_24">
+             <widget class="QLabel" name="labTCpuMax">
               <property name="text">
                <string>0 *C</string>
               </property>
@@ -707,7 +707,7 @@ QFrame {
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="label_30">
+             <widget class="QLabel" name="labTCpuMin">
               <property name="text">
                <string>0 *C</string>
               </property>

@@ -16,7 +16,6 @@ import gui
 from utils import convertBool
 import styles
 import icons_rc
-import ter_temp
 import link
 from diagnostic import DiagThread
 from event_handler import EventHandler
@@ -61,13 +60,12 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         self.displayView(0)
 
         self.initStyles()
-        self.tman = ter_temp.TempSensorsManager()
 
         self.guiClicker = gui_clicker.GuiClicker()
         self.guiClicker.setUpdateSignal(self.updateButtonStyle)
         self.guiClicker.start()
 
-        self.diagThread = DiagThread(self.tman)
+        self.diagThread = DiagThread()
         self.diagThread.update.connect(self.updateDiagPage)
         self.diagThread.start()
 
@@ -96,16 +94,21 @@ class MainWindow(QMainWindow, gui.Ui_MainWindow):
         for name, gui in self.lamps.items():
             gui['btn'].clicked.connect(self.createLampButtonCallback(name))
 
-    def updateDiagPage(self, stats):
-        self.labTTemp1.setText('%.1f' % stats['temp1'].lastVal)
-        self.labTTemp1Avg.setText('%.1f' % stats['temp1'].avg)
-        self.labTTemp1Min.setText('%.1f' % stats['temp1'].min)
-        self.labTTemp1Max.setText('%.1f' % stats['temp1'].max)
+    def updateDiagPage(self, sensors):
+        self.labTTemp1.setText('%.1f' % sensors['t1'].stats.lastVal)
+        self.labTTemp1Avg.setText('%.1f' % sensors['t1'].stats.avg)
+        self.labTTemp1Min.setText('%.1f' % sensors['t1'].stats.min)
+        self.labTTemp1Max.setText('%.1f' % sensors['t1'].stats.max)
 
-        self.labTTemp2.setText('%.1f' % stats['temp2'].lastVal)
-        self.labTTemp2Avg.setText('%.1f' % stats['temp2'].avg)
-        self.labTTemp2Min.setText('%.1f' % stats['temp2'].min)
-        self.labTTemp2Max.setText('%.1f' % stats['temp2'].max)
+        self.labTTemp2.setText('%.1f' % sensors['t2'].stats.lastVal)
+        self.labTTemp2Avg.setText('%.1f' % sensors['t2'].stats.avg)
+        self.labTTemp2Min.setText('%.1f' % sensors['t2'].stats.min)
+        self.labTTemp2Max.setText('%.1f' % sensors['t2'].stats.max)
+
+        self.labTCpu.setText('%.1f' % sensors['cpu'].stats.lastVal)
+        self.labTCpuAvg.setText('%.1f' % sensors['cpu'].stats.avg)
+        self.labTCpuMin.setText('%.1f' % sensors['cpu'].stats.min)
+        self.labTCpuMax.setText('%.1f' % sensors['cpu'].stats.max)
 
     def reinitButtons(self, data):
         self.log.debug('Updating GUI buttons with data')
