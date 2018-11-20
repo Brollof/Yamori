@@ -131,3 +131,6 @@ sudo apt-get install xscreensaver
 - backlight script:
 @sh /home/pi/tools/set_backlight.sh
 - alias max_temp
+pip install evdev
+- lcd.py script added to autostart
+- alias lcdfix: @sh /home/pi/tools/restart_lcd.sh
