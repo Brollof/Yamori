@@ -47,7 +47,7 @@ class Sensor():
         self.stats.update(self.read())
 
     def read(self):
-        return int(self.readCallback()) if self.readCallback else 0
+        return float(self.readCallback()) if self.readCallback else 0
 
 
 class DiagThread(QThread):

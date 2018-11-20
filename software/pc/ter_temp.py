@@ -2,6 +2,7 @@ from terio.async import AsyncIO
 import logging
 import ds18b20
 from config import config
+import subprocess
 
 class TempSensorsManager():
     QUEUE_CHECK_PERIOD = 0.2 # seconds
@@ -33,12 +34,12 @@ class TempSensorsManager():
         if config.getPlatform() == 'rpi':
             try:
                 result = subprocess.run('vcgencmd measure_temp', stdout=subprocess.PIPE, shell=True, check=True, universal_newlines=True)
-                return int(result.stdout.strip())
+                return float(result.stdout.strip()[5:-2])
             except Exception as e:
                 self.log.error('Cannot read CPU temp: {}'.format(e))
                 return 0
         else:
-            return 42
+            return 42.5
 
     def close(self):
         self.asyncIO.close()
