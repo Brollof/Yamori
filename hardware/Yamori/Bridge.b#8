@@ -923,13 +923,6 @@ design rules under a new name.</description>
 <contactref element="U1" pad="3"/>
 <wire x1="74.93" y1="30.48" x2="47.3964" y2="43.815" width="0" layer="19" extent="1-1"/>
 </signal>
-<signal name="BCM2">
-<contactref element="J1" pad="4"/>
-<contactref element="U1" pad="19"/>
-<contactref element="U1" pad="1"/>
-<wire x1="47.3964" y1="46.355" x2="56.7436" y2="45.085" width="0" layer="19" extent="1-1"/>
-<wire x1="33.02" y1="59.69" x2="47.3964" y2="46.355" width="0" layer="19" extent="1-1"/>
-</signal>
 <signal name="BCM3">
 <contactref element="J1" pad="6"/>
 </signal>
@@ -1013,6 +1006,13 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$27">
 <contactref element="J1" pad="40"/>
+</signal>
+<signal name="OE_L">
+<contactref element="J1" pad="4"/>
+<contactref element="U1" pad="19"/>
+<contactref element="U1" pad="1"/>
+<wire x1="47.3964" y1="46.355" x2="56.7436" y2="45.085" width="0" layer="19" extent="1-1"/>
+<wire x1="33.02" y1="59.69" x2="47.3964" y2="46.355" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
 <mfgpreviewcolors>

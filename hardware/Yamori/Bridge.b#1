@@ -1151,6 +1151,17 @@ design rules under a new name.</description>
 <attribute name="NAME" x="66.04" y="13.716" size="0.6096" layer="25" font="vector" ratio="20" rot="R180"/>
 <attribute name="VALUE" x="66.04" y="20.193" size="0.6096" layer="27" font="vector" ratio="20" rot="R180"/>
 </element>
+<element name="R3" library="SparkFun-Resistors" package="AXIAL-0.3" value=" " x="5.08" y="7.62" smashed="yes">
+<attribute name="NAME" x="5.08" y="8.636" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center"/>
+<attribute name="PROD_ID" value=" " x="5.08" y="7.62" size="1.778" layer="27" display="off"/>
+<attribute name="VALUE" x="5.08" y="6.604" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
+</element>
+<element name="S2" library="SparkFun-Switches" package="TACTILE_SWITCH_PTH_6.0MM" value="MOMENTARY-SWITCH-SPST-PTH-6.0MM" x="5.08" y="1.27" smashed="yes">
+<attribute name="NAME" x="5.08" y="4.572" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center"/>
+<attribute name="PROD_ID" value=" SWCH-08441" x="5.08" y="1.27" size="1.778" layer="27" display="off"/>
+<attribute name="SF_SKU" value="COM-00097" x="5.08" y="1.27" size="1.778" layer="27" display="off"/>
+<attribute name="VALUE" x="5.08" y="-1.905" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
+</element>
 </elements>
 <signals>
 <signal name="5V">
@@ -1179,6 +1190,7 @@ design rules under a new name.</description>
 <contactref element="S1" pad="1"/>
 <contactref element="J4" pad="19"/>
 <contactref element="J4" pad="20"/>
+<contactref element="S2" pad="1"/>
 <wire x1="39.9288" y1="51.7906" x2="56.99" y2="63.5" width="0" layer="19" extent="1-1"/>
 <wire x1="33.02" y1="46.99" x2="39.9288" y2="51.7906" width="0" layer="19" extent="1-1"/>
 <wire x1="30.48" y1="52.07" x2="33.02" y2="46.99" width="0" layer="19" extent="1-1"/>
@@ -1192,6 +1204,7 @@ design rules under a new name.</description>
 <wire x1="41.91" y1="15.24" x2="41.91" y2="17.78" width="0" layer="19" extent="1-1"/>
 <wire x1="52.07" y1="26.67" x2="41.91" y2="17.78" width="0" layer="19" extent="1-1"/>
 <wire x1="69.85" y1="33.02" x2="52.07" y2="26.67" width="0" layer="19" extent="1-1"/>
+<wire x1="1.8288" y1="3.5306" x2="30.48" y2="13.97" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="DQ">
 <contactref element="J2" pad="2"/>
@@ -1207,11 +1220,13 @@ design rules under a new name.</description>
 <contactref element="J1" pad="17"/>
 <contactref element="R2" pad="P$2"/>
 <contactref element="J4" pad="1"/>
+<contactref element="R3" pad="P$2"/>
 <wire x1="45.72" y1="55.88" x2="46.99" y2="63.5" width="0" layer="19" extent="1-1"/>
 <wire x1="46.99" y1="41.91" x2="45.72" y2="55.88" width="0" layer="19" extent="1-1"/>
 <wire x1="30.48" y1="62.23" x2="45.72" y2="55.88" width="0" layer="19" extent="1-1"/>
 <wire x1="30.48" y1="41.91" x2="46.99" y2="41.91" width="0" layer="19" extent="1-1"/>
 <wire x1="64.77" y1="17.78" x2="46.99" y2="41.91" width="0" layer="19" extent="1-1"/>
+<wire x1="8.89" y1="7.62" x2="30.48" y2="41.91" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="!OE">
 <contactref element="U3" pad="1"/>
@@ -1303,17 +1318,17 @@ design rules under a new name.</description>
 <signal name="BCM3">
 <contactref element="J1" pad="5"/>
 </signal>
-<signal name="TX">
-<contactref element="J1" pad="8"/>
+<signal name="BCM14">
 <contactref element="J4" pad="4"/>
+<contactref element="J1" pad="8"/>
 <wire x1="62.23" y1="15.24" x2="33.02" y2="54.61" width="0" layer="19" extent="1-1"/>
 </signal>
-<signal name="RX">
+<signal name="BCM15">
 <contactref element="J1" pad="10"/>
 <contactref element="J4" pad="6"/>
 <wire x1="59.69" y1="15.24" x2="33.02" y2="52.07" width="0" layer="19" extent="1-1"/>
 </signal>
-<signal name="PWM0">
+<signal name="BCM18">
 <contactref element="J1" pad="12"/>
 <contactref element="J4" pad="3"/>
 <wire x1="62.23" y1="17.78" x2="33.02" y2="49.53" width="0" layer="19" extent="1-1"/>
@@ -1325,44 +1340,75 @@ design rules under a new name.</description>
 <wire x1="39.37" y1="41.91" x2="39.9288" y2="47.2694" width="0" layer="19" extent="1-1"/>
 <wire x1="30.48" y1="49.53" x2="39.9288" y2="47.2694" width="0" layer="19" extent="1-1"/>
 </signal>
-<signal name="BCM27">
+<signal name="PWR_OFF">
 <contactref element="J1" pad="13"/>
+<contactref element="R3" pad="P$1"/>
+<contactref element="S2" pad="3"/>
+<wire x1="1.27" y1="7.62" x2="30.48" y2="46.99" width="0" layer="19" extent="1-1"/>
+<wire x1="1.8288" y1="-0.9906" x2="1.27" y2="7.62" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="BCM22">
 <contactref element="J1" pad="15"/>
 </signal>
 <signal name="BCM23">
 <contactref element="J1" pad="16"/>
+<contactref element="J4" pad="17"/>
+<wire x1="44.45" y1="17.78" x2="33.02" y2="44.45" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="BCM24">
 <contactref element="J1" pad="18"/>
+<contactref element="J4" pad="13"/>
+<contactref element="J4" pad="18"/>
+<wire x1="44.45" y1="15.24" x2="33.02" y2="41.91" width="0" layer="19" extent="1-1"/>
+<wire x1="49.53" y1="17.78" x2="44.45" y2="15.24" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="BCM25">
 <contactref element="J1" pad="22"/>
+<contactref element="J4" pad="15"/>
+<wire x1="46.99" y1="17.78" x2="33.02" y2="36.83" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="BCM10">
 <contactref element="J1" pad="19"/>
+<contactref element="J4" pad="12"/>
+<wire x1="52.07" y1="15.24" x2="30.48" y2="39.37" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="BCM9">
 <contactref element="J1" pad="21"/>
+<contactref element="J4" pad="14"/>
+<wire x1="49.53" y1="15.24" x2="30.48" y2="36.83" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="BCM11">
 <contactref element="J1" pad="23"/>
+<contactref element="J4" pad="16"/>
+<wire x1="46.99" y1="15.24" x2="30.48" y2="34.29" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="BCM0">
 <contactref element="J1" pad="27"/>
+<contactref element="J4" pad="8"/>
+<wire x1="30.48" y1="29.21" x2="57.15" y2="15.24" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="BCM5">
 <contactref element="J1" pad="29"/>
+<contactref element="J4" pad="11"/>
+<wire x1="30.48" y1="26.67" x2="52.07" y2="17.78" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="BCM8">
 <contactref element="J1" pad="24"/>
+<contactref element="J4" pad="7"/>
+<wire x1="33.02" y1="34.29" x2="57.15" y2="17.78" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="BCM7">
 <contactref element="J1" pad="26"/>
+<contactref element="J4" pad="9"/>
+<wire x1="33.02" y1="31.75" x2="54.61" y2="17.78" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="BCM1">
 <contactref element="J1" pad="28"/>
+<contactref element="J4" pad="10"/>
+<wire x1="33.02" y1="29.21" x2="54.61" y2="15.24" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="BCM13">
+<contactref element="J4" pad="5"/>
 </signal>
 </signals>
 <mfgpreviewcolors>
