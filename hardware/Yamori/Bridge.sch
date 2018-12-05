@@ -4664,7 +4664,7 @@ SparkFun BigTime Watch Kit&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
 <part name="SUPPLY8" library="SparkFun-PowerSymbols" deviceset="5V" device=""/>
 <part name="GND5" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="SUPPLY9" library="SparkFun-PowerSymbols" deviceset="3.3V" device=""/>
-<part name="R3" library="SparkFun-Resistors" deviceset="RESISTOR" device="AXIAL-0.3" value=" "/>
+<part name="R3" library="SparkFun-Resistors" deviceset="RESISTOR" device="AXIAL-0.3" value="4.7K"/>
 <part name="S2" library="SparkFun-Switches" deviceset="MOMENTARY-SWITCH-SPST" device="-PTH-6.0MM"/>
 <part name="GND6" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 </parts>
@@ -5152,6 +5152,11 @@ internal pull-up to 3v3</text>
 <wire x1="-71.12" y1="76.2" x2="-81.28" y2="76.2" width="0.1524" layer="91"/>
 <label x="-81.28" y="76.2" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="J4" gate="G$1" pin="5"/>
+<wire x1="83.82" y1="15.24" x2="73.66" y2="15.24" width="0.1524" layer="91"/>
+<label x="73.66" y="15.24" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="BCM14" class="0">
 <segment>
@@ -5189,7 +5194,7 @@ internal pull-up to 3v3</text>
 <label x="73.66" y="17.78" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="BTN1" class="0">
+<net name="!BTN1" class="0">
 <segment>
 <pinref part="J1" gate="G$1" pin="11"/>
 <wire x1="-71.12" y1="68.58" x2="-81.28" y2="68.58" width="0.1524" layer="91"/>
@@ -5203,22 +5208,6 @@ internal pull-up to 3v3</text>
 <wire x1="12.7" y1="2.54" x2="2.54" y2="2.54" width="0.1524" layer="91"/>
 <junction x="12.7" y="2.54"/>
 <label x="2.54" y="2.54" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="PWR_OFF" class="0">
-<segment>
-<pinref part="J1" gate="G$1" pin="13"/>
-<wire x1="-71.12" y1="66.04" x2="-81.28" y2="66.04" width="0.1524" layer="91"/>
-<label x="-83.82" y="66.04" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="R3" gate="G$1" pin="1"/>
-<pinref part="S2" gate="G$1" pin="2"/>
-<wire x1="40.64" y1="5.08" x2="40.64" y2="2.54" width="0.1524" layer="91"/>
-<wire x1="40.64" y1="2.54" x2="40.64" y2="0" width="0.1524" layer="91"/>
-<wire x1="40.64" y1="2.54" x2="30.48" y2="2.54" width="0.1524" layer="91"/>
-<junction x="40.64" y="2.54"/>
-<label x="25.4" y="2.54" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="BCM22" class="0">
@@ -5365,11 +5354,20 @@ internal pull-up to 3v3</text>
 <label x="101.6" y="10.16" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="BCM13" class="0">
+<net name="!PWR_OFF" class="0">
 <segment>
-<pinref part="J4" gate="G$1" pin="5"/>
-<wire x1="83.82" y1="15.24" x2="73.66" y2="15.24" width="0.1524" layer="91"/>
-<label x="73.66" y="15.24" size="1.778" layer="95"/>
+<pinref part="R3" gate="G$1" pin="1"/>
+<pinref part="S2" gate="G$1" pin="2"/>
+<wire x1="40.64" y1="5.08" x2="40.64" y2="2.54" width="0.1524" layer="91"/>
+<wire x1="40.64" y1="2.54" x2="40.64" y2="0" width="0.1524" layer="91"/>
+<wire x1="40.64" y1="2.54" x2="30.48" y2="2.54" width="0.1524" layer="91"/>
+<junction x="40.64" y="2.54"/>
+<label x="25.4" y="2.54" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="J1" gate="G$1" pin="13"/>
+<wire x1="-71.12" y1="66.04" x2="-81.28" y2="66.04" width="0.1524" layer="91"/>
+<label x="-83.82" y="66.04" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
